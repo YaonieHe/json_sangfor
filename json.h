@@ -38,8 +38,8 @@ private:
 		NUM num;
 		bool bol;
 		char* str;
-		std::vector<JSON*> arr;
 	};
+	std::vector<JSON*> arr;
 	std::map<const char*, JSON*, ptrCmp> obj;
 
 
@@ -87,12 +87,26 @@ public:
 	 */
 	json_e get_type();
 
-	template<typename T>
-	T get_value();						// NUM、BOL、STR类型，获取值
-	JSON* get_from_key(const char* key);// OBJ类型，获取键key对应的值
-	JSON* get_from_arr(int index);		// ARR类型，获取index位置的值
+	/*
+	* NUM、BOL、STR类型，获取值
+	* 类型不匹配扔出异常
+	*/
+	NUM get_from_num();
+	bool get_from_bol();
 
-	// void set_type(json_e type_e);			// 设置类型值 
+	// 不成功返回NULL
+	char* get_from_str();	
+
+	/* 
+	* OBJ类型，获取键key对应的值，不成功返回NULL	
+	*/
+	JSON* get_from_key(const char* key);
+	/* 
+	* ARR类型，获取index位置的值，index从0开始
+	* 为-1表示查询最后一个
+	* 超出范围或其他原因不成功返回NULL
+	*/
+	JSON* get_from_arr(int index);		
 
 	/* 
 	* INT、BOL、STR类型，设置值, 成功返回0

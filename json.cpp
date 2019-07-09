@@ -18,7 +18,6 @@ JSON::JSON(json_e type_name){
 }
 
 
-
 JSON::JSON(NUM value){
 	err_info = NULL;
 	this->num = value;
@@ -62,7 +61,6 @@ JSON::JSON(const JSON & json){
 		}
 		case json_e::JSON_ARR:{
 			int arr_len = json.arr.size();
-			printf("22\n");
 			for(int i = 0; i < arr_len; i++){
 				JSON* tmp = new JSON(*(json.arr[i]));
 				this->arr.push_back(tmp);
@@ -92,13 +90,64 @@ json_e JSON::get_type(){
 }
 
 
-// void JSON::set_type(json_e type_e){
-// 	if(this->type == json_e::JSON_NONE) 
-// 		this->type = type_e;
-// 	else{
-// 		throw "非空类型不允许重新设置类型";
-// 	}
-// }
+NUM JSON::get_from_num(){
+	if(this->type == json_e::JSON_NUM){
+		return this->num;
+	}
+	note_err_info("该类型JSON对象不能调用获取NUM值的方法！\n");
+	throw "error";
+}
+bool JSON::get_from_bol(){
+	if(this->type == json_e::JSON_BOL){
+		return this->bol;
+	}
+	note_err_info("该类型JSON对象不能调用获取BOL值的方法！\n");
+	throw "error";
+}
+char* JSON::get_from_str(){
+	if(this->type == json_e::JSON_STR){
+		char* tmp = new char[strlen(this->str) + 1];
+		strcpy(tmp, this->str);
+		return tmp;
+	}
+	note_err_info("该类型JSON对象不能调用获取STR值的方法！\n");
+	
+	return NULL;
+}
+
+JSON* JSON::get_from_key(const char* key){
+	if(this->type == json_e::JSON_OBJ){
+		if(this->obj.find(key) != this->obj.end()){
+			JSON* tmp = new JSON(*(this->obj[key]));
+			return tmp;
+		}
+		note_err_info("该OBJ对象中所查询的键不存在！\n");
+		return NULL;
+	}
+	note_err_info("该类型JSON对象不能调用通过键取值的方法！\n");
+	throw NULL;
+}
+
+JSON* JSON::get_from_arr(int index){
+	if(this->type == json_e::JSON_ARR){
+		int arr_len = this->arr.size();
+		int idx = -1;
+		if(index == -1 && arr_len > 0){
+			idx = arr_len - 1;
+		}
+		else if(index >= 0 && index < arr_len){
+			idx = index;
+		}
+		if(idx != -1){
+			JSON* tmp = new JSON(*(this->arr[idx]));
+			return tmp;
+		}
+		note_err_info("输入小标超过该ARR对象最大元素数量！\n");
+		return NULL;
+	}
+	note_err_info("该类型JSON对象不能调用通过下标取值的方法！\n");
+	throw NULL;
+}
 
 // INT、BOL、STR类型，设置值, 返回0表示执行正确。
 int JSON::set_value(bool value){
@@ -202,11 +251,13 @@ int JSON::arr_add(int index, JSON* value){
 
 	// index = -1, 从末尾插入
 	if(index == -1){
-		this->arr.push_back(new JSON(*value));
+		JSON* tmp = new JSON(*value);
+		this->arr.push_back(tmp);
 	}
 	// 正常插入
 	else{
-		this->arr.insert(this->arr.begin() + index, new JSON(*value));
+		JSON* tmp = new JSON(*value);
+		this->arr.insert(this->arr.begin() + index, tmp);
 	}
 	return 0;
 }
@@ -236,7 +287,29 @@ char* JSON::to_str(){
 }
 
 void JSON::free(){
-
+	if(this->err_info != NULL) delete [] this->err_info;
+	switch(this->type){
+		case json_e::JSON_STR:{
+			delete [] this->str;
+			break;
+		}
+		case json_e::JSON_ARR:{
+			int arr_len = this->arr.size();
+			for(int i = 0; i < arr_len; i++){
+				delete this->arr[i];
+			}
+			this->arr.clear();
+			break;
+		}
+		case json_e::JSON_OBJ:{
+			for(auto it = this->obj.begin(); it != this->obj.end(); it++){
+				delete [] it->first;
+				delete it->second;
+			}
+			this->obj.clear();
+			break;
+		}
+	}
 }
 
 
@@ -244,7 +317,7 @@ void JSON::note_err_info(const char* info){
 	if(err_info != NULL) delete [] err_info;
 	this->err_info = new char[strlen(info) + 1];
 	strcpy(this->err_info, info);
-	printf("err info: %s\n", info);
+	//printf("err info: %s\n", info);
 }
 
 

@@ -54,6 +54,8 @@ TEST(TestAddJSON, AddKeyValue){
 
 	// 非OBJ类型非空对象添加, 失败
 	EXPECT_NE(str_json.obj_add("name2", &num_json), 0);
+
+	delete obj_json;
 }
 
 // 测试JSON::arr_add
@@ -83,6 +85,8 @@ TEST(TestAddJSON, AddArray){
 	
 	// 非ARR类型非空对象添加，失败
 	EXPECT_NE(bol_json.arr_add(0, &num_json), 0);
+
+	delete arr_json;
 }
 
 TEST(TestGetJson, GetType){
@@ -91,14 +95,44 @@ TEST(TestGetJson, GetType){
 }
 
 TEST(TestGetJson, GetValue){
+	JSON str_json("value_str");
+	JSON num_json(3.5);
+	JSON bol_json(true);
 
+	EXPECT_EQ(num_json.get_from_num(), 3.5);
+	EXPECT_EQ(bol_json.get_from_bol(), true);
+
+	char* str = str_json.get_from_str();
+	EXPECT_EQ(strcmp(str, "value_str"), 0);
+	delete [] str;
 }
 TEST(TestGetJson, GetFromKey){
+	JSON str_json("value_str");
+	JSON num_json(3.5);
+	JSON bol_json(true);
 
+	JSON* obj_json = new JSON(json_e::JSON_OBJ);
+	obj_json->obj_add("name1", &num_json);
+	obj_json->obj_add("name2", &bol_json);
+	JSON* get_name2 = obj_json->get_from_key("name2");
+	EXPECT_EQ(get_name2->get_from_bol(), true);
+	delete get_name2;
+	delete obj_json;
 }
-TEST(TestGetJson, GetFromIndex){
+TEST(TestGetJson, GetFromArr){
+	JSON str_json("value_str");
+	JSON num_json(3.5);
+	JSON bol_json(true);
 
+	JSON* arr_json = new JSON(json_e::JSON_ARR);
+	arr_json->arr_add(-1, &num_json);
+	arr_json->arr_add(-1, &bol_json);
+	JSON* get_index = arr_json->get_from_arr(-1);
+	EXPECT_EQ(get_index->get_from_bol(), true);
+	delete get_index;
+	delete arr_json;
 }
+
 
 TEST(TestFormatJSON, ToString){
  	JSON* bol_json = new JSON(true);
@@ -109,32 +143,43 @@ TEST(TestFormatJSON, ToString){
 
 	char* str = bol_json->to_str();
 	ASSERT_TRUE(strlen(str) > 0);
-	printf("bol_json to str: %s\n", str);
+	EXPECT_EQ(strcmp("true", str), 0);
+	//printf("bol_json to str: %s\n", str);
 	delete [] str;
 
 	str = str_json->to_str();
 	ASSERT_TRUE(strlen(str) > 0);
-	printf("str_json to str: %s\n", str);
+	EXPECT_EQ(strcmp("\"value_str\"", str), 0);
+	//printf("str_json to str: %s\n", str);
 	delete [] str;
 
 	str = num_json->to_str();
 	ASSERT_TRUE(strlen(str) > 0);
-	printf("num_json to str: %s\n", str);
+	EXPECT_EQ(strcmp("3.5", str), 0);
+	//printf("num_json to str: %s\n", str);
 	delete [] str;
 
 	arr_json->arr_add(-1, num_json);
 	arr_json->arr_add(0, str_json);
 	str = arr_json->to_str();
 	ASSERT_TRUE(strlen(str) > 0);
-	printf("arr_json to str: %s\n", str);
+	EXPECT_EQ(strcmp("[\"value_str\", 3.5]", str), 0);
+	//printf("arr_json to str: %s\n", str);
 	delete [] str;
 
 	obj_json->obj_add("id1", arr_json);				// {‘id1’ ： }
 	obj_json->obj_add("id2", bol_json);				// {‘id1’ ： ， ‘id2’ : }
 	str = obj_json->to_str();
 	ASSERT_TRUE(strlen(str) > 0);
-	printf("obj_json to str: %s\n", str);
+	EXPECT_EQ(strcmp("{\"id1\":[\"value_str\", 3.5], \"id2\":true}", str), 0);
+	//printf("obj_json to str: %s\n", str);
 	delete [] str;
+
+	delete bol_json;
+	delete num_json;
+	delete str_json;
+	delete arr_json;
+	delete obj_json;
 }
 
 
