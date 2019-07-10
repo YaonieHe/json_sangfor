@@ -6,7 +6,7 @@
 #include<cstring>
 #include<string>
 #include<exception>
-
+#include<cassert>
 
 #define NUM_DIGITS 10 //JSON_NUM类型，数字的有效数字位数
 
@@ -39,11 +39,20 @@ private:
 		bool bol;
 		char* str;
 	};
+	/*
+	* ARR类型，记录数据。
+	* 空间有浪费，可以考虑自行实现一个类，实现vector部分功能，放入union中
+	*/
 	std::vector<JSON*> arr;
+	/*
+	* OBJ类型保存键值对
+	*/
 	std::map<const char*, JSON*, ptrCmp> obj;
 
-
-	char* err_info;						//错误信息
+	/*
+	* 保存错误信息
+	*/
+	char* err_info;						
 
 	/* 
 	* 记录错误信息, 保存在err_info中。
@@ -52,14 +61,40 @@ private:
 
 	/*
 	* to_str函数，将各种类型的JSON对象转换成char*返回
+	* need为-1时不加tab，否则加tab，need表示tab个数
+	* 对于ARR和OBJ，对象之间换行，末尾不换行
 	 */
-	char* none_to_str();
-	char* num_to_str();
-	char* bol_to_str();
-	char* str_to_str();
-	char* arr_to_str();
-	char* obj_to_str();
+	char* none_to_str(int need);
+	char* num_to_str(int need);
+	char* bol_to_str(int need);
+	char* str_to_str(int need);
+	char* arr_to_str(int need);
+	char* obj_to_str(int need);
+	/*
+	* 选择是否需要换行和加tab。
+	* need为-1时不换行且无tab，否则换行加tab，need表示tab个数
+	 */
+	char* to_str_select_tab(int need = -1);
 
+	/*
+	* @param mode: 一个整数，表示缩进模式：
+    *   Mode = 1， 填充tab
+    *   Mode = 2，填充2空格
+    *   Mode = 3，填充1空格，最后一个2空格的第1位置用短线取代
+    *   Mode = 4, 填充4空格
+    *   Mode = 5，填充4空格，最后一个四空格的第三位置用短线取代
+	* @param num: 一个整数，表示填充个数
+	* @return: 一个char*，表示返回的字符串，错误则返回NULL
+	 */
+	char* pre_place(int num, int mode);
+	/*
+	* 转为yaml格式的字符串
+	* @param need: 表示需要的缩进层数 
+	* @param mode: 表示缩进模式 
+	 */
+	char* none_to_yaml(int need, int mode = 4);
+	std::string obj_to_yaml(int need, int mode = 4);
+	char* arr_to_yaml(int need, int mode = 4);
 
 public:
 	JSON();
@@ -127,7 +162,9 @@ public:
 	/*
 	* 格式化为JSON字符串
 	*/
-	char* to_str();						
+	char* to_json_str_without_tab();
+	char* to_json_str_with_tab();		
+	char* to_yaml_str();			
 
 	void obj_rm(const char* key); 		// OBJ类型，删除一个键值对
 	void arr_rm(int index);				// ARR类型，删除下标为index的JSON对象
