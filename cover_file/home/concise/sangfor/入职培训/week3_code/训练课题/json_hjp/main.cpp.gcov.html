@@ -1,0 +1,486 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>LCOV - main.info - /home/concise/sangfor/入职培训/week3_code/训练课题/json_hjp/main.cpp</title>
+  <link rel="stylesheet" type="text/css" href="../../../../../../../gcov.css">
+</head>
+
+<body>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="title">LCOV - code coverage report</td></tr>
+    <tr><td class="ruler"><img src="../../../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+
+    <tr>
+      <td width="100%">
+        <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="35%" class="headerValue"><a href="../../../../../../../index.html">top level</a> - <a href="index.html">home/concise/sangfor/入职培训/week3_code/训练课题/json_hjp</a> - main.cpp<span style="font-size: 80%;"> (source / <a href="main.cpp.func-sort-c.html">functions</a>)</span></td>
+            <td width="5%"></td>
+            <td width="15%"></td>
+            <td width="10%" class="headerCovTableHead">Hit</td>
+            <td width="10%" class="headerCovTableHead">Total</td>
+            <td width="15%" class="headerCovTableHead">Coverage</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">main.info</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntry">218</td>
+            <td class="headerCovTableEntry">218</td>
+            <td class="headerCovTableEntryHi">100.0 %</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Date:</td>
+            <td class="headerValue">2019-07-10 19:13:58</td>
+            <td></td>
+            <td class="headerItem">Functions:</td>
+            <td class="headerCovTableEntry">83</td>
+            <td class="headerCovTableEntry">83</td>
+            <td class="headerCovTableEntryHi">100.0 %</td>
+          </tr>
+          <tr><td><img src="../../../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr><td class="ruler"><img src="../../../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+  </table>
+
+  <table cellpadding=0 cellspacing=0 border=0>
+    <tr>
+      <td><br></td>
+    </tr>
+    <tr>
+      <td>
+<pre class="sourceHeading">          Line data    Source code</pre>
+<pre class="source">
+<a name="1"><span class="lineNum">       1 </span>            : #include&quot;json.h&quot;</a>
+<span class="lineNum">       2 </span>            : #include&lt;gtest/gtest.h&gt;
+<a name="3"><span class="lineNum">       3 </span>            : </a>
+<span class="lineNum">       4 </span>            : // 测试JSON::JSON(json_e)
+<span class="lineNum">       5 </span><span class="lineCov">          5 : TEST(TestCreatJSON, InputType){</span>
+<span class="lineNum">       6 </span><span class="lineCov">          1 :         JSON* bol_json = new JSON(json_e::JSON_BOL);</span>
+<span class="lineNum">       7 </span><span class="lineCov">          1 :     EXPECT_EQ(bol_json-&gt;get_type(), json_e::JSON_BOL);</span>
+<span class="lineNum">       8 </span><span class="lineCov">          1 :     delete bol_json;</span>
+<span class="lineNum">       9 </span><span class="lineCov">          1 : }</span>
+<a name="10"><span class="lineNum">      10 </span>            : </a>
+<span class="lineNum">      11 </span>            : // 测试JSON::JSON(T)
+<span class="lineNum">      12 </span><span class="lineCov">          5 : TEST(TestCreatJSON, InputValue){</span>
+<span class="lineNum">      13 </span><span class="lineCov">          2 :         JSON str_json(&quot;char*&quot;);</span>
+<span class="lineNum">      14 </span><span class="lineCov">          2 :         JSON num_json(1.0);</span>
+<span class="lineNum">      15 </span><span class="lineCov">          2 :         JSON bol_json(true);</span>
+<span class="lineNum">      16 </span><span class="lineCov">          1 :         EXPECT_EQ(str_json.get_type(), json_e::JSON_STR);</span>
+<span class="lineNum">      17 </span><span class="lineCov">          1 :         EXPECT_EQ(num_json.get_type(), json_e::JSON_NUM);</span>
+<span class="lineNum">      18 </span><span class="lineCov">          1 :         EXPECT_EQ(bol_json.get_type(), json_e::JSON_BOL);</span>
+<span class="lineNum">      19 </span><span class="lineCov">          1 : }</span>
+<a name="20"><span class="lineNum">      20 </span>            : </a>
+<span class="lineNum">      21 </span>            : // 测试JSON::set_value
+<span class="lineNum">      22 </span><span class="lineCov">          5 : TEST(TestSetJson, SetConstValue){</span>
+<span class="lineNum">      23 </span>            :         // 测试空JSON设置值
+<span class="lineNum">      24 </span><span class="lineCov">          2 :         JSON none_json;</span>
+<span class="lineNum">      25 </span><span class="lineCov">          1 :         none_json.set_value(1.0);</span>
+<span class="lineNum">      26 </span><span class="lineCov">          1 :         EXPECT_EQ(none_json.get_type(), json_e::JSON_NUM);</span>
+<span class="lineNum">      27 </span>            : 
+<span class="lineNum">      28 </span>            :         // 测试非空JSON设置同类型值
+<span class="lineNum">      29 </span><span class="lineCov">          2 :         JSON str_json(&quot;2.0&quot;);</span>
+<span class="lineNum">      30 </span><span class="lineCov">          1 :         EXPECT_EQ(str_json.set_value(&quot;3.1&quot;), 0);</span>
+<span class="lineNum">      31 </span>            :         
+<span class="lineNum">      32 </span>            :         // 测试非空JSON设置不同类型值 
+<span class="lineNum">      33 </span><span class="lineCov">          1 :         EXPECT_EQ(str_json.set_value(3.1), -1);</span>
+<span class="lineNum">      34 </span><span class="lineCov">          1 : }</span>
+<a name="35"><span class="lineNum">      35 </span>            : </a>
+<span class="lineNum">      36 </span>            : // 测试JSON::obj_add
+<span class="lineNum">      37 </span><span class="lineCov">          5 : TEST(TestAddJSON, AddKeyValue){</span>
+<span class="lineNum">      38 </span>            :         // 空对象添加， 成功
+<span class="lineNum">      39 </span><span class="lineCov">          1 :         JSON* obj_json = new JSON();</span>
+<span class="lineNum">      40 </span><span class="lineCov">          1 :         ASSERT_TRUE(obj_json != NULL);</span>
+<span class="lineNum">      41 </span><span class="lineCov">          2 :         JSON str_json(&quot;111&quot;);</span>
+<span class="lineNum">      42 </span><span class="lineCov">          1 :         EXPECT_EQ(obj_json-&gt;obj_add(&quot;name1&quot;, &amp;str_json), 0);</span>
+<span class="lineNum">      43 </span><span class="lineCov">          1 :         EXPECT_EQ(obj_json-&gt;get_type(), json_e::JSON_OBJ);</span>
+<span class="lineNum">      44 </span>            : 
+<span class="lineNum">      45 </span>            :         // OBJ类型对象添加，成功
+<span class="lineNum">      46 </span><span class="lineCov">          1 :         delete obj_json;</span>
+<span class="lineNum">      47 </span><span class="lineCov">          1 :         obj_json = new JSON(json_e::JSON_OBJ);</span>
+<span class="lineNum">      48 </span><span class="lineCov">          1 :         ASSERT_TRUE(obj_json != NULL);</span>
+<span class="lineNum">      49 </span><span class="lineCov">          2 :         JSON num_json(2.3);</span>
+<span class="lineNum">      50 </span><span class="lineCov">          1 :         EXPECT_EQ(obj_json-&gt;obj_add(&quot;name2&quot;, &amp;num_json), 0);</span>
+<span class="lineNum">      51 </span>            : 
+<span class="lineNum">      52 </span>            :         // OBJ类型，键已存在时添加， 失败
+<span class="lineNum">      53 </span><span class="lineCov">          1 :         EXPECT_EQ(obj_json-&gt;get_type(), json_e::JSON_OBJ);</span>
+<span class="lineNum">      54 </span><span class="lineCov">          1 :         EXPECT_NE(obj_json-&gt;obj_add(&quot;name2&quot;, &amp;num_json), 0);</span>
+<span class="lineNum">      55 </span>            : 
+<span class="lineNum">      56 </span>            :         // 非OBJ类型非空对象添加, 失败
+<span class="lineNum">      57 </span><span class="lineCov">          1 :         EXPECT_NE(str_json.obj_add(&quot;name2&quot;, &amp;num_json), 0);</span>
+<span class="lineNum">      58 </span>            : 
+<span class="lineNum">      59 </span><span class="lineCov">          1 :         delete obj_json;</span>
+<span class="lineNum">      60 </span>            : }
+<a name="61"><span class="lineNum">      61 </span>            : </a>
+<span class="lineNum">      62 </span>            : // 测试JSON::arr_add
+<span class="lineNum">      63 </span><span class="lineCov">          5 : TEST(TestAddJSON, AddArray){</span>
+<span class="lineNum">      64 </span>            :         // 空对象添加，成功
+<span class="lineNum">      65 </span><span class="lineCov">          1 :         JSON* none_json = new JSON();</span>
+<span class="lineNum">      66 </span><span class="lineCov">          1 :         ASSERT_TRUE(none_json != NULL);</span>
+<span class="lineNum">      67 </span><span class="lineCov">          2 :         JSON str_json(&quot;insert to arr&quot;);</span>
+<span class="lineNum">      68 </span><span class="lineCov">          1 :         EXPECT_EQ(none_json-&gt;arr_add(-1, &amp;str_json), 0);</span>
+<span class="lineNum">      69 </span><span class="lineCov">          1 :         EXPECT_EQ(none_json-&gt;get_type(), json_e::JSON_ARR);</span>
+<span class="lineNum">      70 </span><span class="lineCov">          1 :         delete none_json;</span>
+<span class="lineNum">      71 </span>            : 
+<span class="lineNum">      72 </span>            :         // ARR对象末尾添加，成功
+<span class="lineNum">      73 </span><span class="lineCov">          1 :         JSON* arr_json = new JSON(json_e::JSON_ARR);</span>
+<span class="lineNum">      74 </span><span class="lineCov">          2 :         JSON num_json((NUM)2);</span>
+<span class="lineNum">      75 </span><span class="lineCov">          1 :         EXPECT_EQ(arr_json-&gt;arr_add(-1, &amp;num_json), 0);</span>
+<span class="lineNum">      76 </span>            :         
+<span class="lineNum">      77 </span>            :         // ARR对象开头添加，成功
+<span class="lineNum">      78 </span><span class="lineCov">          2 :         JSON bol_json(true);</span>
+<span class="lineNum">      79 </span><span class="lineCov">          1 :         EXPECT_EQ(arr_json-&gt;arr_add(0, &amp;bol_json), 0);</span>
+<span class="lineNum">      80 </span>            :          
+<span class="lineNum">      81 </span>            :         // ARR对象中间添加，成功
+<span class="lineNum">      82 </span><span class="lineCov">          1 :         EXPECT_EQ(arr_json-&gt;arr_add(1, &amp;bol_json), 0);</span>
+<span class="lineNum">      83 </span>            : 
+<span class="lineNum">      84 </span>            :         // ARR对象超出最大长度位置添加，失败
+<span class="lineNum">      85 </span><span class="lineCov">          1 :         EXPECT_NE(arr_json-&gt;arr_add(5, &amp;num_json), 0);</span>
+<span class="lineNum">      86 </span>            :         
+<span class="lineNum">      87 </span>            :         // 非ARR类型非空对象添加，失败
+<span class="lineNum">      88 </span><span class="lineCov">          1 :         EXPECT_NE(bol_json.arr_add(0, &amp;num_json), 0);</span>
+<span class="lineNum">      89 </span>            : 
+<span class="lineNum">      90 </span><span class="lineCov">          1 :         delete arr_json;</span>
+<span class="lineNum">      91 </span>            : }
+<a name="92"><span class="lineNum">      92 </span>            : </a>
+<span class="lineNum">      93 </span>            : // 测试JSON::get_type
+<span class="lineNum">      94 </span><span class="lineCov">          5 : TEST(TestGetJson, GetType){</span>
+<span class="lineNum">      95 </span><span class="lineCov">          2 :         JSON str_json(&quot;sad&quot;);</span>
+<span class="lineNum">      96 </span><span class="lineCov">          1 :         EXPECT_EQ(str_json.get_type(), json_e::JSON_STR);</span>
+<span class="lineNum">      97 </span><span class="lineCov">          1 : }</span>
+<a name="98"><span class="lineNum">      98 </span>            : </a>
+<span class="lineNum">      99 </span>            : // 测试JSON::get_from_*（num,bol,str）
+<span class="lineNum">     100 </span><span class="lineCov">          5 : TEST(TestGetJson, GetValue){</span>
+<span class="lineNum">     101 </span><span class="lineCov">          2 :         JSON str_json(&quot;value_str&quot;);</span>
+<span class="lineNum">     102 </span><span class="lineCov">          2 :         JSON num_json(3.5);</span>
+<span class="lineNum">     103 </span><span class="lineCov">          2 :         JSON bol_json(true);</span>
+<span class="lineNum">     104 </span>            : 
+<span class="lineNum">     105 </span><span class="lineCov">          1 :         EXPECT_EQ(num_json.get_from_num(), 3.5);</span>
+<span class="lineNum">     106 </span><span class="lineCov">          1 :         EXPECT_EQ(bol_json.get_from_bol(), true);</span>
+<span class="lineNum">     107 </span>            : 
+<span class="lineNum">     108 </span><span class="lineCov">          2 :         std::string str = str_json.get_from_str();</span>
+<span class="lineNum">     109 </span><span class="lineCov">          1 :         EXPECT_EQ(str, &quot;value_str&quot;);</span>
+<span class="lineNum">     110 </span>            : 
+<span class="lineNum">     111 </span><span class="lineCov">          1 : }</span>
+<a name="112"><span class="lineNum">     112 </span>            : </a>
+<span class="lineNum">     113 </span>            : // 测试JSON::get_from_key
+<span class="lineNum">     114 </span><span class="lineCov">          5 : TEST(TestGetJson, GetFromKey){</span>
+<span class="lineNum">     115 </span><span class="lineCov">          2 :         JSON str_json(&quot;value_str&quot;);</span>
+<span class="lineNum">     116 </span><span class="lineCov">          2 :         JSON num_json(3.5);</span>
+<span class="lineNum">     117 </span><span class="lineCov">          2 :         JSON bol_json(true);</span>
+<span class="lineNum">     118 </span>            : 
+<span class="lineNum">     119 </span><span class="lineCov">          1 :         JSON* obj_json = new JSON(json_e::JSON_OBJ);</span>
+<span class="lineNum">     120 </span><span class="lineCov">          1 :         obj_json-&gt;obj_add(&quot;name1&quot;, &amp;num_json);</span>
+<span class="lineNum">     121 </span><span class="lineCov">          1 :         obj_json-&gt;obj_add(&quot;name2&quot;, &amp;bol_json);</span>
+<span class="lineNum">     122 </span><span class="lineCov">          1 :         JSON* get_name2 = obj_json-&gt;get_from_key(&quot;name2&quot;);</span>
+<span class="lineNum">     123 </span><span class="lineCov">          1 :         EXPECT_EQ(get_name2-&gt;get_from_bol(), true);</span>
+<span class="lineNum">     124 </span><span class="lineCov">          1 :         delete get_name2;</span>
+<span class="lineNum">     125 </span><span class="lineCov">          1 :         delete obj_json;</span>
+<span class="lineNum">     126 </span><span class="lineCov">          1 : }</span>
+<a name="127"><span class="lineNum">     127 </span>            : </a>
+<span class="lineNum">     128 </span>            : // 测试JSON::get_from_arr
+<span class="lineNum">     129 </span><span class="lineCov">          5 : TEST(TestGetJson, GetFromArr){</span>
+<span class="lineNum">     130 </span><span class="lineCov">          2 :         JSON str_json(&quot;value_str&quot;);</span>
+<span class="lineNum">     131 </span><span class="lineCov">          2 :         JSON num_json(3.5);</span>
+<span class="lineNum">     132 </span><span class="lineCov">          2 :         JSON bol_json(true);</span>
+<span class="lineNum">     133 </span>            : 
+<span class="lineNum">     134 </span><span class="lineCov">          1 :         JSON* arr_json = new JSON(json_e::JSON_ARR);</span>
+<span class="lineNum">     135 </span><span class="lineCov">          1 :         arr_json-&gt;arr_add(-1, &amp;num_json);</span>
+<span class="lineNum">     136 </span><span class="lineCov">          1 :         arr_json-&gt;arr_add(-1, &amp;bol_json);</span>
+<span class="lineNum">     137 </span><span class="lineCov">          1 :         JSON* get_index = arr_json-&gt;get_from_arr(-1);</span>
+<span class="lineNum">     138 </span><span class="lineCov">          1 :         EXPECT_EQ(get_index-&gt;get_from_bol(), true);</span>
+<span class="lineNum">     139 </span><span class="lineCov">          1 :         delete get_index;</span>
+<span class="lineNum">     140 </span><span class="lineCov">          1 :         delete arr_json;</span>
+<span class="lineNum">     141 </span><span class="lineCov">          1 : }</span>
+<a name="142"><span class="lineNum">     142 </span>            : </a>
+<span class="lineNum">     143 </span>            : // 测试JSON::to_json_str_*(NONE类型)
+<span class="lineNum">     144 </span><span class="lineCov">          5 : TEST(TestFormatJson, NONEToJsonStr){</span>
+<span class="lineNum">     145 </span><span class="lineCov">          1 :         JSON* none_json = new JSON();</span>
+<span class="lineNum">     146 </span>            :         // 测试NONE to str without tab
+<span class="lineNum">     147 </span><span class="lineCov">          2 :         std::string str = none_json-&gt;to_json_str_without_tab();</span>
+<span class="lineNum">     148 </span><span class="lineCov">          1 :         EXPECT_EQ(&quot;null&quot;, str);</span>
+<span class="lineNum">     149 </span>            :         //printf(&quot;\033[1;31;40mbol_json to str without tab:\n%s\033[0m\n&quot;, str);
+<span class="lineNum">     150 </span>            : 
+<span class="lineNum">     151 </span>            :         // 测试NONE to str with tab
+<span class="lineNum">     152 </span><span class="lineCov">          1 :         str = none_json-&gt;to_json_str_with_tab();</span>
+<span class="lineNum">     153 </span><span class="lineCov">          1 :         EXPECT_EQ(&quot;null&quot;, str);</span>
+<span class="lineNum">     154 </span>            :         //printf(&quot;\033[1;31;40mbol_json to str with tab:\n%s\033[0m\n&quot;, str);
+<span class="lineNum">     155 </span>            : 
+<span class="lineNum">     156 </span><span class="lineCov">          1 :         delete none_json;</span>
+<span class="lineNum">     157 </span><span class="lineCov">          1 : }</span>
+<a name="158"><span class="lineNum">     158 </span>            : </a>
+<span class="lineNum">     159 </span>            : // 测试JSON::to_json_str_*(BOL类型)
+<span class="lineNum">     160 </span><span class="lineCov">          5 : TEST(TestFormatJson, BOLToJsonStr){</span>
+<span class="lineNum">     161 </span><span class="lineCov">          1 :         JSON* bol_json = new JSON(true);</span>
+<span class="lineNum">     162 </span>            :         // 测试BOL to str without tab
+<span class="lineNum">     163 </span><span class="lineCov">          2 :         std::string str = bol_json-&gt;to_json_str_without_tab();</span>
+<span class="lineNum">     164 </span><span class="lineCov">          1 :         ASSERT_TRUE(str.size() != 0);</span>
+<span class="lineNum">     165 </span><span class="lineCov">          1 :         EXPECT_EQ(&quot;true&quot;, str);</span>
+<span class="lineNum">     166 </span>            :         //printf(&quot;\033[1;31;40mbol_json to str without tab:\n%s\033[0m\n&quot;, str);
+<span class="lineNum">     167 </span>            : 
+<span class="lineNum">     168 </span>            :         // 测试BOL to str with tab
+<span class="lineNum">     169 </span><span class="lineCov">          1 :         str = bol_json-&gt;to_json_str_with_tab();</span>
+<span class="lineNum">     170 </span><span class="lineCov">          1 :         ASSERT_TRUE(str.size() != 0);</span>
+<span class="lineNum">     171 </span><span class="lineCov">          1 :         EXPECT_EQ(&quot;true&quot;, str);</span>
+<span class="lineNum">     172 </span>            :         //printf(&quot;\033[1;31;40mbol_json to str with tab:\n%s\033[0m\n&quot;, str);
+<span class="lineNum">     173 </span>            : 
+<span class="lineNum">     174 </span><span class="lineCov">          1 :         delete bol_json;</span>
+<span class="lineNum">     175 </span>            : }
+<a name="176"><span class="lineNum">     176 </span>            : </a>
+<span class="lineNum">     177 </span>            : // 测试JSON::to_json_str_*(STR类型)
+<span class="lineNum">     178 </span><span class="lineCov">          5 : TEST(TestFormatJson, STRToJsonStr){</span>
+<span class="lineNum">     179 </span><span class="lineCov">          1 :         JSON* str_json = new JSON(&quot;value_str&quot;);</span>
+<span class="lineNum">     180 </span>            : 
+<span class="lineNum">     181 </span>            :         // 测试STR to str without tab
+<span class="lineNum">     182 </span><span class="lineCov">          2 :         std::string str = str_json-&gt;to_json_str_without_tab();</span>
+<span class="lineNum">     183 </span>            : 
+<span class="lineNum">     184 </span><span class="lineCov">          1 :         EXPECT_EQ(&quot;\&quot;value_str\&quot;&quot;, str);</span>
+<span class="lineNum">     185 </span>            :         //printf(&quot;\033[1;31;40mstr_json to str without tab:\n%s\033[0m\n&quot;, str.c_str());
+<span class="lineNum">     186 </span>            : 
+<span class="lineNum">     187 </span>            :         // 测试STR to str with tab
+<span class="lineNum">     188 </span><span class="lineCov">          1 :         str = str_json-&gt;to_json_str_with_tab();</span>
+<span class="lineNum">     189 </span>            : 
+<span class="lineNum">     190 </span><span class="lineCov">          1 :         EXPECT_EQ(&quot;\&quot;value_str\&quot;&quot;, str);</span>
+<span class="lineNum">     191 </span>            :         //printf(&quot;\033[1;31;40mstr_json to str with tab:\n%s\033[0m\n&quot;, str.c_str());
+<span class="lineNum">     192 </span>            : 
+<span class="lineNum">     193 </span><span class="lineCov">          1 :         delete str_json;</span>
+<span class="lineNum">     194 </span><span class="lineCov">          1 : }</span>
+<a name="195"><span class="lineNum">     195 </span>            : </a>
+<span class="lineNum">     196 </span>            : // 测试JSON::to_json_str_*(NUM类型)
+<span class="lineNum">     197 </span><span class="lineCov">          5 : TEST(TestFormatJson, NUMToJsonStr){</span>
+<span class="lineNum">     198 </span><span class="lineCov">          1 :         JSON* num_json = new JSON((NUM)3.5);</span>
+<span class="lineNum">     199 </span>            : 
+<span class="lineNum">     200 </span>            :         // 测试NUM to str with tab
+<span class="lineNum">     201 </span><span class="lineCov">          2 :         std::string str = num_json-&gt;to_json_str_with_tab();</span>
+<span class="lineNum">     202 </span><span class="lineCov">          1 :         ASSERT_TRUE(str.size() != 0);</span>
+<span class="lineNum">     203 </span><span class="lineCov">          1 :         EXPECT_EQ(&quot;3.5&quot;, str);</span>
+<span class="lineNum">     204 </span>            :         //printf(&quot;\033[1;31;40mnum_json to str with tab:\n%s\033[0m\n&quot;, str.c_str());
+<span class="lineNum">     205 </span>            : 
+<span class="lineNum">     206 </span>            :         // 测试NUM to str without tab
+<span class="lineNum">     207 </span><span class="lineCov">          1 :         str = num_json-&gt;to_json_str_without_tab();</span>
+<span class="lineNum">     208 </span><span class="lineCov">          1 :         ASSERT_TRUE(str.size() != 0);</span>
+<span class="lineNum">     209 </span><span class="lineCov">          1 :         EXPECT_EQ(&quot;3.5&quot;, str);</span>
+<span class="lineNum">     210 </span>            :         //printf(&quot;\033[1;31;40mnum_json to str without tab:\n%s\033[0m\n&quot;, str.c_str());
+<span class="lineNum">     211 </span>            : 
+<span class="lineNum">     212 </span><span class="lineCov">          1 :         delete num_json;</span>
+<span class="lineNum">     213 </span>            : }
+<a name="214"><span class="lineNum">     214 </span>            : </a>
+<span class="lineNum">     215 </span>            : // 测试JSON::to_json_str_*(ARR类型和OBJ类型)
+<span class="lineNum">     216 </span><span class="lineCov">          5 : TEST(TestFormatJson, ARRandOBJToJsonStr){</span>
+<span class="lineNum">     217 </span><span class="lineCov">          1 :         JSON* bol_json = new JSON(true);</span>
+<span class="lineNum">     218 </span><span class="lineCov">          1 :         JSON* str_json = new JSON(&quot;value_str&quot;);</span>
+<span class="lineNum">     219 </span><span class="lineCov">          1 :         JSON* num_json = new JSON((NUM)3.5);</span>
+<span class="lineNum">     220 </span><span class="lineCov">          1 :         JSON* arr_json = new JSON(json_e::JSON_ARR);    // </span>
+<span class="lineNum">     221 </span><span class="lineCov">          1 :         JSON* obj_json = new JSON(json_e::JSON_OBJ);    // {}</span>
+<span class="lineNum">     222 </span>            : 
+<span class="lineNum">     223 </span><span class="lineCov">          1 :         arr_json-&gt;arr_add(-1, num_json);</span>
+<span class="lineNum">     224 </span><span class="lineCov">          1 :         arr_json-&gt;arr_add(0, str_json);</span>
+<span class="lineNum">     225 </span><span class="lineCov">          1 :         obj_json-&gt;obj_add(&quot;id1&quot;, arr_json);                                // {‘id1’ ： }</span>
+<span class="lineNum">     226 </span><span class="lineCov">          1 :         obj_json-&gt;obj_add(&quot;id2&quot;, bol_json);                                // {‘id1’ ： ， ‘id2’ : }</span>
+<span class="lineNum">     227 </span>            :         
+<span class="lineNum">     228 </span>            :         // 测试ARR to str without tab
+<span class="lineNum">     229 </span><span class="lineCov">          2 :         std::string str = arr_json-&gt;to_json_str_without_tab();</span>
+<span class="lineNum">     230 </span><span class="lineCov">          1 :         EXPECT_EQ(&quot;[\&quot;value_str\&quot;, 3.5]&quot;, str);</span>
+<span class="lineNum">     231 </span>            :         //printf(&quot;\033[1;31;40marr_json to str:\n%s\033[0m\n&quot;, str.c_str());
+<span class="lineNum">     232 </span>            : 
+<span class="lineNum">     233 </span>            :         // ARR to str with tab
+<span class="lineNum">     234 </span><span class="lineCov">          1 :         str = arr_json-&gt;to_json_str_with_tab();</span>
+<span class="lineNum">     235 </span>            :         //EXPECT_EQ(&quot;[\n\t\&quot;value_str\&quot;,\n\t3.5\n]&quot;, str);
+<span class="lineNum">     236 </span>            :         //printf(&quot;\033[1;31;40marr_json to str:\n%s\033[0m\n&quot;, str.c_str());
+<span class="lineNum">     237 </span>            : 
+<span class="lineNum">     238 </span>            :         // 测试OBJ to str without tab
+<span class="lineNum">     239 </span><span class="lineCov">          1 :         str = obj_json-&gt;to_json_str_without_tab();</span>
+<span class="lineNum">     240 </span><span class="lineCov">          1 :         EXPECT_EQ(&quot;{\&quot;id1\&quot;: [\&quot;value_str\&quot;, 3.5], \&quot;id2\&quot;: true}&quot;, str);</span>
+<span class="lineNum">     241 </span>            :         //printf(&quot;\033[1;31;40mobj_json to str without tab:\n%s\033[0m\n&quot;, str.c_str());
+<span class="lineNum">     242 </span>            : 
+<span class="lineNum">     243 </span>            :         // 测试OBJ to str with tab
+<span class="lineNum">     244 </span><span class="lineCov">          1 :         str = obj_json-&gt;to_json_str_with_tab();</span>
+<span class="lineNum">     245 </span>            :         //EXPECT_EQ(&quot;{\n\t\&quot;id1\&quot;: [\n\t\t\&quot;value_str\&quot;,\n\t\t3.5\n\t],\n\t\&quot;id2\&quot;: true\n}&quot;, str);
+<span class="lineNum">     246 </span>            :         //printf(&quot;\033[1;31;40mobj_json to str with tab:\n%s\033[0m\n&quot;, str.c_str());
+<span class="lineNum">     247 </span>            : 
+<span class="lineNum">     248 </span><span class="lineCov">          1 :         delete bol_json;</span>
+<span class="lineNum">     249 </span><span class="lineCov">          1 :         delete num_json;</span>
+<span class="lineNum">     250 </span><span class="lineCov">          1 :         delete str_json;</span>
+<span class="lineNum">     251 </span><span class="lineCov">          1 :         delete arr_json;</span>
+<span class="lineNum">     252 </span><span class="lineCov">          1 :         delete obj_json;</span>
+<span class="lineNum">     253 </span><span class="lineCov">          1 : }</span>
+<a name="254"><span class="lineNum">     254 </span>            : </a>
+<span class="lineNum">     255 </span>            : // 测试JSON::to_yaml_str(NONE类型)
+<span class="lineNum">     256 </span><span class="lineCov">          5 : TEST(TestFormatYaml, NONEToYamlStr){</span>
+<span class="lineNum">     257 </span><span class="lineCov">          1 :         JSON* none_json = new JSON();</span>
+<span class="lineNum">     258 </span>            :         // 测试NONE to yaml
+<span class="lineNum">     259 </span><span class="lineCov">          2 :         std::string str = none_json-&gt;to_yaml_str();</span>
+<span class="lineNum">     260 </span><span class="lineCov">          1 :         EXPECT_EQ(&quot;~&quot;, str);</span>
+<span class="lineNum">     261 </span>            :         //printf(&quot;\033[1;31;40mbol_json to str without tab:\n%s\033[0m\n&quot;, str);
+<span class="lineNum">     262 </span>            : 
+<span class="lineNum">     263 </span><span class="lineCov">          1 :         delete none_json;</span>
+<span class="lineNum">     264 </span><span class="lineCov">          1 : }</span>
+<a name="265"><span class="lineNum">     265 </span>            : </a>
+<span class="lineNum">     266 </span>            : // 测试JSON::to_yaml_str(BOL类型)
+<span class="lineNum">     267 </span><span class="lineCov">          5 : TEST(TestFormatYaml, BOLToYamlStr){</span>
+<span class="lineNum">     268 </span><span class="lineCov">          1 :         JSON* bol_json = new JSON(true);</span>
+<span class="lineNum">     269 </span>            :         // 测试BOL to str without tab
+<span class="lineNum">     270 </span><span class="lineCov">          2 :         std::string str = bol_json-&gt;to_yaml_str();</span>
+<span class="lineNum">     271 </span><span class="lineCov">          1 :         ASSERT_TRUE(str.size() != 0);</span>
+<span class="lineNum">     272 </span><span class="lineCov">          1 :         EXPECT_EQ(&quot;true&quot;, str);</span>
+<span class="lineNum">     273 </span>            :         //printf(&quot;\033[1;31;40mbol_json to str without tab:\n%s\033[0m\n&quot;, str);
+<span class="lineNum">     274 </span>            : 
+<span class="lineNum">     275 </span><span class="lineCov">          1 :         delete bol_json;</span>
+<span class="lineNum">     276 </span>            : }
+<a name="277"><span class="lineNum">     277 </span>            : </a>
+<span class="lineNum">     278 </span>            : // 测试JSON::to_yaml_str(STR类型)
+<span class="lineNum">     279 </span><span class="lineCov">          5 : TEST(TestFormatYaml, STRToYamlStr){</span>
+<span class="lineNum">     280 </span><span class="lineCov">          1 :         JSON* str_json = new JSON(&quot;value_str&quot;);</span>
+<span class="lineNum">     281 </span>            : 
+<span class="lineNum">     282 </span>            :         // 测试STR to str without tab
+<span class="lineNum">     283 </span><span class="lineCov">          2 :         std::string str = str_json-&gt;to_yaml_str();</span>
+<span class="lineNum">     284 </span><span class="lineCov">          1 :         EXPECT_EQ(&quot;\&quot;value_str\&quot;&quot;, str);</span>
+<span class="lineNum">     285 </span>            :         //printf(&quot;\033[1;31;40mstr_json to str without tab:\n%s\033[0m\n&quot;, str.c_str());
+<span class="lineNum">     286 </span>            : 
+<span class="lineNum">     287 </span><span class="lineCov">          1 :         delete str_json;</span>
+<span class="lineNum">     288 </span><span class="lineCov">          1 : }</span>
+<a name="289"><span class="lineNum">     289 </span>            : </a>
+<span class="lineNum">     290 </span>            : // 测试JSON::to_yaml_str(NUM类型)
+<span class="lineNum">     291 </span><span class="lineCov">          5 : TEST(TestFormatYaml, NUMToYamlStr){</span>
+<span class="lineNum">     292 </span><span class="lineCov">          1 :         JSON* num_json = new JSON((NUM)3.5);</span>
+<span class="lineNum">     293 </span>            : 
+<span class="lineNum">     294 </span>            :         // 测试NUM to str with tab
+<span class="lineNum">     295 </span><span class="lineCov">          2 :         std::string str = num_json-&gt;to_yaml_str();</span>
+<span class="lineNum">     296 </span><span class="lineCov">          1 :         EXPECT_EQ(&quot;3.5&quot;, str);</span>
+<span class="lineNum">     297 </span>            :         //printf(&quot;\033[1;31;40mnum_json to str with tab:\n%s\033[0m\n&quot;, str.c_str());
+<span class="lineNum">     298 </span>            : 
+<span class="lineNum">     299 </span><span class="lineCov">          1 :         delete num_json;</span>
+<span class="lineNum">     300 </span><span class="lineCov">          1 : }</span>
+<a name="301"><span class="lineNum">     301 </span>            : </a>
+<span class="lineNum">     302 </span>            : // 测试JSON::to_yaml_str(ARR类型和OBJ类型)
+<span class="lineNum">     303 </span><span class="lineCov">          5 : TEST(TestFormatYaml, ARRandOBJToYamlStr){</span>
+<span class="lineNum">     304 </span><span class="lineCov">          1 :         JSON* bol_json = new JSON(true);</span>
+<span class="lineNum">     305 </span><span class="lineCov">          1 :         JSON* str_json = new JSON(&quot;value_str&quot;);</span>
+<span class="lineNum">     306 </span><span class="lineCov">          1 :         JSON* num_json = new JSON((NUM)3.5);</span>
+<span class="lineNum">     307 </span><span class="lineCov">          1 :         JSON* arr_json = new JSON(json_e::JSON_ARR);    // </span>
+<span class="lineNum">     308 </span><span class="lineCov">          1 :         JSON* obj_json = new JSON(json_e::JSON_OBJ);    // {}</span>
+<span class="lineNum">     309 </span>            : 
+<span class="lineNum">     310 </span><span class="lineCov">          1 :         arr_json-&gt;arr_add(-1, num_json);</span>
+<span class="lineNum">     311 </span><span class="lineCov">          1 :         arr_json-&gt;arr_add(0, str_json);</span>
+<span class="lineNum">     312 </span><span class="lineCov">          1 :         obj_json-&gt;obj_add(&quot;id1&quot;, arr_json);                                // {‘id1’ ： }</span>
+<span class="lineNum">     313 </span><span class="lineCov">          1 :         obj_json-&gt;obj_add(&quot;id2&quot;, bol_json);                                // {‘id1’ ： ， ‘id2’ : }</span>
+<span class="lineNum">     314 </span>            :         
+<span class="lineNum">     315 </span>            :         // 测试ARR to yaml
+<span class="lineNum">     316 </span><span class="lineCov">          2 :         std::string str = arr_json-&gt;to_yaml_str();</span>
+<span class="lineNum">     317 </span>            :         //EXPECT_EQ(&quot;\&quot;value_str\&quot;\n3.5\n&quot;, str);
+<span class="lineNum">     318 </span>            :         //printf(&quot;\033[1;31;40marr_json to yaml:\n%s\033[0m\n&quot;, str.c_str());
+<span class="lineNum">     319 </span>            : 
+<span class="lineNum">     320 </span>            :         // 测试OBJ to yaml
+<span class="lineNum">     321 </span><span class="lineCov">          1 :         str = obj_json-&gt;to_yaml_str();</span>
+<span class="lineNum">     322 </span>            :         //EXPECT_EQ(&quot;id1:\n  - \&quot;value_str\&quot;\n  - 3.5\nid2: true\n&quot;, str);
+<span class="lineNum">     323 </span>            :         //printf(&quot;\033[1;31;40mobj_json to yaml:\n%s\033[0m\n&quot;, str.c_str());
+<span class="lineNum">     324 </span>            : 
+<span class="lineNum">     325 </span><span class="lineCov">          1 :         delete bol_json;</span>
+<span class="lineNum">     326 </span><span class="lineCov">          1 :         delete num_json;</span>
+<span class="lineNum">     327 </span><span class="lineCov">          1 :         delete str_json;</span>
+<span class="lineNum">     328 </span><span class="lineCov">          1 :         delete arr_json;</span>
+<span class="lineNum">     329 </span><span class="lineCov">          1 :         delete obj_json;</span>
+<span class="lineNum">     330 </span><span class="lineCov">          1 : }</span>
+<a name="331"><span class="lineNum">     331 </span>            : </a>
+<span class="lineNum">     332 </span>            : // 测试复杂JSON（ARR类型和OBJ类型）转json和yaml
+<span class="lineNum">     333 </span><span class="lineCov">          5 : TEST(TestFormatComplex, ARRandOBJToStr){</span>
+<span class="lineNum">     334 </span><span class="lineCov">          1 :         JSON* bol_json = new JSON(true);</span>
+<span class="lineNum">     335 </span><span class="lineCov">          1 :         JSON* str_json = new JSON(&quot;value_str&quot;);</span>
+<span class="lineNum">     336 </span><span class="lineCov">          1 :         JSON* num_json = new JSON((NUM)3.5);</span>
+<span class="lineNum">     337 </span><span class="lineCov">          1 :         JSON* arr_json = new JSON(json_e::JSON_ARR);    // </span>
+<span class="lineNum">     338 </span><span class="lineCov">          1 :         JSON* obj_json = new JSON(json_e::JSON_OBJ);    // {}</span>
+<span class="lineNum">     339 </span>            : 
+<span class="lineNum">     340 </span><span class="lineCov">          1 :         arr_json-&gt;arr_add(-1, num_json);</span>
+<span class="lineNum">     341 </span><span class="lineCov">          1 :         arr_json-&gt;arr_add(0, str_json);</span>
+<span class="lineNum">     342 </span><span class="lineCov">          1 :         obj_json-&gt;obj_add(&quot;id1&quot;, arr_json);                                // {‘id1’ ： }</span>
+<span class="lineNum">     343 </span><span class="lineCov">          1 :         obj_json-&gt;obj_add(&quot;id2&quot;, bol_json);                                // {‘id1’ ： ， ‘id2’ : }</span>
+<span class="lineNum">     344 </span><span class="lineCov">          1 :         arr_json-&gt;arr_add(-1, arr_json);</span>
+<span class="lineNum">     345 </span><span class="lineCov">          1 :         arr_json-&gt;arr_add(-1, obj_json);</span>
+<span class="lineNum">     346 </span><span class="lineCov">          1 :         obj_json-&gt;obj_add(&quot;cpx1&quot;, arr_json);</span>
+<span class="lineNum">     347 </span>            : 
+<span class="lineNum">     348 </span>            :         // ARR to yaml
+<span class="lineNum">     349 </span><span class="lineCov">          2 :         std::string str = arr_json-&gt;to_yaml_str();</span>
+<span class="lineNum">     350 </span><span class="lineCov">          1 :         printf(&quot;\033[1;36;40mcomplex arr_json to yaml:\n%s\033[0m\n&quot;, str.c_str());</span>
+<span class="lineNum">     351 </span>            : 
+<span class="lineNum">     352 </span>            :         // ARR to json
+<span class="lineNum">     353 </span><span class="lineCov">          1 :         str = arr_json-&gt;to_json_str_with_tab();</span>
+<span class="lineNum">     354 </span><span class="lineCov">          1 :         printf(&quot;\033[1;36;40mcomplex arr_json to json with tab:\n%s\033[0m\n&quot;, str.c_str());</span>
+<span class="lineNum">     355 </span>            : 
+<span class="lineNum">     356 </span>            :         // OBJ to yaml
+<span class="lineNum">     357 </span><span class="lineCov">          1 :         str = obj_json-&gt;to_yaml_str();</span>
+<span class="lineNum">     358 </span><span class="lineCov">          1 :         printf(&quot;\033[1;36;40mcomplex obj_json to yaml:\n%s\033[0m\n&quot;, str.c_str());</span>
+<span class="lineNum">     359 </span>            : 
+<span class="lineNum">     360 </span>            :         // OBJ to json
+<span class="lineNum">     361 </span><span class="lineCov">          1 :         str = obj_json-&gt;to_json_str_with_tab();</span>
+<span class="lineNum">     362 </span><span class="lineCov">          1 :         printf(&quot;\033[1;36;40mcomplex obj_json to json with tab:\n%s\033[0m\n&quot;, str.c_str());</span>
+<span class="lineNum">     363 </span>            : 
+<span class="lineNum">     364 </span><span class="lineCov">          1 :         delete bol_json;</span>
+<span class="lineNum">     365 </span><span class="lineCov">          1 :         delete num_json;</span>
+<span class="lineNum">     366 </span><span class="lineCov">          1 :         delete str_json;</span>
+<span class="lineNum">     367 </span><span class="lineCov">          1 :         delete arr_json;</span>
+<span class="lineNum">     368 </span><span class="lineCov">          1 :         delete obj_json;</span>
+<span class="lineNum">     369 </span><span class="lineCov">          1 : }</span>
+<a name="370"><span class="lineNum">     370 </span>            : </a>
+<span class="lineNum">     371 </span>            : 
+<span class="lineNum">     372 </span><span class="lineCov">          1 : int main(int argc,char **argv){</span>
+<a name="373"><span class="lineNum">     373 </span><span class="lineCov">          1 :   testing::InitGoogleTest(&amp;argc,argv);</span></a>
+<span class="lineNum">     374 </span><span class="lineCov">          1 :   return RUN_ALL_TESTS();</span>
+<span class="lineNum">     375 </span><span class="lineCov">          3 : }</span>
+<span class="lineNum">     376 </span>            : 
+<span class="lineNum">     377 </span>            : 
+<span class="lineNum">     378 </span>            : 
+<span class="lineNum">     379 </span>            : // int main(){
+<span class="lineNum">     380 </span>            : 
+<span class="lineNum">     381 </span>            : //      try{
+<span class="lineNum">     382 </span>            : //              // 创建测试
+<span class="lineNum">     383 </span>            : //              JSON* bol_json = new JSON(json_e::JSON_BOL);
+<span class="lineNum">     384 </span>            : //              JSON* str_json = new JSON(json_e::JSON_STR);
+<span class="lineNum">     385 </span>            : //              JSON* arr_json = new JSON(json_e::JSON_ARR);
+<span class="lineNum">     386 </span>            : //              JSON* obj_json = new JSON(json_e::JSON_OBJ);    // {}
+<span class="lineNum">     387 </span>            : //              JSON* int_json = new JSON(json_e::JSON_NUM);
+<span class="lineNum">     388 </span>            : 
+<span class="lineNum">     389 </span>            : //              // 插入测试
+<span class="lineNum">     390 </span>            : // //           bol_json-&gt;set_value&lt;bool&gt;(true);
+<span class="lineNum">     391 </span>            : // //           int_json-&gt;set_value&lt;NUM&gt;(1);
+<span class="lineNum">     392 </span>            : // //           str_json-&gt;set_value&lt;char*&gt;(&quot;hello world&quot;);
+<span class="lineNum">     393 </span>            : //              arr_json-&gt;arr_add(-1, int_json);
+<span class="lineNum">     394 </span>            : //              arr_json-&gt;arr_add(0, str_json);
+<span class="lineNum">     395 </span>            : //              obj_json-&gt;obj_add(&quot;id1&quot;, arr_json);                                // {‘id1’ ： }
+<span class="lineNum">     396 </span>            : //              obj_json-&gt;obj_add(&quot;id2&quot;, bol_json);                                // {‘id1’ ： ， ‘id2’ : }
+<span class="lineNum">     397 </span>            : 
+<span class="lineNum">     398 </span>            : //              // 查询测试
+<span class="lineNum">     399 </span>            : // //           NUM get_num_value = int_json-&gt;get_value&lt;NUM&gt;();
+<span class="lineNum">     400 </span>            : // //           JSON* get_from_key = obj_json-&gt;get_from_key(&quot;id1&quot;);
+<span class="lineNum">     401 </span>            : // //           JSON* get_from_arr = arr_json-&gt;get_from_arr(1);
+<span class="lineNum">     402 </span>            : 
+<span class="lineNum">     403 </span>            : //              // 格式化测试
+<span class="lineNum">     404 </span>            : //              char* to_str = obj_json-&gt;to_str();
+<span class="lineNum">     405 </span>            : //      }catch(const char* str){
+<span class="lineNum">     406 </span>            : //              printf(&quot;%s\n&quot;, str);
+<span class="lineNum">     407 </span>            : //      }
+<span class="lineNum">     408 </span>            : 
+<span class="lineNum">     409 </span>            : //      return 0;
+<span class="lineNum">     410 </span>            : // }
+</pre>
+      </td>
+    </tr>
+  </table>
+  <br>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="ruler"><img src="../../../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+    <tr><td class="versionInfo">Generated by: <a href="http://ltp.sourceforge.net/coverage/lcov.php" target="_parent">LCOV version 1.13</a></td></tr>
+  </table>
+  <br>
+
+</body>
+</html>

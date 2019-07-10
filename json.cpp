@@ -631,3 +631,52 @@ std::string JSON::arr_to_yaml(int need, int mode){
 	}
 	return value;
 }
+
+
+int JSON::size(){
+	switch(this->type){
+		case json_e::JSON_NONE:
+			return 0;
+		case json_e::JSON_ARR:
+			return this->arr.size();
+		case json_e::JSON_OBJ:
+			return this->obj.size();
+		default:
+			return 1;
+	}
+}
+
+int JSON::obj_rm(const char* key){
+	assert(key != NULL);
+	if(key == NULL){
+		this->note_err_info("[obj_rm] 参数错误，key不能为空！");
+		return -1;
+	}
+	auto it = this->obj.find(key);
+	if(this->obj.find(key) == this->obj.end()){
+		this->note_err_info("[obj_rm] 键不存在");
+		return -1;
+	}
+	delete [] it->first;
+	delete it->second;
+	this->obj.erase(it);
+	return 0;
+}
+
+int JSON::arr_rm(int index){
+	assert(index >= -1);
+	int len = this->arr.size();
+	if(index < -1 || index > len || (index == -1 && len == 0)){
+		this->note_err_info("[obj_rm] 参数错误，index超出范围！");
+		return -1;	
+	}
+	if(index == -1){
+		delete this->arr[len -1];
+		this->arr.pop_back();
+	}
+	else{
+		delete this->arr[index];
+		this->arr.erase(this->arr.begin() + index);
+	}
+	return 0;
+}	

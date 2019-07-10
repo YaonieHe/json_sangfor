@@ -47,7 +47,7 @@ private:
 	/*
 	* OBJ类型保存键值对
 	*/
-	std::map<const char*, JSON*, ptrCmp> obj;
+	std::map<const char* const, JSON*, ptrCmp> obj;
 
 	/*
 	* 保存错误信息
@@ -126,13 +126,17 @@ public:
 	json_e get_type();
 
 	/*
+	* ARR类型和OBJ类型返回包含对象数量
+	* NONE类型返回0
+	* 其他类型返回1
+	 */
+	int size();
+	/*
 	* NUM、BOL、STR类型，获取值
 	* 类型不匹配扔出异常
 	*/
 	NUM get_from_num();
 	bool get_from_bol();
-
-	// 不成功返回NULL
 	std::string get_from_str();	
 
 	/* 
@@ -163,15 +167,30 @@ public:
 	int arr_add(int index, JSON* value);
 	
 	/*
-	* 格式化为JSON字符串
+	* 格式化为JSON字符串，不换行
 	*/
 	std::string to_json_str_without_tab();
+	/*
+	* 格式化为JSON字符串，换行，有缩进
+	*/
 	std::string to_json_str_with_tab();		
+	/*
+	* 格式化为YAML字符串
+	*/
 	std::string to_yaml_str();			
 
-	void obj_rm(const char* key); 		// OBJ类型，删除一个键值对
-	void arr_rm(int index);				// ARR类型，删除下标为index的JSON对象
+	/*
+	* OBJ类型，删除一个键值对,成功返回0
+	 */
+	int obj_rm(const char* key); 		
+	/* 
+	* ARR类型，删除下标为index的JSON对象，成功返回0
+	*/
+	int arr_rm(int index);				
 
+	/*
+	* 清空 
+	*/
 	void free();
 
 	/* 
