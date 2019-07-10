@@ -262,12 +262,39 @@ int JSON::arr_add(int index, JSON* value){
 }
 
 
-char* JSON::to_json_str_without_tab(){
+std::string JSON::to_json_str_without_tab(){
 	return this->to_str_select_tab();
 }
-char* JSON::to_json_str_with_tab(){
+std::string JSON::to_json_str_with_tab(){
 	return this->to_str_select_tab(0);
 }
+
+std::string JSON::to_yaml_str(){
+	return this->to_yaml_select_tab(0);
+}
+std::string JSON::to_yaml_select_tab(int need){
+	switch(this->type){
+			case json_e::JSON_NONE:{
+				return this->none_to_yaml(0);
+			}
+			case json_e::JSON_NUM:{
+				return this->num_to_str(0);
+			}
+			case json_e::JSON_BOL:{
+				return this->bol_to_str(0);
+			}
+			case json_e::JSON_STR:{
+				return this->str_to_str(0);
+			}
+			case json_e::JSON_ARR:{
+				return this->arr_to_yaml(need, 3);
+			}
+			case json_e::JSON_OBJ:{
+				return this->obj_to_yaml(need, 2);
+			}
+		}
+}
+
 
 void JSON::free(){
 	if(this->err_info != NULL) delete [] this->err_info;
@@ -304,299 +331,241 @@ void JSON::note_err_info(const char* info){
 }
 
 
-char* JSON::get_err_info_ptr(){
+std::string JSON::get_err_info(){
 	return this->err_info;
 }
 
 
-char* JSON::to_str_select_tab(int need){
+std::string JSON::to_str_select_tab(int need){
+	int mode = 4;
 	switch(this->type){
 		case json_e::JSON_NONE:{
-			return this->none_to_str(need);
+			return this->none_to_str(need, mode);
 		}
 		case json_e::JSON_NUM:{
-			return this->num_to_str(need);
+			return this->num_to_str(need, mode);
 		}
 		case json_e::JSON_BOL:{
-			return this->bol_to_str(need);
+			return this->bol_to_str(need, mode);
 		}
 		case json_e::JSON_STR:{
-			return this->str_to_str(need);
+			return this->str_to_str(need, mode);
 		}
 		case json_e::JSON_ARR:{
-			return this->arr_to_str(need);
+			return this->arr_to_str(need, mode);
 		}
 		case json_e::JSON_OBJ:{
-			return this->obj_to_str(need);
+			return this->obj_to_str(need, mode);
 		}
 	}
 }
 
-char* JSON::none_to_str(int need = -1){
+std::string JSON::none_to_str(int need, int mode){
+	assert(need >= -1);
 	if(need < -1){
 		note_err_info("[none_to_str] 参数范围错误");
 		return NULL;
 	}
 	// need =-1, 不加tab
-	if(need == -1) return strdup("NULL");
+	if(need == -1) return "null";
 	// 加tab
-	int ext_char = 6;						// 计算额外的字符个数
-	char* tmp = new char[need + ext_char];
-	memset(tmp, '\t', need);
-	strcpy(tmp + need, "NULL");
-	return tmp;
+	return pre_place(need, mode) + "null";
 }
 
-char* JSON::num_to_str(int need = -1){
+std::string JSON::num_to_str(int need, int mode){
+	assert(need >= -1);
 	if(need < -1){
 		note_err_info("[none_to_str] 参数范围错误");
 		return NULL;
 	}
-	int ext_char = 7;						// 计算额外字符个数
-	char* value = new char[NUM_DIGITS + need + ext_char];
-	// need = -1, 不加tab
+	char num_to_char[NUM_DIGITS + 2];
+	gcvt(this->num, NUM_DIGITS, num_to_char);
+	// 不加tab
 	if(need == -1){
-		gcvt(this->num, NUM_DIGITS, value);
+		return num_to_char;
 	}
 	// 加tab
 	else{
-		memset(value, '\t', need);
-		gcvt(this->num, NUM_DIGITS, value + need);
+		return pre_place(need, mode) + num_to_char;
 	}
-	return value;
 }
 
-char* JSON::bol_to_str(int need = -1){
+std::string JSON::bol_to_str(int need, int mode){
+	assert(need >= -1);
 	if(need < -1){
 		note_err_info("[none_to_str] 参数范围错误");
 		return NULL;
 	}
-	int ext_char = 7;						// 计算额外字符个数
-	char* value = new char[need + ext_char];
-	char* tmp = value;						// 用于指定tab后面插入字符的位置
+	std::string value = "";
 	// 加tab
 	if(need != -1){
-		memset(value, '\t', need);
-		tmp += need;
+		value += pre_place(need, mode);
 	}
 	// bol to str
 	if(this->bol){
-		strcpy(tmp, "true");
+		return value + "true";
 	}
 	else{
-		strcpy(tmp, "false");
+		return value + "false";
 	}
-	return value;
 }
 
-char* JSON::str_to_str(int need = -1){
+std::string JSON::str_to_str(int need, int mode){
+	assert(need >= -1);
 	if(need < -1){
 		note_err_info("[none_to_str] 参数范围错误");
 		return NULL;
 	}
-	int ext_char = 3;						// 计算额外字符个数, '\"', '\"'
-	int str_len = strlen(this->str);
-	char* value = new char[str_len + need + ext_char];
-	char* tmp = value;						// 用于指定tab后面插入字符的位置
+	std::string value = "";
 	// 加 tab
 	if(need != -1){
-		memset(value, '\t', need);
-		tmp += need;
+		value += pre_place(need, mode);
 	}
 	// str to str
-	tmp[0] = '\"';
-	strcpy(tmp + 1, this->str);
-	tmp[str_len + 1] = '\"';
-	tmp[str_len + 2] = '\0';
-
-	return value;
+	return value + "\"" + this->str + "\"";
 }
 
-char* JSON::arr_to_str(int need = -1){
+std::string JSON::arr_to_str(int need, int mode){
+	assert(need >= -1);
 	if(need < -1){
 		note_err_info("[none_to_str] 参数范围错误");
 		return NULL;
 	}
-	char *value = NULL, *tmp = NULL;
-	int ext_char = 4;					// 计算额外字符个数
-	int len = 0;						// 记录value的长度
-	value = new char[need + ext_char];
+	std::string value = "";
 	// 加tab，加 [
 	if(need != -1){
-		memset(value, '\t', need);
-		len = need;
+		value += pre_place(need, mode);
 	}
-	value[len++] = '[';
+	value += "[";
 	
 	//换行
 	if(need != -1){
-		value[len++] = '\n';
+		value += "\n";
 	}
-	value[len] = '\0';
+
 	// 放入数组中所有对象。
 	for(int i = 0; i < this->arr.size(); i++){
-		char* next;
 		// 不加tab
 		if(need == -1){
-			next = this->arr[i]->to_str_select_tab(-1);
+			value += this->arr[i]->to_str_select_tab(-1);
 		}
 		// 加tab，tab数要加1
 		else{
-			next = this->arr[i]->to_str_select_tab(need + 1);
+			value += this->arr[i]->to_str_select_tab(need + 1);
 		}
-		int next_len = strlen(next);
-		ext_char = 5;			// 后面需添加','、']'、'\n'.
-		tmp = new char[len + next_len + need + ext_char];
-		strcpy(tmp, value);
-		strcpy(tmp + len, next);
-		len += next_len;
 		// 加逗号分隔
 		if(i < this->arr.size() - 1){
-			tmp[len++] = ',';
+			value += ",";
 		}
 		//换行
 		if(need != -1){
-			tmp[len++] = '\n';
+			value += "\n";
 		}
 		else if(i < this->arr.size() - 1){
-			tmp[len++] = ' ';
+			value += " ";
 		}
-		delete [] next;
-		delete [] value;
-		value = tmp;
-		value[len] = '\0';
 	}
 	// 加tab，加 ]
 	if(need != -1){
-		memset(value + len, '\t', need);
-		len += need;
+		value += pre_place(need, mode);
 	}
-	value[len++] = ']';
-	value[len] = '\0';
-	return value;
+	return value + "]";
 }
 
-char* JSON::obj_to_str(int need = -1){
+std::string JSON::obj_to_str(int need, int mode){
+	assert(need >= -1);
 	if(need < -1){
 		note_err_info("[none_to_str] 参数范围错误");
 		return NULL;
 	}
-	char *value = NULL, *tmp = NULL;
-	int ext_char = 4;					// 计算额外字符个数, 有'{','\n'
-	int len = 0;						// 记录value的长度
-	value = new char[need + ext_char];
+	std::string value = "", pre = "", pre_next = "";
+	// 初始化pre和pre_next
+	// 加缩进
 	if(need != -1){
-		memset(value, '\t', need);
-		len += need;
+		pre = pre_place(need, mode);
+		pre_next = pre_place(need + 1, mode);
+		value += pre;
 	}
 	// 加‘{’
-	value[len++] = '{';
+	value += "{";
 	// 换行
 	if(need != -1){
-		value[len++] = '\n';
+		value += "\n";
 	}
-	for(auto it = this->obj.begin(); it != this->obj.end(); ){
-		// 将子对象转换为str保存在next中
-		char* next;						
-		// 不加tab
+	for(auto it = this->obj.begin(); it != this->obj.end(); ){					
+		// 加缩进
+		if(need != -1){
+			value += pre_next;
+		}
+		// 加name和:
+		value += "\"";
+		value += it->first;
+		value += "\": ";
+		// 加值 去缩进
 		if(need == -1){
-			next = it->second->to_str_select_tab(-1);
-		}
-		// 加tab
-		else{
-			next = it->second->to_str_select_tab(need + 1);
-		}
-		int next_len = strlen(next);
-		int first_len = strlen(it->first);
-		ext_char = 7;	// 额外字符包括 '\"','\"',':','\'
-		tmp = new char[len + first_len + need + next_len + ext_char];
-		strcpy(tmp, value);
-		// 加tab
-		if(need != -1){
-			memset(tmp + len, '\t', need + 1);
-			len += need + 1;
-		}
-		// 加name
-		tmp[len++] = '\"';
-		strcpy(tmp + len, it->first);
-		len += first_len;
-		tmp[len++] = '\"';
-		// 加 ':'
-		tmp[len++] = ':';
-		// 加值，先去最前面的tab
-		if(need != -1){
-			strcpy(tmp + len, next + need + 1);
-			len += (next_len - need - 1);
+			value += it->second->to_str_select_tab(-1);
 		}
 		else{
-			strcpy(tmp + len, next);
-			len += next_len;
+			std::string tmp = it->second->to_str_select_tab(need + 1);
+			value += tmp.substr(pre_next.size());
 		}
 		// 判断是否末尾， 不是则加','
 		it++;
 		if(it != this->obj.end()){
-			tmp[len++] = ',';
+			value += ",";
 		}
 		//换行
 		if(need != -1){
-			tmp[len++] = '\n';
+			value += "\n";
 		}
 		else if(it != this->obj.end()){
-			tmp[len++] = ' ';
+			value += " ";
 		}
-		tmp[len] ='\0';
-		delete [] value;
-		delete [] next;
-		value = tmp;
 	}
-	// 加tab，加'}'
+	// 加缩进，加'}'
 	if(need != -1){
-		memset(value + len, '\t', need);
-		len += need;
+		value += pre;
 	}
-	value[len++] = '}';
-	value[len] = '\0';
-	return value;
+	return value + "}";
 }
 
-char* JSON::pre_place(int num, int mode){
+std::string JSON::pre_place(int num, int mode){
 	assert(num >= 0);
 	if(num < 0){
 		this->note_err_info("[pre_place] 参数错误，num不能小于0！\n");
 		return NULL;
 	}
-	char* pre;
+	std::string pre = "";
 	switch(mode){
 		case 1:{
-			pre = new char[num + 1];
-			memset(pre, '\t', num);
+			for(int i = 0; i < num; i++){
+				pre += "\t";
+			}
 			return pre;
 		}
 		case 2:{
-			pre = new char[2 * num + 1];
-			memset(pre, ' ', 2 * num);
+			for(int i = 0; i < num; i++){
+				pre += "  ";
+			}
 			return pre;
 		}
 		case 3:{
-			pre = new char[2 * num + 1];
-			memset(pre, ' ', 2 * num);
-			if(num > 0){
-				pre[2 * num - 2] = '-';
+			for(int i = 0; i < num; i++){
+				pre += "  ";
 			}
-			return pre;
+			return pre += "- ";
 		}
 		case 4:{
-			pre = new char[4 * num + 1];
-			memset(pre, ' ', 4 * num);
+			for(int i = 0; i < num; i++){
+				pre += "    ";
+			}
 			return pre;
 		}
 		case 5:{
-			pre = new char[4 * num + 1];
-			memset(pre, ' ', 4 * num);
-			if(num > 0){
-				pre[4 * num - 2] = '-';
+			for(int i = 0; i < num; i++){
+				pre += "    ";
 			}
-			return pre;
+			return pre += "  - ";
 		}
 		default:{
 			this->note_err_info("[pre_place] 参数错误，mode不匹配！\n");
@@ -607,55 +576,58 @@ char* JSON::pre_place(int num, int mode){
 
 std::string JSON::none_to_yaml(int need, int mode){
 	assert(need >= 0);
-	if(need == 0){
-		char* value = new char[2];
-		value[0] = '~';
-		return value;
-	}
-	//need > 0
-	char* pre = pre_place(need, mode);
-	int pre_len = strlen(pre);
-	char* value = new char[pre_len + 2];
-	strcpy(value, pre);
-	value[pre_len] = '~';
-	return value;  
+	return pre_place(need, mode) + "~";  
 }
 
 std::string JSON::obj_to_yaml(int need, int mode){
 	assert(need >= 0);
-	char* pre = pre_place(need, mode);
-	char* pre_next = pre_place(need + 1, mode);
-	assert(pre != NULL);
-	assert(pre_next != NULL);
+	std::string pre = pre_place(need, mode);
+	std::string pre_next = pre_place(need + 1, mode);
 
-	int pre_len = strlen(pre);
-	int pre_next_len = strlen(pre_next);
-	// value开始为空, 长度为0
+	// value开始为空
 	std::string value = "";
-	int len = 0;
 	for(auto it = this->obj.begin(); it != this->obj.end(); it++){
-		int first_len = strlen(it->first);
-		char* next = it->second->to_yaml_str();
-		assert(next != NULL);
-		int next_len = strlen(next);
-		int ext_char = 5;
-		//char* value = new char[len + pre_len + first_len + next_len + ext_char];
+		//加缩进
 		value += pre;
+		// 加name和：
+		value += it->first;
 		value += ":";
-		if(it->second->type == json_e::JSON_OBJ || it->second->type == json_e::JSON_ARR){
+		// 根据type来设置缩进和换行
+		json_e tmp_type = it->second->type;
+		if(tmp_type == json_e::JSON_OBJ || tmp_type == json_e::JSON_ARR){
 			value += "\n";
+			value += it->second->to_yaml_select_tab(need + 1);
 		}
 		else{
 			value += " ";
+			value += it->second->to_yaml_select_tab(0);
+			// 换行
+			value += "\n";
 		}
-		value += next;
-		value += "\n";
-		delete [] next;
 	}
-	delete [] pre;
-	delete [] pre_next;
 	return value;
 }
-char* JSON::arr_to_yaml(int need, int mode){
 
+std::string JSON::arr_to_yaml(int need, int mode){
+	assert(need >= 0);
+	std::string pre = pre_place(need, mode);
+	std::string pre_next = pre_place(need + 1, mode);
+
+	// value开始为空
+	std::string value = "";
+	for(int i = 0; i < this->arr.size(); i++){
+		value += pre;
+		// 根据type来设置缩进和换行
+		json_e tmp_type = this->arr[i]->type;
+		if(tmp_type == json_e::JSON_OBJ || tmp_type == json_e::JSON_ARR){
+			value += "\n";
+			value += this->arr[i]->to_yaml_select_tab(need + 1);
+		}
+		else{
+			value += this->arr[i]->to_yaml_select_tab(0);
+			//换行
+			value += "\n";
+		}
+	}
+	return value;
 }

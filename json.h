@@ -62,19 +62,20 @@ private:
 	/*
 	* to_str函数，将各种类型的JSON对象转换成char*返回
 	* need为-1时不加tab，否则加tab，need表示tab个数
+	* @param mode: 缩进模式
 	* 对于ARR和OBJ，对象之间换行，末尾不换行
 	 */
-	char* none_to_str(int need);
-	char* num_to_str(int need);
-	char* bol_to_str(int need);
-	char* str_to_str(int need);
-	char* arr_to_str(int need);
-	char* obj_to_str(int need);
+	std::string none_to_str(int need, int mode = 1);
+	std::string num_to_str(int need, int mode = 1);
+	std::string bol_to_str(int need, int mode = 1);
+	std::string str_to_str(int need, int mode = 1);
+	std::string arr_to_str(int need, int mode = 1);
+	std::string obj_to_str(int need, int mode =1);
 	/*
 	* 选择是否需要换行和加tab。
 	* need为-1时不换行且无tab，否则换行加tab，need表示tab个数
 	 */
-	char* to_str_select_tab(int need = -1);
+	std::string to_str_select_tab(int need = -1);
 
 	/*
 	* @param mode: 一个整数，表示缩进模式：
@@ -86,15 +87,17 @@ private:
 	* @param num: 一个整数，表示填充个数
 	* @return: 一个char*，表示返回的字符串，错误则返回NULL
 	 */
-	char* pre_place(int num, int mode);
+	std::string pre_place(int num, int mode);
 	/*
 	* 转为yaml格式的字符串
 	* @param need: 表示需要的缩进层数 
 	* @param mode: 表示缩进模式 
 	 */
-	char* none_to_yaml(int need, int mode = 4);
+	std::string none_to_yaml(int need, int mode = 4);
 	std::string obj_to_yaml(int need, int mode = 4);
-	char* arr_to_yaml(int need, int mode = 4);
+	std::string arr_to_yaml(int need, int mode = 4);
+
+	std::string to_yaml_select_tab(int need = -1);
 
 public:
 	JSON();
@@ -130,7 +133,7 @@ public:
 	bool get_from_bol();
 
 	// 不成功返回NULL
-	char* get_from_str();	
+	std::string get_from_str();	
 
 	/* 
 	* OBJ类型，获取键key对应的值，不成功返回NULL	
@@ -162,9 +165,9 @@ public:
 	/*
 	* 格式化为JSON字符串
 	*/
-	char* to_json_str_without_tab();
-	char* to_json_str_with_tab();		
-	char* to_yaml_str();			
+	std::string to_json_str_without_tab();
+	std::string to_json_str_with_tab();		
+	std::string to_yaml_str();			
 
 	void obj_rm(const char* key); 		// OBJ类型，删除一个键值对
 	void arr_rm(int index);				// ARR类型，删除下标为index的JSON对象
@@ -174,7 +177,7 @@ public:
 	/* 
 	* 获取错误信息, 返回err_info的指针。
 	*/
-	char* get_err_info_ptr();
+	std::string get_err_info();
 };
 
 

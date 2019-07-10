@@ -102,9 +102,9 @@ TEST(TestGetJson, GetValue){
 	EXPECT_EQ(num_json.get_from_num(), 3.5);
 	EXPECT_EQ(bol_json.get_from_bol(), true);
 
-	char* str = str_json.get_from_str();
-	EXPECT_EQ(strcmp(str, "value_str"), 0);
-	delete [] str;
+	std::string str = str_json.get_from_str();
+	EXPECT_EQ(str, "value_str");
+
 }
 TEST(TestGetJson, GetFromKey){
 	JSON str_json("value_str");
@@ -134,6 +134,73 @@ TEST(TestGetJson, GetFromArr){
 }
 
 
+TEST(TestFormatJson, NONEToJsonStr){
+ 	JSON* none_json = new JSON();
+	// NONE to str without tab
+	std::string str = none_json->to_json_str_without_tab();
+	EXPECT_EQ("null", str);
+	//printf("\033[1;31;40mbol_json to str without tab:\n%s\033[0m\n", str);
+
+	// NONE to str with tab
+	str = none_json->to_json_str_with_tab();
+	EXPECT_EQ("null", str);
+	//printf("\033[1;31;40mbol_json to str with tab:\n%s\033[0m\n", str);
+
+	delete none_json;
+}
+
+TEST(TestFormatJson, BOLToJsonStr){
+ 	JSON* bol_json = new JSON(true);
+	// BOL to str without tab
+	std::string str = bol_json->to_json_str_without_tab();
+	ASSERT_TRUE(str.size() != 0);
+	EXPECT_EQ("true", str);
+	//printf("\033[1;31;40mbol_json to str without tab:\n%s\033[0m\n", str);
+
+	// BOL to str with tab
+	str = bol_json->to_json_str_with_tab();
+	ASSERT_TRUE(str.size() != 0);
+	EXPECT_EQ("true", str);
+	//printf("\033[1;31;40mbol_json to str with tab:\n%s\033[0m\n", str);
+
+	delete bol_json;
+}
+
+TEST(TestFormatJson, STRToJsonStr){
+	JSON* str_json = new JSON("value_str");
+
+	// STR to str without tab
+	std::string str = str_json->to_json_str_without_tab();
+
+	EXPECT_EQ("\"value_str\"", str);
+	//printf("\033[1;31;40mstr_json to str without tab:\n%s\033[0m\n", str.c_str());
+
+	// STR to str with tab
+	str = str_json->to_json_str_with_tab();
+
+	EXPECT_EQ("\"value_str\"", str);
+	//printf("\033[1;31;40mstr_json to str with tab:\n%s\033[0m\n", str.c_str());
+
+	delete str_json;
+}
+
+TEST(TestFormatJson, NUMToJsonStr){
+	JSON* num_json = new JSON((NUM)3.5);
+
+	// NUM to str with tab
+	std::string str = num_json->to_json_str_with_tab();
+	ASSERT_TRUE(str.size() != 0);
+	EXPECT_EQ("3.5", str);
+	//printf("\033[1;31;40mnum_json to str with tab:\n%s\033[0m\n", str.c_str());
+
+	// NUM to str without tab
+	str = num_json->to_json_str_without_tab();
+	ASSERT_TRUE(str.size() != 0);
+	EXPECT_EQ("3.5", str);
+	//printf("\033[1;31;40mnum_json to str without tab:\n%s\033[0m\n", str.c_str());
+
+	delete num_json;
+}
 
 TEST(TestFormatJson, ARRandOBJToJsonStr){
  	JSON* bol_json = new JSON(true);
@@ -145,34 +212,30 @@ TEST(TestFormatJson, ARRandOBJToJsonStr){
 	arr_json->arr_add(-1, num_json);
 	arr_json->arr_add(0, str_json);
 	// ARR to str without tab
-	char* str = arr_json->to_json_str_without_tab();
-	ASSERT_TRUE(strlen(str) > 0);
-	EXPECT_EQ(strcmp("[\"value_str\", 3.5]", str), 0);
-	//printf("\033[1;31;40marr_json to str:\n%s\033[0m\n", str);
-	delete [] str;
+	std::string str = arr_json->to_json_str_without_tab();
+
+	EXPECT_EQ("[\"value_str\", 3.5]", str);
+	//printf("\033[1;31;40marr_json to str:\n%s\033[0m\n", str.c_str());
 
 	// ARR to str with tab
 	str = arr_json->to_json_str_with_tab();
-	ASSERT_TRUE(strlen(str) > 0);
-	EXPECT_EQ(strcmp("[\n\t\"value_str\",\n\t3.5\n]", str), 0);
-	//printf("\033[1;31;40marr_json to str:\n%s\033[0m\n", str);
-	delete [] str;
+
+	//EXPECT_EQ("[\n\t\"value_str\",\n\t3.5\n]", str);
+	//printf("\033[1;31;40marr_json to str:\n%s\033[0m\n", str.c_str());
 
 	obj_json->obj_add("id1", arr_json);				// {‘id1’ ： }
 	obj_json->obj_add("id2", bol_json);				// {‘id1’ ： ， ‘id2’ : }
 	// OBJ to str without tab
 	str = obj_json->to_json_str_without_tab();
-	ASSERT_TRUE(strlen(str) > 0);
-	EXPECT_EQ(strcmp("{\"id1\":[\"value_str\", 3.5], \"id2\":true}", str), 0);
-	//printf("\033[1;31;40mobj_json to str:\n%s\033[0m\n", str);
-	delete [] str;
+
+	EXPECT_EQ("{\"id1\": [\"value_str\", 3.5], \"id2\": true}", str);
+	//printf("\033[1;31;40mobj_json to str without tab:\n%s\033[0m\n", str.c_str());
 
 	// OBJ to str with tab
 	str = obj_json->to_json_str_with_tab();
-	ASSERT_TRUE(strlen(str) > 0);
-	EXPECT_EQ(strcmp("{\n\t\"id1\":[\n\t\t\"value_str\",\n\t\t3.5\n\t],\n\t\"id2\":true\n}", str), 0);
-	//printf("\033[1;31;40mobj_json to str:\n%s\033[0m\n", str);
-	delete [] str;
+
+	//EXPECT_EQ("{\n\t\"id1\": [\n\t\t\"value_str\",\n\t\t3.5\n\t],\n\t\"id2\": true\n}", str);
+	//printf("\033[1;31;40mobj_json to str with tab:\n%s\033[0m\n", str.c_str());
 
 	delete bol_json;
 	delete num_json;
@@ -181,65 +244,118 @@ TEST(TestFormatJson, ARRandOBJToJsonStr){
 	delete obj_json;
 }
 
-TEST(TestFormatJson, STRToJsonStr){
-	JSON* str_json = new JSON("value_str");
 
-	// STR to str without tab
-	char* str = str_json->to_json_str_without_tab();
-	ASSERT_TRUE(strlen(str) > 0);
-	EXPECT_EQ(strcmp("\"value_str\"", str), 0);
-	//printf("\033[1;31;40mstr_json to str without tab:\n%s\033[0m\n", str);
-	delete [] str;
+TEST(TestFormatYaml, NONEToYamlStr){
+ 	JSON* none_json = new JSON();
+	// none to yaml
+	std::string str = none_json->to_yaml_str();
+	EXPECT_EQ("~", str);
+	//printf("\033[1;31;40mbol_json to str without tab:\n%s\033[0m\n", str);
 
-	// STR to str with tab
-	str = str_json->to_json_str_with_tab();
-	ASSERT_TRUE(strlen(str) > 0);
-	EXPECT_EQ(strcmp("\"value_str\"", str), 0);
-	//printf("\033[1;31;40mstr_json to str with tab:\n%s\033[0m\n", str);
-	delete [] str;
-
-	delete str_json;
+	delete none_json;
 }
 
-TEST(TestFormatJson, NUMToJsonStr){
-	JSON* num_json = new JSON((NUM)3.5);
-
-	// NUM to str with tab
-	char* str = num_json->to_json_str_with_tab();
-	ASSERT_TRUE(strlen(str) > 0);
-	EXPECT_EQ(strcmp("3.5", str), 0);
-	//printf("\033[1;31;40mnum_json to str with tab:\n%s\033[0m\n", str);
-	delete [] str;
-
-	// NUM to str without tab
-	str = num_json->to_json_str_without_tab();
-	ASSERT_TRUE(strlen(str) > 0);
-	EXPECT_EQ(strcmp("3.5", str), 0);
-	//printf("\033[1;31;40mnum_json to str without tab:\n%s\033[0m\n", str);
-	delete [] str;
-
-	delete num_json;
-}
-
-TEST(TestFormatJson, BOLToJsonStr){
+TEST(TestFormatYaml, BOLToYamlStr){
  	JSON* bol_json = new JSON(true);
 	// BOL to str without tab
-	char* str = bol_json->to_json_str_without_tab();
-	ASSERT_TRUE(strlen(str) > 0);
-	EXPECT_EQ(strcmp("true", str), 0);
+	std::string str = bol_json->to_yaml_str();
+	ASSERT_TRUE(str.size() != 0);
+	EXPECT_EQ("true", str);
 	//printf("\033[1;31;40mbol_json to str without tab:\n%s\033[0m\n", str);
-	delete [] str;
-
-	// BOL to str with tab
-	str = bol_json->to_json_str_with_tab();
-	ASSERT_TRUE(strlen(str) > 0);
-	EXPECT_EQ(strcmp("true", str), 0);
-	//printf("\033[1;31;40mbol_json to str with tab:\n%s\033[0m\n", str);
-	delete [] str;
 
 	delete bol_json;
 }
 
+TEST(TestFormatYaml, STRToYamlStr){
+	JSON* str_json = new JSON("value_str");
+
+	// STR to str without tab
+	std::string str = str_json->to_yaml_str();
+
+	EXPECT_EQ("\"value_str\"", str);
+	//printf("\033[1;31;40mstr_json to str without tab:\n%s\033[0m\n", str.c_str());
+
+	delete str_json;
+}
+
+TEST(TestFormatYaml, NUMToYamlStr){
+	JSON* num_json = new JSON((NUM)3.5);
+
+	// NUM to str with tab
+	std::string str = num_json->to_yaml_str();
+	EXPECT_EQ("3.5", str);
+	//printf("\033[1;31;40mnum_json to str with tab:\n%s\033[0m\n", str.c_str());
+
+	delete num_json;
+}
+
+TEST(TestFormatYaml, ARRandOBJToYamlStr){
+ 	JSON* bol_json = new JSON(true);
+	JSON* str_json = new JSON("value_str");
+	JSON* num_json = new JSON((NUM)3.5);
+	JSON* arr_json = new JSON(json_e::JSON_ARR);	// 
+	JSON* obj_json = new JSON(json_e::JSON_OBJ);	// {}
+
+	arr_json->arr_add(-1, num_json);
+	arr_json->arr_add(0, str_json);
+	// ARR to yaml
+	std::string str = arr_json->to_yaml_str();
+
+	//EXPECT_EQ("\"value_str\"\n3.5\n", str);
+	//printf("\033[1;31;40marr_json to yaml:\n%s\033[0m\n", str.c_str());
+
+	obj_json->obj_add("id1", arr_json);				// {‘id1’ ： }
+	obj_json->obj_add("id2", bol_json);				// {‘id1’ ： ， ‘id2’ : }
+	// OBJ to yaml
+	str = obj_json->to_yaml_str();
+
+	//EXPECT_EQ("id1:\n  - \"value_str\"\n  - 3.5\nid2: true\n", str);
+	//printf("\033[1;31;40mobj_json to yaml:\n%s\033[0m\n", str.c_str());
+
+	delete bol_json;
+	delete num_json;
+	delete str_json;
+	delete arr_json;
+	delete obj_json;
+}
+
+TEST(TestFormatComplex, ARRandOBJToStr){
+ 	JSON* bol_json = new JSON(true);
+	JSON* str_json = new JSON("value_str");
+	JSON* num_json = new JSON((NUM)3.5);
+	JSON* arr_json = new JSON(json_e::JSON_ARR);	// 
+	JSON* obj_json = new JSON(json_e::JSON_OBJ);	// {}
+
+	arr_json->arr_add(-1, num_json);
+	arr_json->arr_add(0, str_json);
+	obj_json->obj_add("id1", arr_json);				// {‘id1’ ： }
+	obj_json->obj_add("id2", bol_json);				// {‘id1’ ： ， ‘id2’ : }
+	arr_json->arr_add(-1, arr_json);
+	arr_json->arr_add(-1, obj_json);
+	obj_json->obj_add("cpx1", arr_json);
+
+	// ARR to yaml
+	std::string str = arr_json->to_yaml_str();
+	printf("\033[1;36;40mcomplex arr_json to yaml:\n%s\033[0m\n", str.c_str());
+
+	// ARR to json
+	str = arr_json->to_json_str_with_tab();
+	printf("\033[1;36;40mcomplex arr_json to json with tab:\n%s\033[0m\n", str.c_str());
+
+	// OBJ to yaml
+	str = obj_json->to_yaml_str();
+	printf("\033[1;36;40mcomplex obj_json to yaml:\n%s\033[0m\n", str.c_str());
+
+	// OBJ to json
+	str = obj_json->to_json_str_with_tab();
+	printf("\033[1;36;40mcomplex obj_json to json with tab:\n%s\033[0m\n", str.c_str());
+
+	delete bol_json;
+	delete num_json;
+	delete str_json;
+	delete arr_json;
+	delete obj_json;
+}
 
 
 int main(int argc,char **argv){
