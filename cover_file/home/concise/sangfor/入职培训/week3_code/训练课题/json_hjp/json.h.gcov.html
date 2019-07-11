@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2019-07-10 19:13:58</td>
+            <td class="headerValue">2019-07-11 15:14:39</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">1</td>
@@ -86,9 +86,9 @@
 <span class="lineNum">      24 </span>            : 
 <a name="25"><span class="lineNum">      25 </span>            : typedef struct ptrCmp</a>
 <span class="lineNum">      26 </span>            : {
-<span class="lineNum">      27 </span><span class="lineCov">         35 :         bool operator()( const char * s1, const char * s2 ) const</span>
+<span class="lineNum">      27 </span><span class="lineCov">         73 :         bool operator()( const char * s1, const char * s2 ) const</span>
 <span class="lineNum">      28 </span>            :         {
-<span class="lineNum">      29 </span><span class="lineCov">         35 :                 return strcmp( s1, s2 ) &lt; 0;</span>
+<span class="lineNum">      29 </span><span class="lineCov">         73 :                 return strcmp( s1, s2 ) &lt; 0;</span>
 <span class="lineNum">      30 </span>            :         }
 <span class="lineNum">      31 </span>            : }ptrCmp;
 <span class="lineNum">      32 </span>            : 
@@ -172,7 +172,7 @@
 <span class="lineNum">     110 </span>            :          */                     
 <span class="lineNum">     111 </span>            :         JSON(NUM value);
 <span class="lineNum">     112 </span>            :         JSON(const char* value);
-<span class="lineNum">     113 </span>            :         JSON(std::string value);
+<span class="lineNum">     113 </span>            :         JSON(const std::string&amp; value);
 <span class="lineNum">     114 </span>            :         JSON(bool value);
 <span class="lineNum">     115 </span>            :         /*
 <span class="lineNum">     116 </span>            :         * 拷贝构造
@@ -218,7 +218,7 @@
 <span class="lineNum">     156 </span>            :         int set_value(bool value);                              
 <span class="lineNum">     157 </span>            :         int set_value(NUM value);
 <span class="lineNum">     158 </span>            :         int set_value(const char* value);
-<span class="lineNum">     159 </span>            :         int set_value(std::string value);
+<span class="lineNum">     159 </span>            :         int set_value(const std::string&amp; value);
 <span class="lineNum">     160 </span>            :         /*
 <span class="lineNum">     161 </span>            :         * OBJ类型，新增一个键值对, 成功返回0
 <span class="lineNum">     162 </span>            :          */

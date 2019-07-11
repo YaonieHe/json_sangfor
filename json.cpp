@@ -14,6 +14,14 @@ JSON::JSON(json_e type_name){
 			this->str = NULL;
 			break;
 		}
+		case json_e::JSON_NUM:{
+			this->num = 0;
+			break;
+		}
+		case json_e::JSON_BOL:{
+			this->bol = true;
+			break;
+		}
 	}
 }
 
@@ -28,10 +36,13 @@ JSON::JSON(bool value){
 	this->bol = value;
 	this->type = json_e::JSON_BOL;
 }
-JSON::JSON(std::string value){
+JSON::JSON(const std::string& value){
 	err_info = NULL;
 	this->type = json_e::JSON_STR;
 	this->str = new char[value.size() + 1];
+	if(this->str == NULL){
+		throw "error";
+	}
 	strcpy(this->str, value.c_str());
 }
 JSON::JSON(const char* value){
@@ -111,7 +122,7 @@ std::string JSON::get_from_str(){
 		return this->str;
 	}
 	note_err_info("该类型JSON对象不能调用获取STR值的方法！\n");
-	return NULL;
+	throw "error";
 }
 
 JSON* JSON::get_from_key(const char* key){
@@ -121,10 +132,10 @@ JSON* JSON::get_from_key(const char* key){
 			return tmp;
 		}
 		note_err_info("该OBJ对象中所查询的键不存在！\n");
-		return NULL;
+		return nullptr;
 	}
 	note_err_info("该类型JSON对象不能调用通过键取值的方法！\n");
-	throw NULL;
+	return nullptr;
 }
 
 JSON* JSON::get_from_arr(int index){
@@ -141,11 +152,11 @@ JSON* JSON::get_from_arr(int index){
 			JSON* tmp = new JSON(*(this->arr[idx]));
 			return tmp;
 		}
-		note_err_info("输入小标超过该ARR对象最大元素数量！\n");
-		return NULL;
+		note_err_info("输入下标超过该ARR对象最大元素数量！\n");
+		return nullptr;
 	}
 	note_err_info("该类型JSON对象不能调用通过下标取值的方法！\n");
-	throw NULL;
+	return nullptr;
 }
 
 // INT、BOL、STR类型，设置值, 返回0表示执行正确。
@@ -172,26 +183,37 @@ int JSON::set_value(const char* value){
 		note_err_info("该JSON对象不允许设置为STRING值！\n");
 		return -1;
 	}
+	char* tmp = new char[strlen(value) + 1];
+	if(tmp == NULL){
+		note_err_info("[set_value(char*)] 内存申请失败！\n");
+		return -1;
+	}
+	strcpy(tmp, value);
 	free();
 	this->type = json_e::JSON_STR;
-	this->str = new char[strlen(value) + 1];
-	strcpy(this->str, value);
+	this->str = tmp;
 	return 0;
 }
-int JSON::set_value(std::string value){
-	if(this->type != json_e::JSON_NONE && this->type != json_e::JSON_NUM){
+int JSON::set_value(const std::string& value){
+	if(this->type != json_e::JSON_NONE && this->type != json_e::JSON_STR){
 		note_err_info("该JSON对象不允许设置为NUM值！\n");
 		return -1;
 	}
+	char* tmp = new char[value.size() + 1];
+	if(tmp == NULL){
+		note_err_info("[set_value(string)] 内存申请失败！\n");
+		return -1;
+	}
+	strcpy(tmp, value.c_str());
 	free();
 	this->type = json_e::JSON_STR;
-	this->str = new char[value.size() + 1];
-	strcpy(this->str, value.c_str());
+	this->str = tmp;
 	return 0;
 }
 
 
 int JSON::obj_add(const char* key, JSON* value){
+	assert(key != NULL && value != NULL);
 	if(this->type != json_e::JSON_OBJ && this->type != json_e::JSON_NONE){
 		note_err_info("该JSON对象不支持键值对添加操作");
 		return -1;
@@ -202,21 +224,25 @@ int JSON::obj_add(const char* key, JSON* value){
 		this->type = json_e::JSON_OBJ;
 	}
 	// 键为空时，不成功。
-	if(strlen(key) == 0) {
+	if(key == NULL || strlen(key) == 0) {
 		note_err_info("键不能为空");
-		return -1;
-	}
-	char* new_key = new char[strlen(key) + 1];
-	strcpy(new_key, key);
-	//键已存在时，不成功。
-	if(this->obj.find(new_key) != this->obj.end()){
-		note_err_info("键已存在");
 		return -1;
 	}
 
 	// 值为空, 不成功
 	if(value == nullptr){
 		note_err_info("值不能为空");
+		return -1;
+	}
+	char* new_key = new char[strlen(key) + 1];
+	if(new_key == NULL){
+		throw "error";
+	}
+	strcpy(new_key, key);
+	//键已存在时，不成功。
+	if(this->obj.find(new_key) != this->obj.end()){
+		note_err_info("键已存在");
+		delete [] new_key;
 		return -1;
 	}
 
@@ -327,7 +353,7 @@ void JSON::note_err_info(const char* info){
 	if(err_info != NULL) delete [] err_info;
 	this->err_info = new char[strlen(info) + 1];
 	strcpy(this->err_info, info);
-	//printf("err info: %s\n", info);
+	fprintf(stderr, "err info: %s\n", info);
 }
 
 
@@ -364,7 +390,7 @@ std::string JSON::none_to_str(int need, int mode){
 	assert(need >= -1);
 	if(need < -1){
 		note_err_info("[none_to_str] 参数范围错误");
-		return NULL;
+		throw "error";
 	}
 	// need =-1, 不加tab
 	if(need == -1) return "null";
@@ -376,7 +402,7 @@ std::string JSON::num_to_str(int need, int mode){
 	assert(need >= -1);
 	if(need < -1){
 		note_err_info("[none_to_str] 参数范围错误");
-		return NULL;
+		throw "error";
 	}
 	char num_to_char[NUM_DIGITS + 2];
 	gcvt(this->num, NUM_DIGITS, num_to_char);
@@ -394,7 +420,7 @@ std::string JSON::bol_to_str(int need, int mode){
 	assert(need >= -1);
 	if(need < -1){
 		note_err_info("[none_to_str] 参数范围错误");
-		return NULL;
+		throw "error";
 	}
 	std::string value = "";
 	// 加tab
@@ -414,7 +440,7 @@ std::string JSON::str_to_str(int need, int mode){
 	assert(need >= -1);
 	if(need < -1){
 		note_err_info("[none_to_str] 参数范围错误");
-		return NULL;
+		throw "error";
 	}
 	std::string value = "";
 	// 加 tab
@@ -429,7 +455,7 @@ std::string JSON::arr_to_str(int need, int mode){
 	assert(need >= -1);
 	if(need < -1){
 		note_err_info("[none_to_str] 参数范围错误");
-		return NULL;
+		throw "error";
 	}
 	std::string value = "";
 	// 加tab，加 [
@@ -444,7 +470,8 @@ std::string JSON::arr_to_str(int need, int mode){
 	}
 
 	// 放入数组中所有对象。
-	for(int i = 0; i < this->arr.size(); i++){
+	int arr_len = this->arr.size();
+	for(int i = 0; i < arr_len; i++){
 		// 不加tab
 		if(need == -1){
 			value += this->arr[i]->to_str_select_tab(-1);
@@ -476,7 +503,7 @@ std::string JSON::obj_to_str(int need, int mode){
 	assert(need >= -1);
 	if(need < -1){
 		note_err_info("[none_to_str] 参数范围错误");
-		return NULL;
+		throw "error";
 	}
 	std::string value = "", pre = "", pre_next = "";
 	// 初始化pre和pre_next
@@ -533,7 +560,7 @@ std::string JSON::pre_place(int num, int mode){
 	assert(num >= 0);
 	if(num < 0){
 		this->note_err_info("[pre_place] 参数错误，num不能小于0！\n");
-		return NULL;
+		throw "error";
 	}
 	std::string pre = "";
 	switch(mode){
@@ -569,7 +596,7 @@ std::string JSON::pre_place(int num, int mode){
 		}
 		default:{
 			this->note_err_info("[pre_place] 参数错误，mode不匹配！\n");
-			return NULL;
+			throw "error";
 		}
 	}
 }
@@ -615,7 +642,8 @@ std::string JSON::arr_to_yaml(int need, int mode){
 
 	// value开始为空
 	std::string value = "";
-	for(int i = 0; i < this->arr.size(); i++){
+	int arr_len = this->arr.size();
+	for(int i = 0; i < arr_len; i++){
 		value += pre;
 		// 根据type来设置缩进和换行
 		json_e tmp_type = this->arr[i]->type;
@@ -666,7 +694,7 @@ int JSON::obj_rm(const char* key){
 int JSON::arr_rm(int index){
 	assert(index >= -1);
 	int len = this->arr.size();
-	if(index < -1 || index > len || (index == -1 && len == 0)){
+	if(index < -1 || index >= len || (index == -1 && len == 0)){
 		this->note_err_info("[obj_rm] 参数错误，index超出范围！");
 		return -1;	
 	}

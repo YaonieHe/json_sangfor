@@ -31,18 +31,18 @@
             <td class="headerValue">main.info</td>
             <td></td>
             <td class="headerItem">Lines:</td>
-            <td class="headerCovTableEntry">0</td>
-            <td class="headerCovTableEntry">1</td>
-            <td class="headerCovTableEntryLo">0.0 %</td>
+            <td class="headerCovTableEntry">3</td>
+            <td class="headerCovTableEntry">7</td>
+            <td class="headerCovTableEntryLo">42.9 %</td>
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2019-07-10 19:13:58</td>
+            <td class="headerValue">2019-07-11 15:14:39</td>
             <td></td>
             <td class="headerItem">Functions:</td>
-            <td class="headerCovTableEntry">0</td>
-            <td class="headerCovTableEntry">1</td>
-            <td class="headerCovTableEntryLo">0.0 %</td>
+            <td class="headerCovTableEntry">2</td>
+            <td class="headerCovTableEntry">5</td>
+            <td class="headerCovTableEntryLo">40.0 %</td>
           </tr>
           <tr><td><img src="../../../../glass.png" width=3 height=3 alt=""></td></tr>
         </table>
@@ -961,25 +961,25 @@
 <span class="lineNum">     899 </span>            :   // A copy constructor is required by the Standard to initialize object
 <span class="lineNum">     900 </span>            :   // references from r-values.
 <span class="lineNum">     901 </span>            :   RE(const RE&amp; other) { Init(other.pattern()); }
-<span class="lineNum">     902 </span>            : 
+<a name="902"><span class="lineNum">     902 </span>            : </a>
 <span class="lineNum">     903 </span>            :   // Constructs an RE from a string.
-<span class="lineNum">     904 </span>            :   RE(const ::std::string&amp; regex) { Init(regex.c_str()); }  // NOLINT
+<span class="lineNum">     904 </span><span class="lineCov">          2 :   RE(const ::std::string&amp; regex) { Init(regex.c_str()); }  // NOLINT</span>
 <span class="lineNum">     905 </span>            : 
 <span class="lineNum">     906 </span>            :   RE(const char* regex) { Init(regex); }  // NOLINT
 <span class="lineNum">     907 </span>            :   ~RE();
-<span class="lineNum">     908 </span>            : 
+<a name="908"><span class="lineNum">     908 </span>            : </a>
 <span class="lineNum">     909 </span>            :   // Returns the string representation of the regex.
-<span class="lineNum">     910 </span>            :   const char* pattern() const { return pattern_; }
+<span class="lineNum">     910 </span><span class="lineNoCov">          0 :   const char* pattern() const { return pattern_; }</span>
 <span class="lineNum">     911 </span>            : 
 <span class="lineNum">     912 </span>            :   // FullMatch(str, re) returns true iff regular expression re matches
 <span class="lineNum">     913 </span>            :   // the entire str.
-<span class="lineNum">     914 </span>            :   // PartialMatch(str, re) returns true iff regular expression re
+<a name="914"><span class="lineNum">     914 </span>            :   // PartialMatch(str, re) returns true iff regular expression re</a>
 <span class="lineNum">     915 </span>            :   // matches a substring of str (including str itself).
-<span class="lineNum">     916 </span>            :   static bool FullMatch(const ::std::string&amp; str, const RE&amp; re) {
-<span class="lineNum">     917 </span>            :     return FullMatch(str.c_str(), re);
+<span class="lineNum">     916 </span><span class="lineNoCov">          0 :   static bool FullMatch(const ::std::string&amp; str, const RE&amp; re) {</span>
+<a name="917"><span class="lineNum">     917 </span><span class="lineNoCov">          0 :     return FullMatch(str.c_str(), re);</span></a>
 <span class="lineNum">     918 </span>            :   }
-<span class="lineNum">     919 </span>            :   static bool PartialMatch(const ::std::string&amp; str, const RE&amp; re) {
-<span class="lineNum">     920 </span>            :     return PartialMatch(str.c_str(), re);
+<span class="lineNum">     919 </span><span class="lineCov">          2 :   static bool PartialMatch(const ::std::string&amp; str, const RE&amp; re) {</span>
+<span class="lineNum">     920 </span><span class="lineCov">          2 :     return PartialMatch(str.c_str(), re);</span>
 <span class="lineNum">     921 </span>            :   }
 <span class="lineNum">     922 </span>            : 
 <span class="lineNum">     923 </span>            :   static bool FullMatch(const char* str, const RE&amp; re);

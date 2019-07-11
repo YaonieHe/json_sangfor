@@ -1,0 +1,824 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>LCOV - main.info - /usr/include/gtest/gtest-matchers.h</title>
+  <link rel="stylesheet" type="text/css" href="../../../gcov.css">
+</head>
+
+<body>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="title">LCOV - code coverage report</td></tr>
+    <tr><td class="ruler"><img src="../../../glass.png" width=3 height=3 alt=""></td></tr>
+
+    <tr>
+      <td width="100%">
+        <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="35%" class="headerValue"><a href="../../../index.html">top level</a> - <a href="index.html">usr/include/gtest</a> - gtest-matchers.h<span style="font-size: 80%;"> (source / <a href="gtest-matchers.h.func-sort-c.html">functions</a>)</span></td>
+            <td width="5%"></td>
+            <td width="15%"></td>
+            <td width="10%" class="headerCovTableHead">Hit</td>
+            <td width="10%" class="headerCovTableHead">Total</td>
+            <td width="15%" class="headerCovTableHead">Coverage</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">main.info</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntry">29</td>
+            <td class="headerCovTableEntry">47</td>
+            <td class="headerCovTableEntryLo">61.7 %</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Date:</td>
+            <td class="headerValue">2019-07-11 15:14:39</td>
+            <td></td>
+            <td class="headerItem">Functions:</td>
+            <td class="headerCovTableEntry">22</td>
+            <td class="headerCovTableEntry">31</td>
+            <td class="headerCovTableEntryLo">71.0 %</td>
+          </tr>
+          <tr><td><img src="../../../glass.png" width=3 height=3 alt=""></td></tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr><td class="ruler"><img src="../../../glass.png" width=3 height=3 alt=""></td></tr>
+  </table>
+
+  <table cellpadding=0 cellspacing=0 border=0>
+    <tr>
+      <td><br></td>
+    </tr>
+    <tr>
+      <td>
+<pre class="sourceHeading">          Line data    Source code</pre>
+<pre class="source">
+<a name="1"><span class="lineNum">       1 </span>            : // Copyright 2007, Google Inc.</a>
+<span class="lineNum">       2 </span>            : // All rights reserved.
+<span class="lineNum">       3 </span>            : //
+<span class="lineNum">       4 </span>            : // Redistribution and use in source and binary forms, with or without
+<span class="lineNum">       5 </span>            : // modification, are permitted provided that the following conditions are
+<span class="lineNum">       6 </span>            : // met:
+<span class="lineNum">       7 </span>            : //
+<span class="lineNum">       8 </span>            : //     * Redistributions of source code must retain the above copyright
+<span class="lineNum">       9 </span>            : // notice, this list of conditions and the following disclaimer.
+<span class="lineNum">      10 </span>            : //     * Redistributions in binary form must reproduce the above
+<span class="lineNum">      11 </span>            : // copyright notice, this list of conditions and the following disclaimer
+<span class="lineNum">      12 </span>            : // in the documentation and/or other materials provided with the
+<span class="lineNum">      13 </span>            : // distribution.
+<span class="lineNum">      14 </span>            : //     * Neither the name of Google Inc. nor the names of its
+<span class="lineNum">      15 </span>            : // contributors may be used to endorse or promote products derived from
+<span class="lineNum">      16 </span>            : // this software without specific prior written permission.
+<span class="lineNum">      17 </span>            : //
+<span class="lineNum">      18 </span>            : // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+<span class="lineNum">      19 </span>            : // &quot;AS IS&quot; AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+<span class="lineNum">      20 </span>            : // LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+<span class="lineNum">      21 </span>            : // A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+<span class="lineNum">      22 </span>            : // OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+<span class="lineNum">      23 </span>            : // SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+<span class="lineNum">      24 </span>            : // LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+<span class="lineNum">      25 </span>            : // DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+<span class="lineNum">      26 </span>            : // THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+<span class="lineNum">      27 </span>            : // (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+<span class="lineNum">      28 </span>            : // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+<span class="lineNum">      29 </span>            : 
+<span class="lineNum">      30 </span>            : // The Google C++ Testing and Mocking Framework (Google Test)
+<span class="lineNum">      31 </span>            : //
+<span class="lineNum">      32 </span>            : // This file implements just enough of the matcher interface to allow
+<span class="lineNum">      33 </span>            : // EXPECT_DEATH and friends to accept a matcher argument.
+<span class="lineNum">      34 </span>            : 
+<span class="lineNum">      35 </span>            : // IWYU pragma: private, include &quot;testing/base/public/gunit.h&quot;
+<span class="lineNum">      36 </span>            : // IWYU pragma: friend third_party/googletest/googlemock/.*
+<span class="lineNum">      37 </span>            : // IWYU pragma: friend third_party/googletest/googletest/.*
+<span class="lineNum">      38 </span>            : 
+<span class="lineNum">      39 </span>            : #ifndef GTEST_INCLUDE_GTEST_GTEST_MATCHERS_H_
+<span class="lineNum">      40 </span>            : #define GTEST_INCLUDE_GTEST_GTEST_MATCHERS_H_
+<span class="lineNum">      41 </span>            : 
+<span class="lineNum">      42 </span>            : #include &lt;memory&gt;
+<span class="lineNum">      43 </span>            : #include &lt;ostream&gt;
+<span class="lineNum">      44 </span>            : #include &lt;string&gt;
+<span class="lineNum">      45 </span>            : 
+<span class="lineNum">      46 </span>            : #include &quot;gtest/gtest-printers.h&quot;
+<span class="lineNum">      47 </span>            : #include &quot;gtest/internal/gtest-internal.h&quot;
+<span class="lineNum">      48 </span>            : #include &quot;gtest/internal/gtest-port.h&quot;
+<span class="lineNum">      49 </span>            : 
+<span class="lineNum">      50 </span>            : // MSVC warning C5046 is new as of VS2017 version 15.8.
+<span class="lineNum">      51 </span>            : #if defined(_MSC_VER) &amp;&amp; _MSC_VER &gt;= 1915
+<span class="lineNum">      52 </span>            : #define GTEST_MAYBE_5046_ 5046
+<span class="lineNum">      53 </span>            : #else
+<span class="lineNum">      54 </span>            : #define GTEST_MAYBE_5046_
+<span class="lineNum">      55 </span>            : #endif
+<span class="lineNum">      56 </span>            : 
+<span class="lineNum">      57 </span>            : GTEST_DISABLE_MSC_WARNINGS_PUSH_(
+<span class="lineNum">      58 </span>            :     4251 GTEST_MAYBE_5046_ /* class A needs to have dll-interface to be used by
+<span class="lineNum">      59 </span>            :                               clients of class B */
+<span class="lineNum">      60 </span>            :     /* Symbol involving type with internal linkage not defined */)
+<span class="lineNum">      61 </span>            : 
+<span class="lineNum">      62 </span>            : namespace testing {
+<span class="lineNum">      63 </span>            : 
+<span class="lineNum">      64 </span>            : // To implement a matcher Foo for type T, define:
+<span class="lineNum">      65 </span>            : //   1. a class FooMatcherImpl that implements the
+<span class="lineNum">      66 </span>            : //      MatcherInterface&lt;T&gt; interface, and
+<span class="lineNum">      67 </span>            : //   2. a factory function that creates a Matcher&lt;T&gt; object from a
+<span class="lineNum">      68 </span>            : //      FooMatcherImpl*.
+<span class="lineNum">      69 </span>            : //
+<span class="lineNum">      70 </span>            : // The two-level delegation design makes it possible to allow a user
+<span class="lineNum">      71 </span>            : // to write &quot;v&quot; instead of &quot;Eq(v)&quot; where a Matcher is expected, which
+<span class="lineNum">      72 </span>            : // is impossible if we pass matchers by pointers.  It also eases
+<span class="lineNum">      73 </span>            : // ownership management as Matcher objects can now be copied like
+<span class="lineNum">      74 </span>            : // plain values.
+<span class="lineNum">      75 </span>            : 
+<span class="lineNum">      76 </span>            : // MatchResultListener is an abstract class.  Its &lt;&lt; operator can be
+<span class="lineNum">      77 </span>            : // used by a matcher to explain why a value matches or doesn't match.
+<span class="lineNum">      78 </span>            : //
+<span class="lineNum">      79 </span>            : class MatchResultListener {
+<span class="lineNum">      80 </span>            :  public:
+<span class="lineNum">      81 </span>            :   // Creates a listener object with the given underlying ostream.  The
+<span class="lineNum">      82 </span>            :   // listener does not own the ostream, and does not dereference it
+<span class="lineNum">      83 </span>            :   // in the constructor or destructor.
+<span class="lineNum">      84 </span>            :   explicit MatchResultListener(::std::ostream* os) : stream_(os) {}
+<span class="lineNum">      85 </span>            :   virtual ~MatchResultListener() = 0;  // Makes this class abstract.
+<span class="lineNum">      86 </span>            : 
+<span class="lineNum">      87 </span>            :   // Streams x to the underlying ostream; does nothing if the ostream
+<span class="lineNum">      88 </span>            :   // is NULL.
+<span class="lineNum">      89 </span>            :   template &lt;typename T&gt;
+<span class="lineNum">      90 </span>            :   MatchResultListener&amp; operator&lt;&lt;(const T&amp; x) {
+<span class="lineNum">      91 </span>            :     if (stream_ != nullptr) *stream_ &lt;&lt; x;
+<span class="lineNum">      92 </span>            :     return *this;
+<span class="lineNum">      93 </span>            :   }
+<span class="lineNum">      94 </span>            : 
+<span class="lineNum">      95 </span>            :   // Returns the underlying ostream.
+<span class="lineNum">      96 </span>            :   ::std::ostream* stream() { return stream_; }
+<span class="lineNum">      97 </span>            : 
+<span class="lineNum">      98 </span>            :   // Returns true iff the listener is interested in an explanation of
+<span class="lineNum">      99 </span>            :   // the match result.  A matcher's MatchAndExplain() method can use
+<span class="lineNum">     100 </span>            :   // this information to avoid generating the explanation when no one
+<span class="lineNum">     101 </span>            :   // intends to hear it.
+<span class="lineNum">     102 </span>            :   bool IsInterested() const { return stream_ != nullptr; }
+<span class="lineNum">     103 </span>            : 
+<span class="lineNum">     104 </span>            :  private:
+<span class="lineNum">     105 </span>            :   ::std::ostream* const stream_;
+<span class="lineNum">     106 </span>            : 
+<span class="lineNum">     107 </span>            :   GTEST_DISALLOW_COPY_AND_ASSIGN_(MatchResultListener);
+<span class="lineNum">     108 </span>            : };
+<span class="lineNum">     109 </span>            : 
+<span class="lineNum">     110 </span>            : inline MatchResultListener::~MatchResultListener() {
+<span class="lineNum">     111 </span>            : }
+<span class="lineNum">     112 </span>            : 
+<a name="113"><span class="lineNum">     113 </span>            : // An instance of a subclass of this knows how to describe itself as a</a>
+<span class="lineNum">     114 </span>            : // matcher.
+<a name="115"><span class="lineNum">     115 </span><span class="lineCov">          2 : class MatcherDescriberInterface {</span></a>
+<span class="lineNum">     116 </span>            :  public:
+<span class="lineNum">     117 </span><span class="lineCov">          2 :   virtual ~MatcherDescriberInterface() {}</span>
+<span class="lineNum">     118 </span>            : 
+<span class="lineNum">     119 </span>            :   // Describes this matcher to an ostream.  The function should print
+<span class="lineNum">     120 </span>            :   // a verb phrase that describes the property a value matching this
+<span class="lineNum">     121 </span>            :   // matcher should have.  The subject of the verb phrase is the value
+<span class="lineNum">     122 </span>            :   // being matched.  For example, the DescribeTo() method of the Gt(7)
+<span class="lineNum">     123 </span>            :   // matcher prints &quot;is greater than 7&quot;.
+<span class="lineNum">     124 </span>            :   virtual void DescribeTo(::std::ostream* os) const = 0;
+<span class="lineNum">     125 </span>            : 
+<span class="lineNum">     126 </span>            :   // Describes the negation of this matcher to an ostream.  For
+<span class="lineNum">     127 </span>            :   // example, if the description of this matcher is &quot;is greater than
+<span class="lineNum">     128 </span>            :   // 7&quot;, the negated description could be &quot;is not greater than 7&quot;.
+<span class="lineNum">     129 </span>            :   // You are not required to override this when implementing
+<a name="130"><span class="lineNum">     130 </span>            :   // MatcherInterface, but it is highly advised so that your matcher</a>
+<span class="lineNum">     131 </span>            :   // can produce good error messages.
+<span class="lineNum">     132 </span><span class="lineNoCov">          0 :   virtual void DescribeNegationTo(::std::ostream* os) const {</span>
+<span class="lineNum">     133 </span><span class="lineNoCov">          0 :     *os &lt;&lt; &quot;not (&quot;;</span>
+<span class="lineNum">     134 </span><span class="lineNoCov">          0 :     DescribeTo(os);</span>
+<span class="lineNum">     135 </span><span class="lineNoCov">          0 :     *os &lt;&lt; &quot;)&quot;;</span>
+<span class="lineNum">     136 </span><span class="lineNoCov">          0 :   }</span>
+<span class="lineNum">     137 </span>            : };
+<span class="lineNum">     138 </span>            : 
+<a name="139"><span class="lineNum">     139 </span>            : // The implementation of a matcher.</a>
+<span class="lineNum">     140 </span>            : template &lt;typename T&gt;
+<span class="lineNum">     141 </span><span class="lineCov">          4 : class MatcherInterface : public MatcherDescriberInterface {</span>
+<span class="lineNum">     142 </span>            :  public:
+<span class="lineNum">     143 </span>            :   // Returns true iff the matcher matches x; also explains the match
+<span class="lineNum">     144 </span>            :   // result to 'listener' if necessary (see the next paragraph), in
+<span class="lineNum">     145 </span>            :   // the form of a non-restrictive relative clause (&quot;which ...&quot;,
+<span class="lineNum">     146 </span>            :   // &quot;whose ...&quot;, etc) that describes x.  For example, the
+<span class="lineNum">     147 </span>            :   // MatchAndExplain() method of the Pointee(...) matcher should
+<span class="lineNum">     148 </span>            :   // generate an explanation like &quot;which points to ...&quot;.
+<span class="lineNum">     149 </span>            :   //
+<span class="lineNum">     150 </span>            :   // Implementations of MatchAndExplain() should add an explanation of
+<span class="lineNum">     151 </span>            :   // the match result *if and only if* they can provide additional
+<span class="lineNum">     152 </span>            :   // information that's not already present (or not obvious) in the
+<span class="lineNum">     153 </span>            :   // print-out of x and the matcher's description.  Whether the match
+<span class="lineNum">     154 </span>            :   // succeeds is not a factor in deciding whether an explanation is
+<span class="lineNum">     155 </span>            :   // needed, as sometimes the caller needs to print a failure message
+<span class="lineNum">     156 </span>            :   // when the match succeeds (e.g. when the matcher is used inside
+<span class="lineNum">     157 </span>            :   // Not()).
+<span class="lineNum">     158 </span>            :   //
+<span class="lineNum">     159 </span>            :   // For example, a &quot;has at least 10 elements&quot; matcher should explain
+<span class="lineNum">     160 </span>            :   // what the actual element count is, regardless of the match result,
+<span class="lineNum">     161 </span>            :   // as it is useful information to the reader; on the other hand, an
+<span class="lineNum">     162 </span>            :   // &quot;is empty&quot; matcher probably only needs to explain what the actual
+<span class="lineNum">     163 </span>            :   // size is when the match fails, as it's redundant to say that the
+<span class="lineNum">     164 </span>            :   // size is 0 when the value is already known to be empty.
+<span class="lineNum">     165 </span>            :   //
+<span class="lineNum">     166 </span>            :   // You should override this method when defining a new matcher.
+<span class="lineNum">     167 </span>            :   //
+<span class="lineNum">     168 </span>            :   // It's the responsibility of the caller (Google Test) to guarantee
+<span class="lineNum">     169 </span>            :   // that 'listener' is not NULL.  This helps to simplify a matcher's
+<span class="lineNum">     170 </span>            :   // implementation when it doesn't care about the performance, as it
+<span class="lineNum">     171 </span>            :   // can talk to 'listener' without checking its validity first.
+<span class="lineNum">     172 </span>            :   // However, in order to implement dummy listeners efficiently,
+<span class="lineNum">     173 </span>            :   // listener-&gt;stream() may be NULL.
+<span class="lineNum">     174 </span>            :   virtual bool MatchAndExplain(T x, MatchResultListener* listener) const = 0;
+<span class="lineNum">     175 </span>            : 
+<span class="lineNum">     176 </span>            :   // Inherits these methods from MatcherDescriberInterface:
+<span class="lineNum">     177 </span>            :   //   virtual void DescribeTo(::std::ostream* os) const = 0;
+<span class="lineNum">     178 </span>            :   //   virtual void DescribeNegationTo(::std::ostream* os) const;
+<span class="lineNum">     179 </span>            : };
+<span class="lineNum">     180 </span>            : 
+<span class="lineNum">     181 </span>            : namespace internal {
+<span class="lineNum">     182 </span>            : 
+<span class="lineNum">     183 </span>            : // Converts a MatcherInterface&lt;T&gt; to a MatcherInterface&lt;const T&amp;&gt;.
+<span class="lineNum">     184 </span>            : template &lt;typename T&gt;
+<span class="lineNum">     185 </span>            : class MatcherInterfaceAdapter : public MatcherInterface&lt;const T&amp;&gt; {
+<span class="lineNum">     186 </span>            :  public:
+<span class="lineNum">     187 </span>            :   explicit MatcherInterfaceAdapter(const MatcherInterface&lt;T&gt;* impl)
+<span class="lineNum">     188 </span>            :       : impl_(impl) {}
+<span class="lineNum">     189 </span>            :   ~MatcherInterfaceAdapter() override { delete impl_; }
+<span class="lineNum">     190 </span>            : 
+<span class="lineNum">     191 </span>            :   void DescribeTo(::std::ostream* os) const override { impl_-&gt;DescribeTo(os); }
+<span class="lineNum">     192 </span>            : 
+<span class="lineNum">     193 </span>            :   void DescribeNegationTo(::std::ostream* os) const override {
+<span class="lineNum">     194 </span>            :     impl_-&gt;DescribeNegationTo(os);
+<span class="lineNum">     195 </span>            :   }
+<span class="lineNum">     196 </span>            : 
+<span class="lineNum">     197 </span>            :   bool MatchAndExplain(const T&amp; x,
+<span class="lineNum">     198 </span>            :                        MatchResultListener* listener) const override {
+<span class="lineNum">     199 </span>            :     return impl_-&gt;MatchAndExplain(x, listener);
+<span class="lineNum">     200 </span>            :   }
+<span class="lineNum">     201 </span>            : 
+<span class="lineNum">     202 </span>            :  private:
+<span class="lineNum">     203 </span>            :   const MatcherInterface&lt;T&gt;* const impl_;
+<span class="lineNum">     204 </span>            : 
+<span class="lineNum">     205 </span>            :   GTEST_DISALLOW_COPY_AND_ASSIGN_(MatcherInterfaceAdapter);
+<span class="lineNum">     206 </span>            : };
+<span class="lineNum">     207 </span>            : 
+<span class="lineNum">     208 </span>            : struct AnyEq {
+<span class="lineNum">     209 </span>            :   template &lt;typename A, typename B&gt;
+<span class="lineNum">     210 </span>            :   bool operator()(const A&amp; a, const B&amp; b) const { return a == b; }
+<span class="lineNum">     211 </span>            : };
+<span class="lineNum">     212 </span>            : struct AnyNe {
+<span class="lineNum">     213 </span>            :   template &lt;typename A, typename B&gt;
+<span class="lineNum">     214 </span>            :   bool operator()(const A&amp; a, const B&amp; b) const { return a != b; }
+<span class="lineNum">     215 </span>            : };
+<span class="lineNum">     216 </span>            : struct AnyLt {
+<span class="lineNum">     217 </span>            :   template &lt;typename A, typename B&gt;
+<span class="lineNum">     218 </span>            :   bool operator()(const A&amp; a, const B&amp; b) const { return a &lt; b; }
+<span class="lineNum">     219 </span>            : };
+<span class="lineNum">     220 </span>            : struct AnyGt {
+<span class="lineNum">     221 </span>            :   template &lt;typename A, typename B&gt;
+<span class="lineNum">     222 </span>            :   bool operator()(const A&amp; a, const B&amp; b) const { return a &gt; b; }
+<span class="lineNum">     223 </span>            : };
+<span class="lineNum">     224 </span>            : struct AnyLe {
+<span class="lineNum">     225 </span>            :   template &lt;typename A, typename B&gt;
+<span class="lineNum">     226 </span>            :   bool operator()(const A&amp; a, const B&amp; b) const { return a &lt;= b; }
+<span class="lineNum">     227 </span>            : };
+<span class="lineNum">     228 </span>            : struct AnyGe {
+<span class="lineNum">     229 </span>            :   template &lt;typename A, typename B&gt;
+<span class="lineNum">     230 </span>            :   bool operator()(const A&amp; a, const B&amp; b) const { return a &gt;= b; }
+<span class="lineNum">     231 </span>            : };
+<span class="lineNum">     232 </span>            : 
+<span class="lineNum">     233 </span>            : // A match result listener that ignores the explanation.
+<span class="lineNum">     234 </span>            : class DummyMatchResultListener : public MatchResultListener {
+<span class="lineNum">     235 </span>            :  public:
+<span class="lineNum">     236 </span>            :   DummyMatchResultListener() : MatchResultListener(nullptr) {}
+<span class="lineNum">     237 </span>            : 
+<span class="lineNum">     238 </span>            :  private:
+<span class="lineNum">     239 </span>            :   GTEST_DISALLOW_COPY_AND_ASSIGN_(DummyMatchResultListener);
+<span class="lineNum">     240 </span>            : };
+<span class="lineNum">     241 </span>            : 
+<span class="lineNum">     242 </span>            : // A match result listener that forwards the explanation to a given
+<span class="lineNum">     243 </span>            : // ostream.  The difference between this and MatchResultListener is
+<span class="lineNum">     244 </span>            : // that the former is concrete.
+<span class="lineNum">     245 </span>            : class StreamMatchResultListener : public MatchResultListener {
+<span class="lineNum">     246 </span>            :  public:
+<span class="lineNum">     247 </span>            :   explicit StreamMatchResultListener(::std::ostream* os)
+<span class="lineNum">     248 </span>            :       : MatchResultListener(os) {}
+<span class="lineNum">     249 </span>            : 
+<span class="lineNum">     250 </span>            :  private:
+<span class="lineNum">     251 </span>            :   GTEST_DISALLOW_COPY_AND_ASSIGN_(StreamMatchResultListener);
+<span class="lineNum">     252 </span>            : };
+<span class="lineNum">     253 </span>            : 
+<span class="lineNum">     254 </span>            : // An internal class for implementing Matcher&lt;T&gt;, which will derive
+<span class="lineNum">     255 </span>            : // from it.  We put functionalities common to all Matcher&lt;T&gt;
+<span class="lineNum">     256 </span>            : // specializations here to avoid code duplication.
+<span class="lineNum">     257 </span>            : template &lt;typename T&gt;
+<span class="lineNum">     258 </span>            : class MatcherBase {
+<span class="lineNum">     259 </span>            :  public:
+<span class="lineNum">     260 </span>            :   // Returns true iff the matcher matches x; also explains the match
+<span class="lineNum">     261 </span>            :   // result to 'listener'.
+<span class="lineNum">     262 </span>            :   bool MatchAndExplain(const T&amp; x, MatchResultListener* listener) const {
+<span class="lineNum">     263 </span>            :     return impl_-&gt;MatchAndExplain(x, listener);
+<span class="lineNum">     264 </span>            :   }
+<span class="lineNum">     265 </span>            : 
+<span class="lineNum">     266 </span>            :   // Returns true iff this matcher matches x.
+<span class="lineNum">     267 </span>            :   bool Matches(const T&amp; x) const {
+<span class="lineNum">     268 </span>            :     DummyMatchResultListener dummy;
+<span class="lineNum">     269 </span>            :     return MatchAndExplain(x, &amp;dummy);
+<span class="lineNum">     270 </span>            :   }
+<span class="lineNum">     271 </span>            : 
+<span class="lineNum">     272 </span>            :   // Describes this matcher to an ostream.
+<span class="lineNum">     273 </span>            :   void DescribeTo(::std::ostream* os) const { impl_-&gt;DescribeTo(os); }
+<span class="lineNum">     274 </span>            : 
+<span class="lineNum">     275 </span>            :   // Describes the negation of this matcher to an ostream.
+<span class="lineNum">     276 </span>            :   void DescribeNegationTo(::std::ostream* os) const {
+<span class="lineNum">     277 </span>            :     impl_-&gt;DescribeNegationTo(os);
+<span class="lineNum">     278 </span>            :   }
+<span class="lineNum">     279 </span>            : 
+<span class="lineNum">     280 </span>            :   // Explains why x matches, or doesn't match, the matcher.
+<span class="lineNum">     281 </span>            :   void ExplainMatchResultTo(const T&amp; x, ::std::ostream* os) const {
+<span class="lineNum">     282 </span>            :     StreamMatchResultListener listener(os);
+<span class="lineNum">     283 </span>            :     MatchAndExplain(x, &amp;listener);
+<span class="lineNum">     284 </span>            :   }
+<span class="lineNum">     285 </span>            : 
+<span class="lineNum">     286 </span>            :   // Returns the describer for this matcher object; retains ownership
+<span class="lineNum">     287 </span>            :   // of the describer, which is only guaranteed to be alive when
+<span class="lineNum">     288 </span>            :   // this matcher object is alive.
+<span class="lineNum">     289 </span>            :   const MatcherDescriberInterface* GetDescriber() const {
+<span class="lineNum">     290 </span>            :     return impl_.get();
+<span class="lineNum">     291 </span>            :   }
+<span class="lineNum">     292 </span>            : 
+<span class="lineNum">     293 </span>            :  protected:
+<span class="lineNum">     294 </span>            :   MatcherBase() {}
+<a name="295"><span class="lineNum">     295 </span>            : </a>
+<span class="lineNum">     296 </span>            :   // Constructs a matcher from its implementation.
+<span class="lineNum">     297 </span><span class="lineCov">          2 :   explicit MatcherBase(const MatcherInterface&lt;const T&amp;&gt;* impl) : impl_(impl) {}</span>
+<span class="lineNum">     298 </span>            : 
+<span class="lineNum">     299 </span>            :   template &lt;typename U&gt;
+<span class="lineNum">     300 </span>            :   explicit MatcherBase(
+<span class="lineNum">     301 </span>            :       const MatcherInterface&lt;U&gt;* impl,
+<span class="lineNum">     302 </span>            :       typename internal::EnableIf&lt;
+<span class="lineNum">     303 </span>            :           !internal::IsSame&lt;U, const U&amp;&gt;::value&gt;::type* = nullptr)
+<span class="lineNum">     304 </span>            :       : impl_(new internal::MatcherInterfaceAdapter&lt;U&gt;(impl)) {}
+<span class="lineNum">     305 </span>            : 
+<span class="lineNum">     306 </span>            :   MatcherBase(const MatcherBase&amp;) = default;
+<span class="lineNum">     307 </span>            :   MatcherBase&amp; operator=(const MatcherBase&amp;) = default;
+<span class="lineNum">     308 </span>            :   MatcherBase(MatcherBase&amp;&amp;) = default;
+<a name="309"><span class="lineNum">     309 </span>            :   MatcherBase&amp; operator=(MatcherBase&amp;&amp;) = default;</a>
+<span class="lineNum">     310 </span>            : 
+<span class="lineNum">     311 </span><span class="lineCov">         12 :   virtual ~MatcherBase() {}</span>
+<span class="lineNum">     312 </span>            : 
+<span class="lineNum">     313 </span>            :  private:
+<span class="lineNum">     314 </span>            :   std::shared_ptr&lt;const MatcherInterface&lt;const T&amp;&gt;&gt; impl_;
+<span class="lineNum">     315 </span>            : };
+<span class="lineNum">     316 </span>            : 
+<span class="lineNum">     317 </span>            : }  // namespace internal
+<span class="lineNum">     318 </span>            : 
+<span class="lineNum">     319 </span>            : // A Matcher&lt;T&gt; is a copyable and IMMUTABLE (except by assignment)
+<span class="lineNum">     320 </span>            : // object that can check whether a value of type T matches.  The
+<span class="lineNum">     321 </span>            : // implementation of Matcher&lt;T&gt; is just a std::shared_ptr to const
+<span class="lineNum">     322 </span>            : // MatcherInterface&lt;T&gt;.  Don't inherit from Matcher!
+<span class="lineNum">     323 </span>            : template &lt;typename T&gt;
+<span class="lineNum">     324 </span>            : class Matcher : public internal::MatcherBase&lt;T&gt; {
+<span class="lineNum">     325 </span>            :  public:
+<span class="lineNum">     326 </span>            :   // Constructs a null matcher.  Needed for storing Matcher objects in STL
+<span class="lineNum">     327 </span>            :   // containers.  A default-constructed matcher is not yet initialized.  You
+<span class="lineNum">     328 </span>            :   // cannot use it until a valid value has been assigned to it.
+<span class="lineNum">     329 </span>            :   explicit Matcher() {}  // NOLINT
+<span class="lineNum">     330 </span>            : 
+<span class="lineNum">     331 </span>            :   // Constructs a matcher from its implementation.
+<span class="lineNum">     332 </span>            :   explicit Matcher(const MatcherInterface&lt;const T&amp;&gt;* impl)
+<span class="lineNum">     333 </span>            :       : internal::MatcherBase&lt;T&gt;(impl) {}
+<span class="lineNum">     334 </span>            : 
+<span class="lineNum">     335 </span>            :   template &lt;typename U&gt;
+<span class="lineNum">     336 </span>            :   explicit Matcher(const MatcherInterface&lt;U&gt;* impl,
+<span class="lineNum">     337 </span>            :                    typename internal::EnableIf&lt;
+<span class="lineNum">     338 </span>            :                        !internal::IsSame&lt;U, const U&amp;&gt;::value&gt;::type* = nullptr)
+<span class="lineNum">     339 </span>            :       : internal::MatcherBase&lt;T&gt;(impl) {}
+<span class="lineNum">     340 </span>            : 
+<span class="lineNum">     341 </span>            :   // Implicit constructor here allows people to write
+<span class="lineNum">     342 </span>            :   // EXPECT_CALL(foo, Bar(5)) instead of EXPECT_CALL(foo, Bar(Eq(5))) sometimes
+<span class="lineNum">     343 </span>            :   Matcher(T value);  // NOLINT
+<span class="lineNum">     344 </span>            : };
+<span class="lineNum">     345 </span>            : 
+<span class="lineNum">     346 </span>            : // The following two specializations allow the user to write str
+<span class="lineNum">     347 </span>            : // instead of Eq(str) and &quot;foo&quot; instead of Eq(&quot;foo&quot;) when a std::string
+<a name="348"><span class="lineNum">     348 </span>            : // matcher is expected.</a>
+<span class="lineNum">     349 </span>            : template &lt;&gt;
+<span class="lineNum">     350 </span><span class="lineCov">         12 : class GTEST_API_ Matcher&lt;const std::string&amp;&gt;</span>
+<span class="lineNum">     351 </span>            :     : public internal::MatcherBase&lt;const std::string&amp;&gt; {
+<span class="lineNum">     352 </span>            :  public:
+<a name="353"><span class="lineNum">     353 </span>            :   Matcher() {}</a>
+<span class="lineNum">     354 </span>            : 
+<span class="lineNum">     355 </span><span class="lineCov">          2 :   explicit Matcher(const MatcherInterface&lt;const std::string&amp;&gt;* impl)</span>
+<span class="lineNum">     356 </span><span class="lineCov">          2 :       : internal::MatcherBase&lt;const std::string&amp;&gt;(impl) {}</span>
+<span class="lineNum">     357 </span>            : 
+<span class="lineNum">     358 </span>            :   // Allows the user to write str instead of Eq(str) sometimes, where
+<span class="lineNum">     359 </span>            :   // str is a std::string object.
+<span class="lineNum">     360 </span>            :   Matcher(const std::string&amp; s);  // NOLINT
+<span class="lineNum">     361 </span>            : 
+<span class="lineNum">     362 </span>            :   // Allows the user to write &quot;foo&quot; instead of Eq(&quot;foo&quot;) sometimes.
+<span class="lineNum">     363 </span>            :   Matcher(const char* s);  // NOLINT
+<span class="lineNum">     364 </span>            : };
+<span class="lineNum">     365 </span>            : 
+<span class="lineNum">     366 </span>            : template &lt;&gt;
+<span class="lineNum">     367 </span>            : class GTEST_API_ Matcher&lt;std::string&gt;
+<span class="lineNum">     368 </span>            :     : public internal::MatcherBase&lt;std::string&gt; {
+<span class="lineNum">     369 </span>            :  public:
+<span class="lineNum">     370 </span>            :   Matcher() {}
+<span class="lineNum">     371 </span>            : 
+<span class="lineNum">     372 </span>            :   explicit Matcher(const MatcherInterface&lt;const std::string&amp;&gt;* impl)
+<span class="lineNum">     373 </span>            :       : internal::MatcherBase&lt;std::string&gt;(impl) {}
+<span class="lineNum">     374 </span>            :   explicit Matcher(const MatcherInterface&lt;std::string&gt;* impl)
+<span class="lineNum">     375 </span>            :       : internal::MatcherBase&lt;std::string&gt;(impl) {}
+<span class="lineNum">     376 </span>            : 
+<span class="lineNum">     377 </span>            :   // Allows the user to write str instead of Eq(str) sometimes, where
+<span class="lineNum">     378 </span>            :   // str is a string object.
+<span class="lineNum">     379 </span>            :   Matcher(const std::string&amp; s);  // NOLINT
+<span class="lineNum">     380 </span>            : 
+<span class="lineNum">     381 </span>            :   // Allows the user to write &quot;foo&quot; instead of Eq(&quot;foo&quot;) sometimes.
+<span class="lineNum">     382 </span>            :   Matcher(const char* s);  // NOLINT
+<span class="lineNum">     383 </span>            : };
+<span class="lineNum">     384 </span>            : 
+<span class="lineNum">     385 </span>            : #if GTEST_HAS_ABSL
+<span class="lineNum">     386 </span>            : // The following two specializations allow the user to write str
+<span class="lineNum">     387 </span>            : // instead of Eq(str) and &quot;foo&quot; instead of Eq(&quot;foo&quot;) when a absl::string_view
+<span class="lineNum">     388 </span>            : // matcher is expected.
+<span class="lineNum">     389 </span>            : template &lt;&gt;
+<span class="lineNum">     390 </span>            : class GTEST_API_ Matcher&lt;const absl::string_view&amp;&gt;
+<span class="lineNum">     391 </span>            :     : public internal::MatcherBase&lt;const absl::string_view&amp;&gt; {
+<span class="lineNum">     392 </span>            :  public:
+<span class="lineNum">     393 </span>            :   Matcher() {}
+<span class="lineNum">     394 </span>            : 
+<span class="lineNum">     395 </span>            :   explicit Matcher(const MatcherInterface&lt;const absl::string_view&amp;&gt;* impl)
+<span class="lineNum">     396 </span>            :       : internal::MatcherBase&lt;const absl::string_view&amp;&gt;(impl) {}
+<span class="lineNum">     397 </span>            : 
+<span class="lineNum">     398 </span>            :   // Allows the user to write str instead of Eq(str) sometimes, where
+<span class="lineNum">     399 </span>            :   // str is a std::string object.
+<span class="lineNum">     400 </span>            :   Matcher(const std::string&amp; s);  // NOLINT
+<span class="lineNum">     401 </span>            : 
+<span class="lineNum">     402 </span>            :   // Allows the user to write &quot;foo&quot; instead of Eq(&quot;foo&quot;) sometimes.
+<span class="lineNum">     403 </span>            :   Matcher(const char* s);  // NOLINT
+<span class="lineNum">     404 </span>            : 
+<span class="lineNum">     405 </span>            :   // Allows the user to pass absl::string_views directly.
+<span class="lineNum">     406 </span>            :   Matcher(absl::string_view s);  // NOLINT
+<span class="lineNum">     407 </span>            : };
+<span class="lineNum">     408 </span>            : 
+<span class="lineNum">     409 </span>            : template &lt;&gt;
+<span class="lineNum">     410 </span>            : class GTEST_API_ Matcher&lt;absl::string_view&gt;
+<span class="lineNum">     411 </span>            :     : public internal::MatcherBase&lt;absl::string_view&gt; {
+<span class="lineNum">     412 </span>            :  public:
+<span class="lineNum">     413 </span>            :   Matcher() {}
+<span class="lineNum">     414 </span>            : 
+<span class="lineNum">     415 </span>            :   explicit Matcher(const MatcherInterface&lt;const absl::string_view&amp;&gt;* impl)
+<span class="lineNum">     416 </span>            :       : internal::MatcherBase&lt;absl::string_view&gt;(impl) {}
+<span class="lineNum">     417 </span>            :   explicit Matcher(const MatcherInterface&lt;absl::string_view&gt;* impl)
+<span class="lineNum">     418 </span>            :       : internal::MatcherBase&lt;absl::string_view&gt;(impl) {}
+<span class="lineNum">     419 </span>            : 
+<span class="lineNum">     420 </span>            :   // Allows the user to write str instead of Eq(str) sometimes, where
+<span class="lineNum">     421 </span>            :   // str is a std::string object.
+<span class="lineNum">     422 </span>            :   Matcher(const std::string&amp; s);  // NOLINT
+<span class="lineNum">     423 </span>            : 
+<span class="lineNum">     424 </span>            :   // Allows the user to write &quot;foo&quot; instead of Eq(&quot;foo&quot;) sometimes.
+<span class="lineNum">     425 </span>            :   Matcher(const char* s);  // NOLINT
+<span class="lineNum">     426 </span>            : 
+<span class="lineNum">     427 </span>            :   // Allows the user to pass absl::string_views directly.
+<span class="lineNum">     428 </span>            :   Matcher(absl::string_view s);  // NOLINT
+<span class="lineNum">     429 </span>            : };
+<span class="lineNum">     430 </span>            : #endif  // GTEST_HAS_ABSL
+<span class="lineNum">     431 </span>            : 
+<span class="lineNum">     432 </span>            : // Prints a matcher in a human-readable format.
+<span class="lineNum">     433 </span>            : template &lt;typename T&gt;
+<span class="lineNum">     434 </span>            : std::ostream&amp; operator&lt;&lt;(std::ostream&amp; os, const Matcher&lt;T&gt;&amp; matcher) {
+<span class="lineNum">     435 </span>            :   matcher.DescribeTo(&amp;os);
+<span class="lineNum">     436 </span>            :   return os;
+<span class="lineNum">     437 </span>            : }
+<span class="lineNum">     438 </span>            : 
+<span class="lineNum">     439 </span>            : // The PolymorphicMatcher class template makes it easy to implement a
+<span class="lineNum">     440 </span>            : // polymorphic matcher (i.e. a matcher that can match values of more
+<span class="lineNum">     441 </span>            : // than one type, e.g. Eq(n) and NotNull()).
+<span class="lineNum">     442 </span>            : //
+<span class="lineNum">     443 </span>            : // To define a polymorphic matcher, a user should provide an Impl
+<span class="lineNum">     444 </span>            : // class that has a DescribeTo() method and a DescribeNegationTo()
+<span class="lineNum">     445 </span>            : // method, and define a member function (or member function template)
+<span class="lineNum">     446 </span>            : //
+<span class="lineNum">     447 </span>            : //   bool MatchAndExplain(const Value&amp; value,
+<span class="lineNum">     448 </span>            : //                        MatchResultListener* listener) const;
+<span class="lineNum">     449 </span>            : //
+<a name="450"><span class="lineNum">     450 </span>            : // See the definition of NotNull() for a complete example.</a>
+<span class="lineNum">     451 </span>            : template &lt;class Impl&gt;
+<a name="452"><span class="lineNum">     452 </span><span class="lineCov">          2 : class PolymorphicMatcher {</span></a>
+<span class="lineNum">     453 </span>            :  public:
+<span class="lineNum">     454 </span><span class="lineCov">          2 :   explicit PolymorphicMatcher(const Impl&amp; an_impl) : impl_(an_impl) {}</span>
+<span class="lineNum">     455 </span>            : 
+<span class="lineNum">     456 </span>            :   // Returns a mutable reference to the underlying matcher
+<span class="lineNum">     457 </span>            :   // implementation object.
+<span class="lineNum">     458 </span>            :   Impl&amp; mutable_impl() { return impl_; }
+<span class="lineNum">     459 </span>            : 
+<span class="lineNum">     460 </span>            :   // Returns an immutable reference to the underlying matcher
+<span class="lineNum">     461 </span>            :   // implementation object.
+<span class="lineNum">     462 </span>            :   const Impl&amp; impl() const { return impl_; }
+<a name="463"><span class="lineNum">     463 </span>            : </a>
+<span class="lineNum">     464 </span>            :   template &lt;typename T&gt;
+<span class="lineNum">     465 </span><span class="lineCov">          2 :   operator Matcher&lt;T&gt;() const {</span>
+<span class="lineNum">     466 </span><span class="lineCov">          2 :     return Matcher&lt;T&gt;(new MonomorphicImpl&lt;const T&amp;&gt;(impl_));</span>
+<span class="lineNum">     467 </span>            :   }
+<span class="lineNum">     468 </span>            : 
+<a name="469"><span class="lineNum">     469 </span>            :  private:</a>
+<span class="lineNum">     470 </span>            :   template &lt;typename T&gt;
+<a name="471"><span class="lineNum">     471 </span><span class="lineCov">          4 :   class MonomorphicImpl : public MatcherInterface&lt;T&gt; {</span></a>
+<span class="lineNum">     472 </span>            :    public:
+<a name="473"><span class="lineNum">     473 </span><span class="lineCov">          2 :     explicit MonomorphicImpl(const Impl&amp; impl) : impl_(impl) {}</span></a>
+<span class="lineNum">     474 </span>            : 
+<a name="475"><span class="lineNum">     475 </span><span class="lineNoCov">          0 :     virtual void DescribeTo(::std::ostream* os) const { impl_.DescribeTo(os); }</span></a>
+<span class="lineNum">     476 </span>            : 
+<span class="lineNum">     477 </span><span class="lineNoCov">          0 :     virtual void DescribeNegationTo(::std::ostream* os) const {</span>
+<span class="lineNum">     478 </span><span class="lineNoCov">          0 :       impl_.DescribeNegationTo(os);</span>
+<a name="479"><span class="lineNum">     479 </span><span class="lineNoCov">          0 :     }</span></a>
+<span class="lineNum">     480 </span>            : 
+<span class="lineNum">     481 </span><span class="lineCov">          2 :     virtual bool MatchAndExplain(T x, MatchResultListener* listener) const {</span>
+<span class="lineNum">     482 </span><span class="lineCov">          2 :       return impl_.MatchAndExplain(x, listener);</span>
+<span class="lineNum">     483 </span>            :     }
+<span class="lineNum">     484 </span>            : 
+<span class="lineNum">     485 </span>            :    private:
+<span class="lineNum">     486 </span>            :     const Impl impl_;
+<span class="lineNum">     487 </span>            :   };
+<span class="lineNum">     488 </span>            : 
+<span class="lineNum">     489 </span>            :   Impl impl_;
+<span class="lineNum">     490 </span>            : };
+<span class="lineNum">     491 </span>            : 
+<span class="lineNum">     492 </span>            : // Creates a matcher from its implementation.
+<span class="lineNum">     493 </span>            : // DEPRECATED: Especially in the generic code, prefer:
+<span class="lineNum">     494 </span>            : //   Matcher&lt;T&gt;(new MyMatcherImpl&lt;const T&amp;&gt;(...));
+<span class="lineNum">     495 </span>            : //
+<span class="lineNum">     496 </span>            : // MakeMatcher may create a Matcher that accepts its argument by value, which
+<span class="lineNum">     497 </span>            : // leads to unnecessary copies &amp; lack of support for non-copyable types.
+<span class="lineNum">     498 </span>            : template &lt;typename T&gt;
+<span class="lineNum">     499 </span>            : inline Matcher&lt;T&gt; MakeMatcher(const MatcherInterface&lt;T&gt;* impl) {
+<span class="lineNum">     500 </span>            :   return Matcher&lt;T&gt;(impl);
+<span class="lineNum">     501 </span>            : }
+<span class="lineNum">     502 </span>            : 
+<span class="lineNum">     503 </span>            : // Creates a polymorphic matcher from its implementation.  This is
+<span class="lineNum">     504 </span>            : // easier to use than the PolymorphicMatcher&lt;Impl&gt; constructor as it
+<span class="lineNum">     505 </span>            : // doesn't require you to explicitly write the template argument, e.g.
+<span class="lineNum">     506 </span>            : //
+<span class="lineNum">     507 </span>            : //   MakePolymorphicMatcher(foo);
+<span class="lineNum">     508 </span>            : // vs
+<a name="509"><span class="lineNum">     509 </span>            : //   PolymorphicMatcher&lt;TypeOfFoo&gt;(foo);</a>
+<span class="lineNum">     510 </span>            : template &lt;class Impl&gt;
+<span class="lineNum">     511 </span><span class="lineCov">          2 : inline PolymorphicMatcher&lt;Impl&gt; MakePolymorphicMatcher(const Impl&amp; impl) {</span>
+<span class="lineNum">     512 </span><span class="lineCov">          2 :   return PolymorphicMatcher&lt;Impl&gt;(impl);</span>
+<span class="lineNum">     513 </span>            : }
+<span class="lineNum">     514 </span>            : 
+<span class="lineNum">     515 </span>            : namespace internal {
+<span class="lineNum">     516 </span>            : // Implements a matcher that compares a given value with a
+<span class="lineNum">     517 </span>            : // pre-supplied value using one of the ==, &lt;=, &lt;, etc, operators.  The
+<span class="lineNum">     518 </span>            : // two values being compared don't have to have the same type.
+<span class="lineNum">     519 </span>            : //
+<span class="lineNum">     520 </span>            : // The matcher defined here is polymorphic (for example, Eq(5) can be
+<span class="lineNum">     521 </span>            : // used to match an int, a short, a double, etc).  Therefore we use
+<span class="lineNum">     522 </span>            : // a template type conversion operator in the implementation.
+<span class="lineNum">     523 </span>            : //
+<span class="lineNum">     524 </span>            : // The following template definition assumes that the Rhs parameter is
+<span class="lineNum">     525 </span>            : // a &quot;bare&quot; type (i.e. neither 'const T' nor 'T&amp;').
+<span class="lineNum">     526 </span>            : template &lt;typename D, typename Rhs, typename Op&gt;
+<span class="lineNum">     527 </span>            : class ComparisonBase {
+<span class="lineNum">     528 </span>            :  public:
+<span class="lineNum">     529 </span>            :   explicit ComparisonBase(const Rhs&amp; rhs) : rhs_(rhs) {}
+<span class="lineNum">     530 </span>            :   template &lt;typename Lhs&gt;
+<span class="lineNum">     531 </span>            :   operator Matcher&lt;Lhs&gt;() const {
+<span class="lineNum">     532 </span>            :     return Matcher&lt;Lhs&gt;(new Impl&lt;const Lhs&amp;&gt;(rhs_));
+<span class="lineNum">     533 </span>            :   }
+<span class="lineNum">     534 </span>            : 
+<span class="lineNum">     535 </span>            :  private:
+<span class="lineNum">     536 </span>            :   template &lt;typename T&gt;
+<span class="lineNum">     537 </span>            :   static const T&amp; Unwrap(const T&amp; v) { return v; }
+<span class="lineNum">     538 </span>            :   template &lt;typename T&gt;
+<span class="lineNum">     539 </span>            :   static const T&amp; Unwrap(std::reference_wrapper&lt;T&gt; v) { return v; }
+<span class="lineNum">     540 </span>            : 
+<span class="lineNum">     541 </span>            :   template &lt;typename Lhs, typename = Rhs&gt;
+<span class="lineNum">     542 </span>            :   class Impl : public MatcherInterface&lt;Lhs&gt; {
+<span class="lineNum">     543 </span>            :    public:
+<span class="lineNum">     544 </span>            :     explicit Impl(const Rhs&amp; rhs) : rhs_(rhs) {}
+<span class="lineNum">     545 </span>            :     bool MatchAndExplain(Lhs lhs,
+<span class="lineNum">     546 </span>            :                          MatchResultListener* /* listener */) const override {
+<span class="lineNum">     547 </span>            :       return Op()(lhs, Unwrap(rhs_));
+<span class="lineNum">     548 </span>            :     }
+<span class="lineNum">     549 </span>            :     void DescribeTo(::std::ostream* os) const override {
+<span class="lineNum">     550 </span>            :       *os &lt;&lt; D::Desc() &lt;&lt; &quot; &quot;;
+<span class="lineNum">     551 </span>            :       UniversalPrint(Unwrap(rhs_), os);
+<span class="lineNum">     552 </span>            :     }
+<span class="lineNum">     553 </span>            :     void DescribeNegationTo(::std::ostream* os) const override {
+<span class="lineNum">     554 </span>            :       *os &lt;&lt; D::NegatedDesc() &lt;&lt;  &quot; &quot;;
+<span class="lineNum">     555 </span>            :       UniversalPrint(Unwrap(rhs_), os);
+<span class="lineNum">     556 </span>            :     }
+<span class="lineNum">     557 </span>            : 
+<span class="lineNum">     558 </span>            :    private:
+<span class="lineNum">     559 </span>            :     Rhs rhs_;
+<span class="lineNum">     560 </span>            :   };
+<span class="lineNum">     561 </span>            :   Rhs rhs_;
+<span class="lineNum">     562 </span>            : };
+<span class="lineNum">     563 </span>            : 
+<span class="lineNum">     564 </span>            : template &lt;typename Rhs&gt;
+<span class="lineNum">     565 </span>            : class EqMatcher : public ComparisonBase&lt;EqMatcher&lt;Rhs&gt;, Rhs, AnyEq&gt; {
+<span class="lineNum">     566 </span>            :  public:
+<span class="lineNum">     567 </span>            :   explicit EqMatcher(const Rhs&amp; rhs)
+<span class="lineNum">     568 </span>            :       : ComparisonBase&lt;EqMatcher&lt;Rhs&gt;, Rhs, AnyEq&gt;(rhs) { }
+<span class="lineNum">     569 </span>            :   static const char* Desc() { return &quot;is equal to&quot;; }
+<span class="lineNum">     570 </span>            :   static const char* NegatedDesc() { return &quot;isn't equal to&quot;; }
+<span class="lineNum">     571 </span>            : };
+<span class="lineNum">     572 </span>            : template &lt;typename Rhs&gt;
+<span class="lineNum">     573 </span>            : class NeMatcher : public ComparisonBase&lt;NeMatcher&lt;Rhs&gt;, Rhs, AnyNe&gt; {
+<span class="lineNum">     574 </span>            :  public:
+<span class="lineNum">     575 </span>            :   explicit NeMatcher(const Rhs&amp; rhs)
+<span class="lineNum">     576 </span>            :       : ComparisonBase&lt;NeMatcher&lt;Rhs&gt;, Rhs, AnyNe&gt;(rhs) { }
+<span class="lineNum">     577 </span>            :   static const char* Desc() { return &quot;isn't equal to&quot;; }
+<span class="lineNum">     578 </span>            :   static const char* NegatedDesc() { return &quot;is equal to&quot;; }
+<span class="lineNum">     579 </span>            : };
+<span class="lineNum">     580 </span>            : template &lt;typename Rhs&gt;
+<span class="lineNum">     581 </span>            : class LtMatcher : public ComparisonBase&lt;LtMatcher&lt;Rhs&gt;, Rhs, AnyLt&gt; {
+<span class="lineNum">     582 </span>            :  public:
+<span class="lineNum">     583 </span>            :   explicit LtMatcher(const Rhs&amp; rhs)
+<span class="lineNum">     584 </span>            :       : ComparisonBase&lt;LtMatcher&lt;Rhs&gt;, Rhs, AnyLt&gt;(rhs) { }
+<span class="lineNum">     585 </span>            :   static const char* Desc() { return &quot;is &lt;&quot;; }
+<span class="lineNum">     586 </span>            :   static const char* NegatedDesc() { return &quot;isn't &lt;&quot;; }
+<span class="lineNum">     587 </span>            : };
+<span class="lineNum">     588 </span>            : template &lt;typename Rhs&gt;
+<span class="lineNum">     589 </span>            : class GtMatcher : public ComparisonBase&lt;GtMatcher&lt;Rhs&gt;, Rhs, AnyGt&gt; {
+<span class="lineNum">     590 </span>            :  public:
+<span class="lineNum">     591 </span>            :   explicit GtMatcher(const Rhs&amp; rhs)
+<span class="lineNum">     592 </span>            :       : ComparisonBase&lt;GtMatcher&lt;Rhs&gt;, Rhs, AnyGt&gt;(rhs) { }
+<span class="lineNum">     593 </span>            :   static const char* Desc() { return &quot;is &gt;&quot;; }
+<span class="lineNum">     594 </span>            :   static const char* NegatedDesc() { return &quot;isn't &gt;&quot;; }
+<span class="lineNum">     595 </span>            : };
+<span class="lineNum">     596 </span>            : template &lt;typename Rhs&gt;
+<span class="lineNum">     597 </span>            : class LeMatcher : public ComparisonBase&lt;LeMatcher&lt;Rhs&gt;, Rhs, AnyLe&gt; {
+<span class="lineNum">     598 </span>            :  public:
+<span class="lineNum">     599 </span>            :   explicit LeMatcher(const Rhs&amp; rhs)
+<span class="lineNum">     600 </span>            :       : ComparisonBase&lt;LeMatcher&lt;Rhs&gt;, Rhs, AnyLe&gt;(rhs) { }
+<span class="lineNum">     601 </span>            :   static const char* Desc() { return &quot;is &lt;=&quot;; }
+<span class="lineNum">     602 </span>            :   static const char* NegatedDesc() { return &quot;isn't &lt;=&quot;; }
+<span class="lineNum">     603 </span>            : };
+<span class="lineNum">     604 </span>            : template &lt;typename Rhs&gt;
+<span class="lineNum">     605 </span>            : class GeMatcher : public ComparisonBase&lt;GeMatcher&lt;Rhs&gt;, Rhs, AnyGe&gt; {
+<span class="lineNum">     606 </span>            :  public:
+<span class="lineNum">     607 </span>            :   explicit GeMatcher(const Rhs&amp; rhs)
+<span class="lineNum">     608 </span>            :       : ComparisonBase&lt;GeMatcher&lt;Rhs&gt;, Rhs, AnyGe&gt;(rhs) { }
+<span class="lineNum">     609 </span>            :   static const char* Desc() { return &quot;is &gt;=&quot;; }
+<span class="lineNum">     610 </span>            :   static const char* NegatedDesc() { return &quot;isn't &gt;=&quot;; }
+<span class="lineNum">     611 </span>            : };
+<span class="lineNum">     612 </span>            : 
+<span class="lineNum">     613 </span>            : // Implements polymorphic matchers MatchesRegex(regex) and
+<a name="614"><span class="lineNum">     614 </span>            : // ContainsRegex(regex), which can be used as a Matcher&lt;T&gt; as long as</a>
+<span class="lineNum">     615 </span>            : // T can be converted to a string.
+<a name="616"><span class="lineNum">     616 </span><span class="lineCov">         10 : class MatchesRegexMatcher {</span></a>
+<span class="lineNum">     617 </span>            :  public:
+<span class="lineNum">     618 </span><span class="lineCov">          2 :   MatchesRegexMatcher(const RE* regex, bool full_match)</span>
+<span class="lineNum">     619 </span><span class="lineCov">          2 :       : regex_(regex), full_match_(full_match) {}</span>
+<span class="lineNum">     620 </span>            : 
+<span class="lineNum">     621 </span>            : #if GTEST_HAS_ABSL
+<span class="lineNum">     622 </span>            :   bool MatchAndExplain(const absl::string_view&amp; s,
+<span class="lineNum">     623 </span>            :                        MatchResultListener* listener) const {
+<span class="lineNum">     624 </span>            :     return MatchAndExplain(std::string(s), listener);
+<span class="lineNum">     625 </span>            :   }
+<span class="lineNum">     626 </span>            : #endif  // GTEST_HAS_ABSL
+<span class="lineNum">     627 </span>            : 
+<span class="lineNum">     628 </span>            :   // Accepts pointer types, particularly:
+<span class="lineNum">     629 </span>            :   //   const char*
+<span class="lineNum">     630 </span>            :   //   char*
+<span class="lineNum">     631 </span>            :   //   const wchar_t*
+<span class="lineNum">     632 </span>            :   //   wchar_t*
+<span class="lineNum">     633 </span>            :   template &lt;typename CharType&gt;
+<span class="lineNum">     634 </span>            :   bool MatchAndExplain(CharType* s, MatchResultListener* listener) const {
+<span class="lineNum">     635 </span>            :     return s != nullptr &amp;&amp; MatchAndExplain(std::string(s), listener);
+<span class="lineNum">     636 </span>            :   }
+<span class="lineNum">     637 </span>            : 
+<span class="lineNum">     638 </span>            :   // Matches anything that can convert to std::string.
+<span class="lineNum">     639 </span>            :   //
+<span class="lineNum">     640 </span>            :   // This is a template, not just a plain function with const std::string&amp;,
+<a name="641"><span class="lineNum">     641 </span>            :   // because absl::string_view has some interfering non-explicit constructors.</a>
+<span class="lineNum">     642 </span>            :   template &lt;class MatcheeStringType&gt;
+<span class="lineNum">     643 </span><span class="lineCov">          2 :   bool MatchAndExplain(const MatcheeStringType&amp; s,</span>
+<span class="lineNum">     644 </span>            :                        MatchResultListener* /* listener */) const {
+<span class="lineNum">     645 </span><span class="lineCov">          2 :     const std::string&amp; s2(s);</span>
+<span class="lineNum">     646 </span><span class="lineCov">          2 :     return full_match_ ? RE::FullMatch(s2, *regex_)</span>
+<span class="lineNum">     647 </span><span class="lineCov">          2 :                        : RE::PartialMatch(s2, *regex_);</span>
+<a name="648"><span class="lineNum">     648 </span>            :   }</a>
+<span class="lineNum">     649 </span>            : 
+<span class="lineNum">     650 </span><span class="lineNoCov">          0 :   void DescribeTo(::std::ostream* os) const {</span>
+<span class="lineNum">     651 </span><span class="lineNoCov">          0 :     *os &lt;&lt; (full_match_ ? &quot;matches&quot; : &quot;contains&quot;) &lt;&lt; &quot; regular expression &quot;;</span>
+<span class="lineNum">     652 </span><span class="lineNoCov">          0 :     UniversalPrinter&lt;std::string&gt;::Print(regex_-&gt;pattern(), os);</span>
+<a name="653"><span class="lineNum">     653 </span><span class="lineNoCov">          0 :   }</span></a>
+<span class="lineNum">     654 </span>            : 
+<span class="lineNum">     655 </span><span class="lineNoCov">          0 :   void DescribeNegationTo(::std::ostream* os) const {</span>
+<span class="lineNum">     656 </span><span class="lineNoCov">          0 :     *os &lt;&lt; &quot;doesn't &quot; &lt;&lt; (full_match_ ? &quot;match&quot; : &quot;contain&quot;)</span>
+<span class="lineNum">     657 </span><span class="lineNoCov">          0 :         &lt;&lt; &quot; regular expression &quot;;</span>
+<span class="lineNum">     658 </span><span class="lineNoCov">          0 :     UniversalPrinter&lt;std::string&gt;::Print(regex_-&gt;pattern(), os);</span>
+<span class="lineNum">     659 </span><span class="lineNoCov">          0 :   }</span>
+<span class="lineNum">     660 </span>            : 
+<span class="lineNum">     661 </span>            :  private:
+<span class="lineNum">     662 </span>            :   const std::shared_ptr&lt;const RE&gt; regex_;
+<span class="lineNum">     663 </span>            :   const bool full_match_;
+<span class="lineNum">     664 </span>            : };
+<span class="lineNum">     665 </span>            : }  // namespace internal
+<span class="lineNum">     666 </span>            : 
+<span class="lineNum">     667 </span>            : // Matches a string that fully matches regular expression 'regex'.
+<span class="lineNum">     668 </span>            : // The matcher takes ownership of 'regex'.
+<span class="lineNum">     669 </span>            : inline PolymorphicMatcher&lt;internal::MatchesRegexMatcher&gt; MatchesRegex(
+<span class="lineNum">     670 </span>            :     const internal::RE* regex) {
+<span class="lineNum">     671 </span>            :   return MakePolymorphicMatcher(internal::MatchesRegexMatcher(regex, true));
+<span class="lineNum">     672 </span>            : }
+<span class="lineNum">     673 </span>            : inline PolymorphicMatcher&lt;internal::MatchesRegexMatcher&gt; MatchesRegex(
+<span class="lineNum">     674 </span>            :     const std::string&amp; regex) {
+<span class="lineNum">     675 </span>            :   return MatchesRegex(new internal::RE(regex));
+<span class="lineNum">     676 </span>            : }
+<span class="lineNum">     677 </span>            : 
+<a name="678"><span class="lineNum">     678 </span>            : // Matches a string that contains regular expression 'regex'.</a>
+<span class="lineNum">     679 </span>            : // The matcher takes ownership of 'regex'.
+<span class="lineNum">     680 </span><span class="lineCov">          2 : inline PolymorphicMatcher&lt;internal::MatchesRegexMatcher&gt; ContainsRegex(</span>
+<span class="lineNum">     681 </span>            :     const internal::RE* regex) {
+<a name="682"><span class="lineNum">     682 </span><span class="lineCov">          2 :   return MakePolymorphicMatcher(internal::MatchesRegexMatcher(regex, false));</span></a>
+<span class="lineNum">     683 </span>            : }
+<span class="lineNum">     684 </span><span class="lineCov">          2 : inline PolymorphicMatcher&lt;internal::MatchesRegexMatcher&gt; ContainsRegex(</span>
+<span class="lineNum">     685 </span>            :     const std::string&amp; regex) {
+<span class="lineNum">     686 </span><span class="lineCov">          2 :   return ContainsRegex(new internal::RE(regex));</span>
+<span class="lineNum">     687 </span>            : }
+<span class="lineNum">     688 </span>            : 
+<span class="lineNum">     689 </span>            : // Creates a polymorphic matcher that matches anything equal to x.
+<span class="lineNum">     690 </span>            : // Note: if the parameter of Eq() were declared as const T&amp;, Eq(&quot;foo&quot;)
+<span class="lineNum">     691 </span>            : // wouldn't compile.
+<span class="lineNum">     692 </span>            : template &lt;typename T&gt;
+<span class="lineNum">     693 </span>            : inline internal::EqMatcher&lt;T&gt; Eq(T x) { return internal::EqMatcher&lt;T&gt;(x); }
+<span class="lineNum">     694 </span>            : 
+<span class="lineNum">     695 </span>            : // Constructs a Matcher&lt;T&gt; from a 'value' of type T.  The constructed
+<span class="lineNum">     696 </span>            : // matcher matches any value that's equal to 'value'.
+<span class="lineNum">     697 </span>            : template &lt;typename T&gt;
+<span class="lineNum">     698 </span>            : Matcher&lt;T&gt;::Matcher(T value) { *this = Eq(value); }
+<span class="lineNum">     699 </span>            : 
+<span class="lineNum">     700 </span>            : // Creates a monomorphic matcher that matches anything with type Lhs
+<span class="lineNum">     701 </span>            : // and equal to rhs.  A user may need to use this instead of Eq(...)
+<span class="lineNum">     702 </span>            : // in order to resolve an overloading ambiguity.
+<span class="lineNum">     703 </span>            : //
+<span class="lineNum">     704 </span>            : // TypedEq&lt;T&gt;(x) is just a convenient short-hand for Matcher&lt;T&gt;(Eq(x))
+<span class="lineNum">     705 </span>            : // or Matcher&lt;T&gt;(x), but more readable than the latter.
+<span class="lineNum">     706 </span>            : //
+<span class="lineNum">     707 </span>            : // We could define similar monomorphic matchers for other comparison
+<span class="lineNum">     708 </span>            : // operations (e.g. TypedLt, TypedGe, and etc), but decided not to do
+<span class="lineNum">     709 </span>            : // it yet as those are used much less than Eq() in practice.  A user
+<span class="lineNum">     710 </span>            : // can always write Matcher&lt;T&gt;(Lt(5)) to be explicit about the type,
+<span class="lineNum">     711 </span>            : // for example.
+<span class="lineNum">     712 </span>            : template &lt;typename Lhs, typename Rhs&gt;
+<span class="lineNum">     713 </span>            : inline Matcher&lt;Lhs&gt; TypedEq(const Rhs&amp; rhs) { return Eq(rhs); }
+<span class="lineNum">     714 </span>            : 
+<span class="lineNum">     715 </span>            : // Creates a polymorphic matcher that matches anything &gt;= x.
+<span class="lineNum">     716 </span>            : template &lt;typename Rhs&gt;
+<span class="lineNum">     717 </span>            : inline internal::GeMatcher&lt;Rhs&gt; Ge(Rhs x) {
+<span class="lineNum">     718 </span>            :   return internal::GeMatcher&lt;Rhs&gt;(x);
+<span class="lineNum">     719 </span>            : }
+<span class="lineNum">     720 </span>            : 
+<span class="lineNum">     721 </span>            : // Creates a polymorphic matcher that matches anything &gt; x.
+<span class="lineNum">     722 </span>            : template &lt;typename Rhs&gt;
+<span class="lineNum">     723 </span>            : inline internal::GtMatcher&lt;Rhs&gt; Gt(Rhs x) {
+<span class="lineNum">     724 </span>            :   return internal::GtMatcher&lt;Rhs&gt;(x);
+<span class="lineNum">     725 </span>            : }
+<span class="lineNum">     726 </span>            : 
+<span class="lineNum">     727 </span>            : // Creates a polymorphic matcher that matches anything &lt;= x.
+<span class="lineNum">     728 </span>            : template &lt;typename Rhs&gt;
+<span class="lineNum">     729 </span>            : inline internal::LeMatcher&lt;Rhs&gt; Le(Rhs x) {
+<span class="lineNum">     730 </span>            :   return internal::LeMatcher&lt;Rhs&gt;(x);
+<span class="lineNum">     731 </span>            : }
+<span class="lineNum">     732 </span>            : 
+<span class="lineNum">     733 </span>            : // Creates a polymorphic matcher that matches anything &lt; x.
+<span class="lineNum">     734 </span>            : template &lt;typename Rhs&gt;
+<span class="lineNum">     735 </span>            : inline internal::LtMatcher&lt;Rhs&gt; Lt(Rhs x) {
+<span class="lineNum">     736 </span>            :   return internal::LtMatcher&lt;Rhs&gt;(x);
+<span class="lineNum">     737 </span>            : }
+<span class="lineNum">     738 </span>            : 
+<span class="lineNum">     739 </span>            : // Creates a polymorphic matcher that matches anything != x.
+<span class="lineNum">     740 </span>            : template &lt;typename Rhs&gt;
+<span class="lineNum">     741 </span>            : inline internal::NeMatcher&lt;Rhs&gt; Ne(Rhs x) {
+<span class="lineNum">     742 </span>            :   return internal::NeMatcher&lt;Rhs&gt;(x);
+<span class="lineNum">     743 </span>            : }
+<span class="lineNum">     744 </span>            : }  // namespace testing
+<span class="lineNum">     745 </span>            : 
+<span class="lineNum">     746 </span>            : GTEST_DISABLE_MSC_WARNINGS_POP_()  //  4251 5046
+<span class="lineNum">     747 </span>            : 
+<span class="lineNum">     748 </span>            : #endif  // GTEST_INCLUDE_GTEST_GTEST_MATCHERS_H_
+</pre>
+      </td>
+    </tr>
+  </table>
+  <br>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="ruler"><img src="../../../glass.png" width=3 height=3 alt=""></td></tr>
+    <tr><td class="versionInfo">Generated by: <a href="http://ltp.sourceforge.net/coverage/lcov.php" target="_parent">LCOV version 1.13</a></td></tr>
+  </table>
+  <br>
+
+</body>
+</html>

@@ -3,17 +3,28 @@
 
 // 测试JSON::JSON(json_e)
 TEST(TestCreatJSON, InputType){
-	JSON* bol_json = new JSON(json_e::JSON_BOL);
-    EXPECT_EQ(bol_json->get_type(), json_e::JSON_BOL);
-    delete bol_json;
+	JSON bol_json(json_e::JSON_BOL);
+	JSON str_json(json_e::JSON_STR);
+	JSON num_json(json_e::JSON_NUM);
+	JSON obj_json(json_e::JSON_OBJ);
+	JSON arr_json(json_e::JSON_ARR);
+	JSON none_json(json_e::JSON_NONE);
+    EXPECT_EQ(bol_json.get_type(), json_e::JSON_BOL);
+    EXPECT_EQ(str_json.get_type(), json_e::JSON_STR);
+    EXPECT_EQ(num_json.get_type(), json_e::JSON_NUM);
+    EXPECT_EQ(arr_json.get_type(), json_e::JSON_ARR);
+    EXPECT_EQ(obj_json.get_type(), json_e::JSON_OBJ);
+    EXPECT_EQ(none_json.get_type(), json_e::JSON_NONE);
 }
 
 // 测试JSON::JSON(T)
 TEST(TestCreatJSON, InputValue){
 	JSON str_json("char*");
+	JSON str1_json((std::string)"char*");
 	JSON num_json(1.0);
 	JSON bol_json(true);
 	EXPECT_EQ(str_json.get_type(), json_e::JSON_STR);
+	EXPECT_EQ(str1_json.get_type(), json_e::JSON_STR);
 	EXPECT_EQ(num_json.get_type(), json_e::JSON_NUM);
 	EXPECT_EQ(bol_json.get_type(), json_e::JSON_BOL);
 }
@@ -25,12 +36,27 @@ TEST(TestSetJson, SetConstValue){
 	none_json.set_value(1.0);
 	EXPECT_EQ(none_json.get_type(), json_e::JSON_NUM);
 
-	// 测试非空JSON设置同类型值
+	// 测试非空JSON设置同类型值，成功
 	JSON str_json("2.0");
+	JSON str1_json("2.0");
+	JSON num_json(1.1);
+	JSON bol_json(true);
+	std::string str = "3.1";
 	EXPECT_EQ(str_json.set_value("3.1"), 0);
+	EXPECT_EQ(str1_json.set_value(str), 0);
+	EXPECT_EQ(num_json.set_value((NUM)2), 0);
+	EXPECT_EQ(bol_json.set_value(false), 0);
+
+	EXPECT_EQ(str_json.get_from_str(), "3.1");
+	EXPECT_EQ(str1_json.get_from_str(), "3.1");
+	EXPECT_EQ(num_json.get_from_num(), 2);
+	EXPECT_EQ(bol_json.get_from_bol(), false);
 	
-	// 测试非空JSON设置不同类型值 
-	EXPECT_EQ(str_json.set_value(3.1), -1);
+	// 测试非空JSON设置不同类型值 , 失败
+	EXPECT_NE(str_json.set_value(3.1), 0);
+	EXPECT_NE(str_json.set_value(true), 0);
+	EXPECT_NE(bol_json.set_value("3.1"), 0);
+	EXPECT_NE(bol_json.set_value(str), 0);
 }
 
 // 测试JSON::obj_add
@@ -52,11 +78,16 @@ TEST(TestAddJSON, AddKeyValue){
 	// OBJ类型，键已存在时添加， 失败
 	EXPECT_EQ(obj_json->get_type(), json_e::JSON_OBJ);
 	EXPECT_NE(obj_json->obj_add("name2", &num_json), 0);
+	std::string err_info = obj_json->get_err_info();
+	ASSERT_TRUE(err_info.size() != 0);
+
+	delete obj_json;
 
 	// 非OBJ类型非空对象添加, 失败
 	EXPECT_NE(str_json.obj_add("name2", &num_json), 0);
 
-	delete obj_json;
+	// OBJ类型非空对象添加,键为空时， 失败
+	ASSERT_DEATH(str_json.obj_add(NULL, &num_json), "");
 }
 
 // 测试JSON::arr_add
@@ -102,12 +133,15 @@ TEST(TestGetJson, GetValue){
 	JSON num_json(3.5);
 	JSON bol_json(true);
 
+	// 调用相应类型的get函数，成功
 	EXPECT_EQ(num_json.get_from_num(), 3.5);
 	EXPECT_EQ(bol_json.get_from_bol(), true);
+	EXPECT_EQ(str_json.get_from_str(), "value_str");
 
-	std::string str = str_json.get_from_str();
-	EXPECT_EQ(str, "value_str");
-
+	// 调用非相应类型的get函数，抛出异常
+	ASSERT_ANY_THROW(num_json.get_from_bol());
+	ASSERT_ANY_THROW(num_json.get_from_str());
+	ASSERT_ANY_THROW(str_json.get_from_num());
 }
 
 // 测试JSON::get_from_key
@@ -119,8 +153,16 @@ TEST(TestGetJson, GetFromKey){
 	JSON* obj_json = new JSON(json_e::JSON_OBJ);
 	obj_json->obj_add("name1", &num_json);
 	obj_json->obj_add("name2", &bol_json);
+
+	// 正常调用, 成功
 	JSON* get_name2 = obj_json->get_from_key("name2");
 	EXPECT_EQ(get_name2->get_from_bol(), true);
+	
+	// 非OBJ类型调用，失败
+	EXPECT_EQ(bol_json.get_from_key("name2"), nullptr);
+	// 不存在键查询，失败
+	EXPECT_EQ(obj_json->get_from_key("name3"), nullptr);
+	
 	delete get_name2;
 	delete obj_json;
 }
@@ -134,9 +176,22 @@ TEST(TestGetJson, GetFromArr){
 	JSON* arr_json = new JSON(json_e::JSON_ARR);
 	arr_json->arr_add(-1, &num_json);
 	arr_json->arr_add(-1, &bol_json);
+	// 正常查询，-1查询末尾对象，成功
 	JSON* get_index = arr_json->get_from_arr(-1);
 	EXPECT_EQ(get_index->get_from_bol(), true);
 	delete get_index;
+
+	// 正常查询，下标0查询，成功
+	get_index = arr_json->get_from_arr(0);
+	EXPECT_EQ(get_index->get_from_num(), 3.5);
+	delete get_index;
+	
+	// 超出范围查询，失败
+	EXPECT_EQ(arr_json->get_from_arr(5), nullptr);
+
+	// 非ARR类型调用，失败
+	EXPECT_EQ(str_json.get_from_arr(-1), nullptr);
+	
 	delete arr_json;
 }
 
@@ -364,6 +419,62 @@ TEST(TestFormatComplex, ARRandOBJToStr){
 	delete bol_json;
 	delete num_json;
 	delete str_json;
+	delete arr_json;
+	delete obj_json;
+}
+
+TEST(TestSize, AllType){
+	JSON none_json;
+	JSON str_json("111");
+	JSON* arr_json = new JSON(json_e::JSON_ARR);
+	JSON* obj_json = new JSON(json_e::JSON_OBJ);
+
+	arr_json->arr_add(-1, &none_json);
+	arr_json->arr_add(1, &str_json);
+
+	obj_json->obj_add("id1", arr_json);
+	obj_json->obj_add("id2", &none_json);
+	obj_json->obj_add("id3", obj_json);
+
+	EXPECT_EQ(none_json.size(), 0);
+	EXPECT_EQ(str_json.size(), 1);
+	EXPECT_EQ(arr_json->size(), 2);
+	EXPECT_EQ(obj_json->size(), 3);
+
+	delete arr_json;
+	delete obj_json;
+}
+
+TEST(TestRmJson, ARRandOBJ){
+	JSON none_json;
+	JSON str_json("111");
+	JSON* arr_json = new JSON(json_e::JSON_ARR);
+	JSON* obj_json = new JSON(json_e::JSON_OBJ);
+
+	arr_json->arr_add(-1, &none_json);
+	arr_json->arr_add(1, &str_json);
+
+	obj_json->obj_add("id1", arr_json);
+	obj_json->obj_add("id2", &none_json);
+	obj_json->obj_add("id3", obj_json);
+	
+	EXPECT_EQ(arr_json->size(), 2);
+	EXPECT_EQ(obj_json->size(), 3);
+
+	// 正常情况删除，成功
+	EXPECT_EQ(obj_json->obj_rm("id1"), 0);
+	EXPECT_EQ(arr_json->arr_rm(-1), 0);
+
+	// 空指针删除，失败
+	ASSERT_DEATH(obj_json->obj_rm(NULL), "");
+	// 键不存在删除，失败
+	EXPECT_NE(obj_json->obj_rm("id1"), 0);
+	// 输入下标超范围，失败
+	EXPECT_NE(arr_json->arr_rm(1), 0);
+	
+	EXPECT_EQ(arr_json->size(), 1);
+	EXPECT_EQ(obj_json->size(), 2);
+
 	delete arr_json;
 	delete obj_json;
 }

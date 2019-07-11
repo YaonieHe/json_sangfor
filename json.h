@@ -110,7 +110,7 @@ public:
 	 */			
 	JSON(NUM value);
 	JSON(const char* value);
-	JSON(std::string value);
+	JSON(const std::string& value);
 	JSON(bool value);
 	/*
 	* 拷贝构造
@@ -156,7 +156,7 @@ public:
 	int set_value(bool value);				
 	int set_value(NUM value);
 	int set_value(const char* value);
-	int set_value(std::string value);
+	int set_value(const std::string& value);
 	/*
 	* OBJ类型，新增一个键值对, 成功返回0
 	 */

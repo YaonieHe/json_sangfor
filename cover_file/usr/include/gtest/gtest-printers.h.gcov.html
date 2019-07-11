@@ -32,16 +32,16 @@
             <td></td>
             <td class="headerItem">Lines:</td>
             <td class="headerCovTableEntry">0</td>
-            <td class="headerCovTableEntry">47</td>
+            <td class="headerCovTableEntry">53</td>
             <td class="headerCovTableEntryLo">0.0 %</td>
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2019-07-10 19:13:58</td>
+            <td class="headerValue">2019-07-11 15:14:39</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">0</td>
-            <td class="headerCovTableEntry">72</td>
+            <td class="headerCovTableEntry">91</td>
             <td class="headerCovTableEntryLo">0.0 %</td>
           </tr>
           <tr><td><img src="../../../glass.png" width=3 height=3 alt=""></td></tr>
@@ -496,19 +496,19 @@
 <span class="lineNum">     434 </span>            : // variable pointer or member function pointer doesn't really point to
 <span class="lineNum">     435 </span>            : // a location in the address space.  Their representation is
 <span class="lineNum">     436 </span>            : // implementation-defined.  Therefore they will be printed as raw
-<span class="lineNum">     437 </span>            : // bytes.)
+<a name="437"><span class="lineNum">     437 </span>            : // bytes.)</a>
 <span class="lineNum">     438 </span>            : template &lt;typename T&gt;
-<span class="lineNum">     439 </span>            : void DefaultPrintTo(WrapPrinterType&lt;kPrintPointer&gt; /* dummy */,
+<span class="lineNum">     439 </span><span class="lineNoCov">          0 : void DefaultPrintTo(WrapPrinterType&lt;kPrintPointer&gt; /* dummy */,</span>
 <span class="lineNum">     440 </span>            :                     T* p, ::std::ostream* os) {
-<span class="lineNum">     441 </span>            :   if (p == nullptr) {
-<span class="lineNum">     442 </span>            :     *os &lt;&lt; &quot;NULL&quot;;
+<span class="lineNum">     441 </span><span class="lineNoCov">          0 :   if (p == nullptr) {</span>
+<span class="lineNum">     442 </span><span class="lineNoCov">          0 :     *os &lt;&lt; &quot;NULL&quot;;</span>
 <span class="lineNum">     443 </span>            :   } else {
 <span class="lineNum">     444 </span>            :     // T is not a function type.  We just call &lt;&lt; to print p,
 <span class="lineNum">     445 </span>            :     // relying on ADL to pick up user-defined &lt;&lt; for their pointer
 <span class="lineNum">     446 </span>            :     // types, if any.
-<span class="lineNum">     447 </span>            :     *os &lt;&lt; p;
+<span class="lineNum">     447 </span><span class="lineNoCov">          0 :     *os &lt;&lt; p;</span>
 <span class="lineNum">     448 </span>            :   }
-<span class="lineNum">     449 </span>            : }
+<span class="lineNum">     449 </span><span class="lineNoCov">          0 : }</span>
 <span class="lineNum">     450 </span>            : template &lt;typename T&gt;
 <span class="lineNum">     451 </span>            : void DefaultPrintTo(WrapPrinterType&lt;kPrintFunctionPointer&gt; /* dummy */,
 <span class="lineNum">     452 </span>            :                     T* p, ::std::ostream* os) {
@@ -670,9 +670,9 @@
 <span class="lineNum">     608 </span>            : inline void PrintTo(absl::string_view sp, ::std::ostream* os) {
 <span class="lineNum">     609 </span>            :   PrintTo(::std::string(sp), os);
 <span class="lineNum">     610 </span>            : }
-<span class="lineNum">     611 </span>            : #endif  // GTEST_HAS_ABSL
+<a name="611"><span class="lineNum">     611 </span>            : #endif  // GTEST_HAS_ABSL</a>
 <span class="lineNum">     612 </span>            : 
-<span class="lineNum">     613 </span>            : inline void PrintTo(std::nullptr_t, ::std::ostream* os) { *os &lt;&lt; &quot;(nullptr)&quot;; }
+<span class="lineNum">     613 </span><span class="lineNoCov">          0 : inline void PrintTo(std::nullptr_t, ::std::ostream* os) { *os &lt;&lt; &quot;(nullptr)&quot;; }</span>
 <span class="lineNum">     614 </span>            : 
 <span class="lineNum">     615 </span>            : template &lt;typename T&gt;
 <span class="lineNum">     616 </span>            : void PrintTo(std::reference_wrapper&lt;T&gt; ref, ::std::ostream* os) {
