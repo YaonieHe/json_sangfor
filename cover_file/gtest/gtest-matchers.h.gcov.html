@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2019-07-11 14:56:41</td>
+            <td class="headerValue">2019-07-11 19:40:28</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">22</td>
@@ -174,9 +174,9 @@
 <span class="lineNum">     112 </span>            : 
 <a name="113"><span class="lineNum">     113 </span>            : // An instance of a subclass of this knows how to describe itself as a</a>
 <span class="lineNum">     114 </span>            : // matcher.
-<a name="115"><span class="lineNum">     115 </span><span class="lineCov">          1 : class MatcherDescriberInterface {</span></a>
+<a name="115"><span class="lineNum">     115 </span><span class="lineCov">          2 : class MatcherDescriberInterface {</span></a>
 <span class="lineNum">     116 </span>            :  public:
-<span class="lineNum">     117 </span><span class="lineCov">          1 :   virtual ~MatcherDescriberInterface() {}</span>
+<span class="lineNum">     117 </span><span class="lineCov">          2 :   virtual ~MatcherDescriberInterface() {}</span>
 <span class="lineNum">     118 </span>            : 
 <span class="lineNum">     119 </span>            :   // Describes this matcher to an ostream.  The function should print
 <span class="lineNum">     120 </span>            :   // a verb phrase that describes the property a value matching this
@@ -200,7 +200,7 @@
 <span class="lineNum">     138 </span>            : 
 <a name="139"><span class="lineNum">     139 </span>            : // The implementation of a matcher.</a>
 <span class="lineNum">     140 </span>            : template &lt;typename T&gt;
-<span class="lineNum">     141 </span><span class="lineCov">          2 : class MatcherInterface : public MatcherDescriberInterface {</span>
+<span class="lineNum">     141 </span><span class="lineCov">          4 : class MatcherInterface : public MatcherDescriberInterface {</span>
 <span class="lineNum">     142 </span>            :  public:
 <span class="lineNum">     143 </span>            :   // Returns true iff the matcher matches x; also explains the match
 <span class="lineNum">     144 </span>            :   // result to 'listener' if necessary (see the next paragraph), in
@@ -356,7 +356,7 @@
 <span class="lineNum">     294 </span>            :   MatcherBase() {}
 <a name="295"><span class="lineNum">     295 </span>            : </a>
 <span class="lineNum">     296 </span>            :   // Constructs a matcher from its implementation.
-<span class="lineNum">     297 </span><span class="lineCov">          1 :   explicit MatcherBase(const MatcherInterface&lt;const T&amp;&gt;* impl) : impl_(impl) {}</span>
+<span class="lineNum">     297 </span><span class="lineCov">          2 :   explicit MatcherBase(const MatcherInterface&lt;const T&amp;&gt;* impl) : impl_(impl) {}</span>
 <span class="lineNum">     298 </span>            : 
 <span class="lineNum">     299 </span>            :   template &lt;typename U&gt;
 <span class="lineNum">     300 </span>            :   explicit MatcherBase(
@@ -370,7 +370,7 @@
 <span class="lineNum">     308 </span>            :   MatcherBase(MatcherBase&amp;&amp;) = default;
 <a name="309"><span class="lineNum">     309 </span>            :   MatcherBase&amp; operator=(MatcherBase&amp;&amp;) = default;</a>
 <span class="lineNum">     310 </span>            : 
-<span class="lineNum">     311 </span><span class="lineCov">          6 :   virtual ~MatcherBase() {}</span>
+<span class="lineNum">     311 </span><span class="lineCov">         12 :   virtual ~MatcherBase() {}</span>
 <span class="lineNum">     312 </span>            : 
 <span class="lineNum">     313 </span>            :  private:
 <span class="lineNum">     314 </span>            :   std::shared_ptr&lt;const MatcherInterface&lt;const T&amp;&gt;&gt; impl_;
@@ -409,13 +409,13 @@
 <span class="lineNum">     347 </span>            : // instead of Eq(str) and &quot;foo&quot; instead of Eq(&quot;foo&quot;) when a std::string
 <a name="348"><span class="lineNum">     348 </span>            : // matcher is expected.</a>
 <span class="lineNum">     349 </span>            : template &lt;&gt;
-<span class="lineNum">     350 </span><span class="lineCov">          6 : class GTEST_API_ Matcher&lt;const std::string&amp;&gt;</span>
+<span class="lineNum">     350 </span><span class="lineCov">         12 : class GTEST_API_ Matcher&lt;const std::string&amp;&gt;</span>
 <span class="lineNum">     351 </span>            :     : public internal::MatcherBase&lt;const std::string&amp;&gt; {
 <span class="lineNum">     352 </span>            :  public:
 <a name="353"><span class="lineNum">     353 </span>            :   Matcher() {}</a>
 <span class="lineNum">     354 </span>            : 
-<span class="lineNum">     355 </span><span class="lineCov">          1 :   explicit Matcher(const MatcherInterface&lt;const std::string&amp;&gt;* impl)</span>
-<span class="lineNum">     356 </span><span class="lineCov">          1 :       : internal::MatcherBase&lt;const std::string&amp;&gt;(impl) {}</span>
+<span class="lineNum">     355 </span><span class="lineCov">          2 :   explicit Matcher(const MatcherInterface&lt;const std::string&amp;&gt;* impl)</span>
+<span class="lineNum">     356 </span><span class="lineCov">          2 :       : internal::MatcherBase&lt;const std::string&amp;&gt;(impl) {}</span>
 <span class="lineNum">     357 </span>            : 
 <span class="lineNum">     358 </span>            :   // Allows the user to write str instead of Eq(str) sometimes, where
 <span class="lineNum">     359 </span>            :   // str is a std::string object.
@@ -511,9 +511,9 @@
 <span class="lineNum">     449 </span>            : //
 <a name="450"><span class="lineNum">     450 </span>            : // See the definition of NotNull() for a complete example.</a>
 <span class="lineNum">     451 </span>            : template &lt;class Impl&gt;
-<a name="452"><span class="lineNum">     452 </span><span class="lineCov">          1 : class PolymorphicMatcher {</span></a>
+<a name="452"><span class="lineNum">     452 </span><span class="lineCov">          2 : class PolymorphicMatcher {</span></a>
 <span class="lineNum">     453 </span>            :  public:
-<span class="lineNum">     454 </span><span class="lineCov">          1 :   explicit PolymorphicMatcher(const Impl&amp; an_impl) : impl_(an_impl) {}</span>
+<span class="lineNum">     454 </span><span class="lineCov">          2 :   explicit PolymorphicMatcher(const Impl&amp; an_impl) : impl_(an_impl) {}</span>
 <span class="lineNum">     455 </span>            : 
 <span class="lineNum">     456 </span>            :   // Returns a mutable reference to the underlying matcher
 <span class="lineNum">     457 </span>            :   // implementation object.
@@ -524,15 +524,15 @@
 <span class="lineNum">     462 </span>            :   const Impl&amp; impl() const { return impl_; }
 <a name="463"><span class="lineNum">     463 </span>            : </a>
 <span class="lineNum">     464 </span>            :   template &lt;typename T&gt;
-<span class="lineNum">     465 </span><span class="lineCov">          1 :   operator Matcher&lt;T&gt;() const {</span>
-<span class="lineNum">     466 </span><span class="lineCov">          1 :     return Matcher&lt;T&gt;(new MonomorphicImpl&lt;const T&amp;&gt;(impl_));</span>
+<span class="lineNum">     465 </span><span class="lineCov">          2 :   operator Matcher&lt;T&gt;() const {</span>
+<span class="lineNum">     466 </span><span class="lineCov">          2 :     return Matcher&lt;T&gt;(new MonomorphicImpl&lt;const T&amp;&gt;(impl_));</span>
 <span class="lineNum">     467 </span>            :   }
 <span class="lineNum">     468 </span>            : 
 <a name="469"><span class="lineNum">     469 </span>            :  private:</a>
 <span class="lineNum">     470 </span>            :   template &lt;typename T&gt;
-<a name="471"><span class="lineNum">     471 </span><span class="lineCov">          2 :   class MonomorphicImpl : public MatcherInterface&lt;T&gt; {</span></a>
+<a name="471"><span class="lineNum">     471 </span><span class="lineCov">          4 :   class MonomorphicImpl : public MatcherInterface&lt;T&gt; {</span></a>
 <span class="lineNum">     472 </span>            :    public:
-<a name="473"><span class="lineNum">     473 </span><span class="lineCov">          1 :     explicit MonomorphicImpl(const Impl&amp; impl) : impl_(impl) {}</span></a>
+<a name="473"><span class="lineNum">     473 </span><span class="lineCov">          2 :     explicit MonomorphicImpl(const Impl&amp; impl) : impl_(impl) {}</span></a>
 <span class="lineNum">     474 </span>            : 
 <a name="475"><span class="lineNum">     475 </span><span class="lineNoCov">          0 :     virtual void DescribeTo(::std::ostream* os) const { impl_.DescribeTo(os); }</span></a>
 <span class="lineNum">     476 </span>            : 
@@ -540,8 +540,8 @@
 <span class="lineNum">     478 </span><span class="lineNoCov">          0 :       impl_.DescribeNegationTo(os);</span>
 <a name="479"><span class="lineNum">     479 </span><span class="lineNoCov">          0 :     }</span></a>
 <span class="lineNum">     480 </span>            : 
-<span class="lineNum">     481 </span><span class="lineCov">          1 :     virtual bool MatchAndExplain(T x, MatchResultListener* listener) const {</span>
-<span class="lineNum">     482 </span><span class="lineCov">          1 :       return impl_.MatchAndExplain(x, listener);</span>
+<span class="lineNum">     481 </span><span class="lineCov">          2 :     virtual bool MatchAndExplain(T x, MatchResultListener* listener) const {</span>
+<span class="lineNum">     482 </span><span class="lineCov">          2 :       return impl_.MatchAndExplain(x, listener);</span>
 <span class="lineNum">     483 </span>            :     }
 <span class="lineNum">     484 </span>            : 
 <span class="lineNum">     485 </span>            :    private:
@@ -570,8 +570,8 @@
 <span class="lineNum">     508 </span>            : // vs
 <a name="509"><span class="lineNum">     509 </span>            : //   PolymorphicMatcher&lt;TypeOfFoo&gt;(foo);</a>
 <span class="lineNum">     510 </span>            : template &lt;class Impl&gt;
-<span class="lineNum">     511 </span><span class="lineCov">          1 : inline PolymorphicMatcher&lt;Impl&gt; MakePolymorphicMatcher(const Impl&amp; impl) {</span>
-<span class="lineNum">     512 </span><span class="lineCov">          1 :   return PolymorphicMatcher&lt;Impl&gt;(impl);</span>
+<span class="lineNum">     511 </span><span class="lineCov">          2 : inline PolymorphicMatcher&lt;Impl&gt; MakePolymorphicMatcher(const Impl&amp; impl) {</span>
+<span class="lineNum">     512 </span><span class="lineCov">          2 :   return PolymorphicMatcher&lt;Impl&gt;(impl);</span>
 <span class="lineNum">     513 </span>            : }
 <span class="lineNum">     514 </span>            : 
 <span class="lineNum">     515 </span>            : namespace internal {
@@ -675,10 +675,10 @@
 <span class="lineNum">     613 </span>            : // Implements polymorphic matchers MatchesRegex(regex) and
 <a name="614"><span class="lineNum">     614 </span>            : // ContainsRegex(regex), which can be used as a Matcher&lt;T&gt; as long as</a>
 <span class="lineNum">     615 </span>            : // T can be converted to a string.
-<a name="616"><span class="lineNum">     616 </span><span class="lineCov">          5 : class MatchesRegexMatcher {</span></a>
+<a name="616"><span class="lineNum">     616 </span><span class="lineCov">         10 : class MatchesRegexMatcher {</span></a>
 <span class="lineNum">     617 </span>            :  public:
-<span class="lineNum">     618 </span><span class="lineCov">          1 :   MatchesRegexMatcher(const RE* regex, bool full_match)</span>
-<span class="lineNum">     619 </span><span class="lineCov">          1 :       : regex_(regex), full_match_(full_match) {}</span>
+<span class="lineNum">     618 </span><span class="lineCov">          2 :   MatchesRegexMatcher(const RE* regex, bool full_match)</span>
+<span class="lineNum">     619 </span><span class="lineCov">          2 :       : regex_(regex), full_match_(full_match) {}</span>
 <span class="lineNum">     620 </span>            : 
 <span class="lineNum">     621 </span>            : #if GTEST_HAS_ABSL
 <span class="lineNum">     622 </span>            :   bool MatchAndExplain(const absl::string_view&amp; s,
@@ -702,11 +702,11 @@
 <span class="lineNum">     640 </span>            :   // This is a template, not just a plain function with const std::string&amp;,
 <a name="641"><span class="lineNum">     641 </span>            :   // because absl::string_view has some interfering non-explicit constructors.</a>
 <span class="lineNum">     642 </span>            :   template &lt;class MatcheeStringType&gt;
-<span class="lineNum">     643 </span><span class="lineCov">          1 :   bool MatchAndExplain(const MatcheeStringType&amp; s,</span>
+<span class="lineNum">     643 </span><span class="lineCov">          2 :   bool MatchAndExplain(const MatcheeStringType&amp; s,</span>
 <span class="lineNum">     644 </span>            :                        MatchResultListener* /* listener */) const {
-<span class="lineNum">     645 </span><span class="lineCov">          1 :     const std::string&amp; s2(s);</span>
-<span class="lineNum">     646 </span><span class="lineCov">          1 :     return full_match_ ? RE::FullMatch(s2, *regex_)</span>
-<span class="lineNum">     647 </span><span class="lineCov">          1 :                        : RE::PartialMatch(s2, *regex_);</span>
+<span class="lineNum">     645 </span><span class="lineCov">          2 :     const std::string&amp; s2(s);</span>
+<span class="lineNum">     646 </span><span class="lineCov">          2 :     return full_match_ ? RE::FullMatch(s2, *regex_)</span>
+<span class="lineNum">     647 </span><span class="lineCov">          2 :                        : RE::PartialMatch(s2, *regex_);</span>
 <a name="648"><span class="lineNum">     648 </span>            :   }</a>
 <span class="lineNum">     649 </span>            : 
 <span class="lineNum">     650 </span><span class="lineNoCov">          0 :   void DescribeTo(::std::ostream* os) const {</span>
@@ -739,13 +739,13 @@
 <span class="lineNum">     677 </span>            : 
 <a name="678"><span class="lineNum">     678 </span>            : // Matches a string that contains regular expression 'regex'.</a>
 <span class="lineNum">     679 </span>            : // The matcher takes ownership of 'regex'.
-<span class="lineNum">     680 </span><span class="lineCov">          1 : inline PolymorphicMatcher&lt;internal::MatchesRegexMatcher&gt; ContainsRegex(</span>
+<span class="lineNum">     680 </span><span class="lineCov">          2 : inline PolymorphicMatcher&lt;internal::MatchesRegexMatcher&gt; ContainsRegex(</span>
 <span class="lineNum">     681 </span>            :     const internal::RE* regex) {
-<a name="682"><span class="lineNum">     682 </span><span class="lineCov">          1 :   return MakePolymorphicMatcher(internal::MatchesRegexMatcher(regex, false));</span></a>
+<a name="682"><span class="lineNum">     682 </span><span class="lineCov">          2 :   return MakePolymorphicMatcher(internal::MatchesRegexMatcher(regex, false));</span></a>
 <span class="lineNum">     683 </span>            : }
-<span class="lineNum">     684 </span><span class="lineCov">          1 : inline PolymorphicMatcher&lt;internal::MatchesRegexMatcher&gt; ContainsRegex(</span>
+<span class="lineNum">     684 </span><span class="lineCov">          2 : inline PolymorphicMatcher&lt;internal::MatchesRegexMatcher&gt; ContainsRegex(</span>
 <span class="lineNum">     685 </span>            :     const std::string&amp; regex) {
-<span class="lineNum">     686 </span><span class="lineCov">          1 :   return ContainsRegex(new internal::RE(regex));</span>
+<span class="lineNum">     686 </span><span class="lineCov">          2 :   return ContainsRegex(new internal::RE(regex));</span>
 <span class="lineNum">     687 </span>            : }
 <span class="lineNum">     688 </span>            : 
 <span class="lineNum">     689 </span>            : // Creates a polymorphic matcher that matches anything equal to x.

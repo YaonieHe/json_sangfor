@@ -31,18 +31,18 @@
             <td class="headerValue">main.info</td>
             <td></td>
             <td class="headerItem">Lines:</td>
-            <td class="headerCovTableEntry">173</td>
+            <td class="headerCovTableEntry">167</td>
             <td class="headerCovTableEntry">206</td>
-            <td class="headerCovTableEntryMed">84.0 %</td>
+            <td class="headerCovTableEntryMed">81.1 %</td>
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2019-07-11 15:14:39</td>
+            <td class="headerValue">2019-07-11 20:01:27</td>
             <td></td>
             <td class="headerItem">Functions:</td>
-            <td class="headerCovTableEntry">56</td>
+            <td class="headerCovTableEntry">55</td>
             <td class="headerCovTableEntry">60</td>
-            <td class="headerCovTableEntryHi">93.3 %</td>
+            <td class="headerCovTableEntryHi">91.7 %</td>
           </tr>
           <tr><td><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
         </table>
@@ -265,13 +265,13 @@
 <span class="lineNum">     203 </span>            :     }
 <a name="204"><span class="lineNum">     204 </span>            : </a>
 <span class="lineNum">     205 </span>            :     void
-<span class="lineNum">     206 </span><span class="lineCov">        148 :     _M_reset()</span>
+<span class="lineNum">     206 </span><span class="lineCov">        152 :     _M_reset()</span>
 <span class="lineNum">     207 </span>            :     {
-<span class="lineNum">     208 </span><span class="lineCov">        148 :       _M_header._M_parent = 0;</span>
-<span class="lineNum">     209 </span><span class="lineCov">        148 :       _M_header._M_left = &amp;_M_header;</span>
-<span class="lineNum">     210 </span><span class="lineCov">        148 :       _M_header._M_right = &amp;_M_header;</span>
-<span class="lineNum">     211 </span><span class="lineCov">        148 :       _M_node_count = 0;</span>
-<span class="lineNum">     212 </span><span class="lineCov">        148 :     }</span>
+<span class="lineNum">     208 </span><span class="lineCov">        152 :       _M_header._M_parent = 0;</span>
+<span class="lineNum">     209 </span><span class="lineCov">        152 :       _M_header._M_left = &amp;_M_header;</span>
+<span class="lineNum">     210 </span><span class="lineCov">        152 :       _M_header._M_right = &amp;_M_header;</span>
+<span class="lineNum">     211 </span><span class="lineCov">        152 :       _M_node_count = 0;</span>
+<span class="lineNum">     212 </span><span class="lineCov">        152 :     }</span>
 <span class="lineNum">     213 </span>            :   };
 <span class="lineNum">     214 </span>            : 
 <span class="lineNum">     215 </span>            :   template&lt;typename _Val&gt;
@@ -293,12 +293,12 @@
 <span class="lineNum">     231 </span>            :       __gnu_cxx::__aligned_membuf&lt;_Val&gt; _M_storage;
 <a name="232"><span class="lineNum">     232 </span>            : </a>
 <span class="lineNum">     233 </span>            :       _Val*
-<span class="lineNum">     234 </span><span class="lineCov">        150 :       _M_valptr()</span>
-<span class="lineNum">     235 </span><span class="lineCov">        150 :       { return _M_storage._M_ptr(); }</span>
+<span class="lineNum">     234 </span><span class="lineCov">        176 :       _M_valptr()</span>
+<span class="lineNum">     235 </span><span class="lineCov">        176 :       { return _M_storage._M_ptr(); }</span>
 <a name="236"><span class="lineNum">     236 </span>            : </a>
 <span class="lineNum">     237 </span>            :       const _Val*
-<span class="lineNum">     238 </span><span class="lineCov">        132 :       _M_valptr() const</span>
-<span class="lineNum">     239 </span><span class="lineCov">        132 :       { return _M_storage._M_ptr(); }</span>
+<span class="lineNum">     238 </span><span class="lineCov">        135 :       _M_valptr() const</span>
+<span class="lineNum">     239 </span><span class="lineCov">        135 :       { return _M_storage._M_ptr(); }</span>
 <span class="lineNum">     240 </span>            : #endif
 <span class="lineNum">     241 </span>            :     };
 <span class="lineNum">     242 </span>            : 
@@ -332,16 +332,16 @@
 <span class="lineNum">     270 </span>            :       : _M_node() { }
 <a name="271"><span class="lineNum">     271 </span>            : </a>
 <span class="lineNum">     272 </span>            :       explicit
-<span class="lineNum">     273 </span><span class="lineCov">        300 :       _Rb_tree_iterator(_Base_ptr __x) _GLIBCXX_NOEXCEPT</span>
-<span class="lineNum">     274 </span><span class="lineCov">        300 :       : _M_node(__x) { }</span>
+<span class="lineNum">     273 </span><span class="lineCov">        317 :       _Rb_tree_iterator(_Base_ptr __x) _GLIBCXX_NOEXCEPT</span>
+<span class="lineNum">     274 </span><span class="lineCov">        317 :       : _M_node(__x) { }</span>
 <a name="275"><span class="lineNum">     275 </span>            : </a>
 <span class="lineNum">     276 </span>            :       reference
-<span class="lineNum">     277 </span><span class="lineCov">         28 :       operator*() const _GLIBCXX_NOEXCEPT</span>
-<span class="lineNum">     278 </span><span class="lineCov">         28 :       { return *static_cast&lt;_Link_type&gt;(_M_node)-&gt;_M_valptr(); }</span>
+<span class="lineNum">     277 </span><span class="lineCov">         27 :       operator*() const _GLIBCXX_NOEXCEPT</span>
+<span class="lineNum">     278 </span><span class="lineCov">         27 :       { return *static_cast&lt;_Link_type&gt;(_M_node)-&gt;_M_valptr(); }</span>
 <a name="279"><span class="lineNum">     279 </span>            : </a>
 <span class="lineNum">     280 </span>            :       pointer
-<span class="lineNum">     281 </span><span class="lineCov">         81 :       operator-&gt;() const _GLIBCXX_NOEXCEPT</span>
-<span class="lineNum">     282 </span><span class="lineCov">         81 :       { return static_cast&lt;_Link_type&gt; (_M_node)-&gt;_M_valptr(); }</span>
+<span class="lineNum">     281 </span><span class="lineCov">         99 :       operator-&gt;() const _GLIBCXX_NOEXCEPT</span>
+<span class="lineNum">     282 </span><span class="lineCov">         99 :       { return static_cast&lt;_Link_type&gt; (_M_node)-&gt;_M_valptr(); }</span>
 <a name="283"><span class="lineNum">     283 </span>            : </a>
 <span class="lineNum">     284 </span>            :       _Self&amp;
 <span class="lineNum">     285 </span><span class="lineCov">          1 :       operator++() _GLIBCXX_NOEXCEPT</span>
@@ -351,11 +351,11 @@
 <span class="lineNum">     289 </span>            :       }
 <a name="290"><span class="lineNum">     290 </span>            : </a>
 <span class="lineNum">     291 </span>            :       _Self
-<span class="lineNum">     292 </span><span class="lineCov">         35 :       operator++(int) _GLIBCXX_NOEXCEPT</span>
+<span class="lineNum">     292 </span><span class="lineCov">         44 :       operator++(int) _GLIBCXX_NOEXCEPT</span>
 <span class="lineNum">     293 </span>            :       {
-<span class="lineNum">     294 </span><span class="lineCov">         35 :         _Self __tmp = *this;</span>
-<span class="lineNum">     295 </span><span class="lineCov">         35 :         _M_node = _Rb_tree_increment(_M_node);</span>
-<span class="lineNum">     296 </span><span class="lineCov">         35 :         return __tmp;</span>
+<span class="lineNum">     294 </span><span class="lineCov">         44 :         _Self __tmp = *this;</span>
+<span class="lineNum">     295 </span><span class="lineCov">         44 :         _M_node = _Rb_tree_increment(_M_node);</span>
+<span class="lineNum">     296 </span><span class="lineCov">         44 :         return __tmp;</span>
 <span class="lineNum">     297 </span>            :       }
 <a name="298"><span class="lineNum">     298 </span>            : </a>
 <span class="lineNum">     299 </span>            :       _Self&amp;
@@ -378,8 +378,8 @@
 <span class="lineNum">     316 </span><span class="lineCov">         64 :       { return _M_node == __x._M_node; }</span>
 <a name="317"><span class="lineNum">     317 </span>            : </a>
 <span class="lineNum">     318 </span>            :       bool
-<span class="lineNum">     319 </span><span class="lineCov">         86 :       operator!=(const _Self&amp; __x) const _GLIBCXX_NOEXCEPT</span>
-<span class="lineNum">     320 </span><span class="lineCov">         86 :       { return _M_node != __x._M_node; }</span>
+<span class="lineNum">     319 </span><span class="lineCov">         99 :       operator!=(const _Self&amp; __x) const _GLIBCXX_NOEXCEPT</span>
+<span class="lineNum">     320 </span><span class="lineCov">         99 :       { return _M_node != __x._M_node; }</span>
 <span class="lineNum">     321 </span>            : 
 <span class="lineNum">     322 </span>            :       _Base_ptr _M_node;
 <span class="lineNum">     323 </span>            :   };
@@ -633,8 +633,8 @@
 <span class="lineNum">     571 </span>            :       typedef _Alloc                            allocator_type;
 <a name="572"><span class="lineNum">     572 </span>            : </a>
 <span class="lineNum">     573 </span>            :       _Node_allocator&amp;
-<span class="lineNum">     574 </span><span class="lineCov">         82 :       _M_get_Node_allocator() _GLIBCXX_NOEXCEPT</span>
-<span class="lineNum">     575 </span><span class="lineCov">         82 :       { return *static_cast&lt;_Node_allocator*&gt;(&amp;this-&gt;_M_impl); }</span>
+<span class="lineNum">     574 </span><span class="lineCov">        100 :       _M_get_Node_allocator() _GLIBCXX_NOEXCEPT</span>
+<span class="lineNum">     575 </span><span class="lineCov">        100 :       { return *static_cast&lt;_Node_allocator*&gt;(&amp;this-&gt;_M_impl); }</span>
 <span class="lineNum">     576 </span>            :       
 <span class="lineNum">     577 </span>            :       const _Node_allocator&amp;
 <span class="lineNum">     578 </span>            :       _M_get_Node_allocator() const _GLIBCXX_NOEXCEPT
@@ -650,8 +650,8 @@
 <span class="lineNum">     588 </span><span class="lineCov">         25 :       { return _Alloc_traits::allocate(_M_get_Node_allocator(), 1); }</span>
 <a name="589"><span class="lineNum">     589 </span>            : </a>
 <span class="lineNum">     590 </span>            :       void
-<span class="lineNum">     591 </span><span class="lineCov">         16 :       _M_put_node(_Link_type __p) _GLIBCXX_NOEXCEPT</span>
-<span class="lineNum">     592 </span><span class="lineCov">         16 :       { _Alloc_traits::deallocate(_M_get_Node_allocator(), __p, 1); }</span>
+<span class="lineNum">     591 </span><span class="lineCov">         25 :       _M_put_node(_Link_type __p) _GLIBCXX_NOEXCEPT</span>
+<span class="lineNum">     592 </span><span class="lineCov">         25 :       { _Alloc_traits::deallocate(_M_get_Node_allocator(), __p, 1); }</span>
 <span class="lineNum">     593 </span>            : 
 <span class="lineNum">     594 </span>            : #if __cplusplus &lt; 201103L
 <span class="lineNum">     595 </span>            :       void
@@ -707,19 +707,19 @@
 <span class="lineNum">     645 </span>            :         }
 <a name="646"><span class="lineNum">     646 </span>            : </a>
 <span class="lineNum">     647 </span>            :       void
-<span class="lineNum">     648 </span><span class="lineCov">         16 :       _M_destroy_node(_Link_type __p) noexcept</span>
+<span class="lineNum">     648 </span><span class="lineCov">         25 :       _M_destroy_node(_Link_type __p) noexcept</span>
 <span class="lineNum">     649 </span>            :       {
-<span class="lineNum">     650 </span><span class="lineCov">         16 :         _Alloc_traits::destroy(_M_get_Node_allocator(), __p-&gt;_M_valptr());</span>
+<span class="lineNum">     650 </span><span class="lineCov">         25 :         _Alloc_traits::destroy(_M_get_Node_allocator(), __p-&gt;_M_valptr());</span>
 <span class="lineNum">     651 </span>            :         __p-&gt;~_Rb_tree_node&lt;_Val&gt;();
-<span class="lineNum">     652 </span><span class="lineCov">         16 :       }</span>
+<span class="lineNum">     652 </span><span class="lineCov">         25 :       }</span>
 <span class="lineNum">     653 </span>            : #endif
 <a name="654"><span class="lineNum">     654 </span>            : </a>
 <span class="lineNum">     655 </span>            :       void
-<span class="lineNum">     656 </span><span class="lineCov">         16 :       _M_drop_node(_Link_type __p) _GLIBCXX_NOEXCEPT</span>
+<span class="lineNum">     656 </span><span class="lineCov">         25 :       _M_drop_node(_Link_type __p) _GLIBCXX_NOEXCEPT</span>
 <span class="lineNum">     657 </span>            :       {
-<span class="lineNum">     658 </span><span class="lineCov">         16 :         _M_destroy_node(__p);</span>
-<span class="lineNum">     659 </span><span class="lineCov">         16 :         _M_put_node(__p);</span>
-<span class="lineNum">     660 </span><span class="lineCov">         16 :       }</span>
+<span class="lineNum">     658 </span><span class="lineCov">         25 :         _M_destroy_node(__p);</span>
+<span class="lineNum">     659 </span><span class="lineCov">         25 :         _M_put_node(__p);</span>
+<span class="lineNum">     660 </span><span class="lineCov">         25 :       }</span>
 <span class="lineNum">     661 </span>            : 
 <span class="lineNum">     662 </span>            :       template&lt;typename _NodeGen&gt;
 <span class="lineNum">     663 </span>            :         _Link_type
@@ -736,7 +736,7 @@
 <span class="lineNum">     674 </span>            :       // Unused _Is_pod_comparator is kept as it is part of mangled name.
 <a name="675"><span class="lineNum">     675 </span>            :       template&lt;typename _Key_compare,</a>
 <span class="lineNum">     676 </span>            :                bool /* _Is_pod_comparator */ = __is_pod(_Key_compare)&gt;
-<span class="lineNum">     677 </span><span class="lineCov">        117 :         struct _Rb_tree_impl</span>
+<span class="lineNum">     677 </span><span class="lineCov">        139 :         struct _Rb_tree_impl</span>
 <span class="lineNum">     678 </span>            :         : public _Node_allocator
 <span class="lineNum">     679 </span>            :         , public _Rb_tree_key_compare&lt;_Key_compare&gt;
 <span class="lineNum">     680 </span>            :         , public _Rb_tree_header
@@ -779,24 +779,24 @@
 <span class="lineNum">     717 </span>            :       { return this-&gt;_M_impl._M_header._M_parent; }
 <a name="718"><span class="lineNum">     718 </span>            : </a>
 <span class="lineNum">     719 </span>            :       _Base_ptr&amp;
-<span class="lineNum">     720 </span><span class="lineCov">          3 :       _M_leftmost() _GLIBCXX_NOEXCEPT</span>
-<span class="lineNum">     721 </span><span class="lineCov">          3 :       { return this-&gt;_M_impl._M_header._M_left; }</span>
+<span class="lineNum">     720 </span><span class="lineNoCov">          0 :       _M_leftmost() _GLIBCXX_NOEXCEPT</span>
+<span class="lineNum">     721 </span><span class="lineNoCov">          0 :       { return this-&gt;_M_impl._M_header._M_left; }</span>
 <span class="lineNum">     722 </span>            : 
 <span class="lineNum">     723 </span>            :       _Const_Base_ptr
 <span class="lineNum">     724 </span>            :       _M_leftmost() const _GLIBCXX_NOEXCEPT
 <span class="lineNum">     725 </span>            :       { return this-&gt;_M_impl._M_header._M_left; }
 <a name="726"><span class="lineNum">     726 </span>            : </a>
 <span class="lineNum">     727 </span>            :       _Base_ptr&amp;
-<span class="lineNum">     728 </span><span class="lineCov">         24 :       _M_rightmost() _GLIBCXX_NOEXCEPT</span>
-<span class="lineNum">     729 </span><span class="lineCov">         24 :       { return this-&gt;_M_impl._M_header._M_right; }</span>
+<span class="lineNum">     728 </span><span class="lineCov">         26 :       _M_rightmost() _GLIBCXX_NOEXCEPT</span>
+<span class="lineNum">     729 </span><span class="lineCov">         26 :       { return this-&gt;_M_impl._M_header._M_right; }</span>
 <span class="lineNum">     730 </span>            : 
 <span class="lineNum">     731 </span>            :       _Const_Base_ptr
 <span class="lineNum">     732 </span>            :       _M_rightmost() const _GLIBCXX_NOEXCEPT
 <span class="lineNum">     733 </span>            :       { return this-&gt;_M_impl._M_header._M_right; }
 <a name="734"><span class="lineNum">     734 </span>            : </a>
 <span class="lineNum">     735 </span>            :       _Link_type
-<span class="lineNum">     736 </span><span class="lineCov">        188 :       _M_begin() _GLIBCXX_NOEXCEPT</span>
-<span class="lineNum">     737 </span><span class="lineCov">        188 :       { return static_cast&lt;_Link_type&gt;(this-&gt;_M_impl._M_header._M_parent); }</span>
+<span class="lineNum">     736 </span><span class="lineCov">        214 :       _M_begin() _GLIBCXX_NOEXCEPT</span>
+<span class="lineNum">     737 </span><span class="lineCov">        214 :       { return static_cast&lt;_Link_type&gt;(this-&gt;_M_impl._M_header._M_parent); }</span>
 <span class="lineNum">     738 </span>            : 
 <span class="lineNum">     739 </span>            :       _Const_Link_type
 <span class="lineNum">     740 </span>            :       _M_begin() const _GLIBCXX_NOEXCEPT
@@ -806,32 +806,32 @@
 <span class="lineNum">     744 </span>            :       }
 <a name="745"><span class="lineNum">     745 </span>            : </a>
 <span class="lineNum">     746 </span>            :       _Base_ptr
-<span class="lineNum">     747 </span><span class="lineCov">        111 :       _M_end() _GLIBCXX_NOEXCEPT</span>
-<span class="lineNum">     748 </span><span class="lineCov">        111 :       { return &amp;this-&gt;_M_impl._M_header; }</span>
+<span class="lineNum">     747 </span><span class="lineCov">        112 :       _M_end() _GLIBCXX_NOEXCEPT</span>
+<span class="lineNum">     748 </span><span class="lineCov">        112 :       { return &amp;this-&gt;_M_impl._M_header; }</span>
 <span class="lineNum">     749 </span>            : 
 <span class="lineNum">     750 </span>            :       _Const_Base_ptr
 <span class="lineNum">     751 </span>            :       _M_end() const _GLIBCXX_NOEXCEPT
 <span class="lineNum">     752 </span>            :       { return &amp;this-&gt;_M_impl._M_header; }
 <a name="753"><span class="lineNum">     753 </span>            : </a>
 <span class="lineNum">     754 </span>            :       static const_reference
-<span class="lineNum">     755 </span><span class="lineCov">         76 :       _S_value(_Const_Link_type __x)</span>
-<span class="lineNum">     756 </span><span class="lineCov">         76 :       { return *__x-&gt;_M_valptr(); }</span>
+<span class="lineNum">     755 </span><span class="lineCov">         79 :       _S_value(_Const_Link_type __x)</span>
+<span class="lineNum">     756 </span><span class="lineCov">         79 :       { return *__x-&gt;_M_valptr(); }</span>
 <a name="757"><span class="lineNum">     757 </span>            : </a>
 <span class="lineNum">     758 </span>            :       static const _Key&amp;
-<span class="lineNum">     759 </span><span class="lineCov">         76 :       _S_key(_Const_Link_type __x)</span>
-<span class="lineNum">     760 </span><span class="lineCov">         76 :       { return _KeyOfValue()(_S_value(__x)); }</span>
+<span class="lineNum">     759 </span><span class="lineCov">         79 :       _S_key(_Const_Link_type __x)</span>
+<span class="lineNum">     760 </span><span class="lineCov">         79 :       { return _KeyOfValue()(_S_value(__x)); }</span>
 <a name="761"><span class="lineNum">     761 </span>            : </a>
 <span class="lineNum">     762 </span>            :       static _Link_type
-<span class="lineNum">     763 </span><span class="lineCov">         26 :       _S_left(_Base_ptr __x) _GLIBCXX_NOEXCEPT</span>
-<span class="lineNum">     764 </span><span class="lineCov">         26 :       { return static_cast&lt;_Link_type&gt;(__x-&gt;_M_left); }</span>
+<span class="lineNum">     763 </span><span class="lineCov">         33 :       _S_left(_Base_ptr __x) _GLIBCXX_NOEXCEPT</span>
+<span class="lineNum">     764 </span><span class="lineCov">         33 :       { return static_cast&lt;_Link_type&gt;(__x-&gt;_M_left); }</span>
 <span class="lineNum">     765 </span>            : 
 <span class="lineNum">     766 </span>            :       static _Const_Link_type
 <span class="lineNum">     767 </span>            :       _S_left(_Const_Base_ptr __x) _GLIBCXX_NOEXCEPT
 <span class="lineNum">     768 </span>            :       { return static_cast&lt;_Const_Link_type&gt;(__x-&gt;_M_left); }
 <a name="769"><span class="lineNum">     769 </span>            : </a>
 <span class="lineNum">     770 </span>            :       static _Link_type
-<span class="lineNum">     771 </span><span class="lineCov">         43 :       _S_right(_Base_ptr __x) _GLIBCXX_NOEXCEPT</span>
-<span class="lineNum">     772 </span><span class="lineCov">         43 :       { return static_cast&lt;_Link_type&gt;(__x-&gt;_M_right); }</span>
+<span class="lineNum">     771 </span><span class="lineCov">         56 :       _S_right(_Base_ptr __x) _GLIBCXX_NOEXCEPT</span>
+<span class="lineNum">     772 </span><span class="lineCov">         56 :       { return static_cast&lt;_Link_type&gt;(__x-&gt;_M_right); }</span>
 <span class="lineNum">     773 </span>            : 
 <span class="lineNum">     774 </span>            :       static _Const_Link_type
 <span class="lineNum">     775 </span>            :       _S_right(_Const_Base_ptr __x) _GLIBCXX_NOEXCEPT
@@ -1007,28 +1007,28 @@
 <span class="lineNum">     945 </span>            :       _Rb_tree(_Rb_tree&amp;&amp; __x, _Node_allocator&amp;&amp; __a);
 <a name="946"><span class="lineNum">     946 </span>            : #endif</a>
 <span class="lineNum">     947 </span>            : 
-<span class="lineNum">     948 </span><span class="lineCov">        117 :       ~_Rb_tree() _GLIBCXX_NOEXCEPT</span>
-<span class="lineNum">     949 </span><span class="lineCov">        117 :       { _M_erase(_M_begin()); }</span>
+<span class="lineNum">     948 </span><span class="lineCov">        139 :       ~_Rb_tree() _GLIBCXX_NOEXCEPT</span>
+<span class="lineNum">     949 </span><span class="lineCov">        139 :       { _M_erase(_M_begin()); }</span>
 <span class="lineNum">     950 </span>            : 
 <span class="lineNum">     951 </span>            :       _Rb_tree&amp;
 <span class="lineNum">     952 </span>            :       operator=(const _Rb_tree&amp; __x);
 <span class="lineNum">     953 </span>            : 
 <a name="954"><span class="lineNum">     954 </span>            :       // Accessors.</a>
 <span class="lineNum">     955 </span>            :       _Compare
-<span class="lineNum">     956 </span><span class="lineCov">          2 :       key_comp() const</span>
-<span class="lineNum">     957 </span><span class="lineCov">          2 :       { return _M_impl._M_key_compare; }</span>
+<span class="lineNum">     956 </span><span class="lineCov">          1 :       key_comp() const</span>
+<span class="lineNum">     957 </span><span class="lineCov">          1 :       { return _M_impl._M_key_compare; }</span>
 <a name="958"><span class="lineNum">     958 </span>            : </a>
 <span class="lineNum">     959 </span>            :       iterator
-<span class="lineNum">     960 </span><span class="lineCov">         30 :       begin() _GLIBCXX_NOEXCEPT</span>
-<span class="lineNum">     961 </span><span class="lineCov">         30 :       { return iterator(this-&gt;_M_impl._M_header._M_left); }</span>
+<span class="lineNum">     960 </span><span class="lineCov">         34 :       begin() _GLIBCXX_NOEXCEPT</span>
+<span class="lineNum">     961 </span><span class="lineCov">         34 :       { return iterator(this-&gt;_M_impl._M_header._M_left); }</span>
 <a name="962"><span class="lineNum">     962 </span>            : </a>
 <span class="lineNum">     963 </span>            :       const_iterator
 <span class="lineNum">     964 </span><span class="lineCov">          4 :       begin() const _GLIBCXX_NOEXCEPT</span>
 <span class="lineNum">     965 </span><span class="lineCov">          4 :       { return const_iterator(this-&gt;_M_impl._M_header._M_left); }</span>
 <a name="966"><span class="lineNum">     966 </span>            : </a>
 <span class="lineNum">     967 </span>            :       iterator
-<span class="lineNum">     968 </span><span class="lineCov">        158 :       end() _GLIBCXX_NOEXCEPT</span>
-<span class="lineNum">     969 </span><span class="lineCov">        158 :       { return iterator(&amp;this-&gt;_M_impl._M_header); }</span>
+<span class="lineNum">     968 </span><span class="lineCov">        171 :       end() _GLIBCXX_NOEXCEPT</span>
+<span class="lineNum">     969 </span><span class="lineCov">        171 :       { return iterator(&amp;this-&gt;_M_impl._M_header); }</span>
 <a name="970"><span class="lineNum">     970 </span>            : </a>
 <span class="lineNum">     971 </span>            :       const_iterator
 <span class="lineNum">     972 </span><span class="lineCov">         12 :       end() const _GLIBCXX_NOEXCEPT</span>
@@ -1055,8 +1055,8 @@
 <span class="lineNum">     993 </span>            :       { return _M_impl._M_node_count == 0; }
 <a name="994"><span class="lineNum">     994 </span>            : </a>
 <span class="lineNum">     995 </span>            :       size_type
-<span class="lineNum">     996 </span><span class="lineCov">         27 :       size() const _GLIBCXX_NOEXCEPT </span>
-<span class="lineNum">     997 </span><span class="lineCov">         27 :       { return _M_impl._M_node_count; }</span>
+<span class="lineNum">     996 </span><span class="lineCov">         28 :       size() const _GLIBCXX_NOEXCEPT </span>
+<span class="lineNum">     997 </span><span class="lineCov">         28 :       { return _M_impl._M_node_count; }</span>
 <span class="lineNum">     998 </span>            : 
 <span class="lineNum">     999 </span>            :       size_type
 <span class="lineNum">    1000 </span>            :       max_size() const _GLIBCXX_NOEXCEPT
@@ -1228,11 +1228,11 @@
 <span class="lineNum">    1166 </span>            :       erase(const key_type* __first, const key_type* __last);
 <a name="1167"><span class="lineNum">    1167 </span>            : </a>
 <span class="lineNum">    1168 </span>            :       void
-<span class="lineNum">    1169 </span><span class="lineCov">          9 :       clear() _GLIBCXX_NOEXCEPT</span>
+<span class="lineNum">    1169 </span><span class="lineCov">         13 :       clear() _GLIBCXX_NOEXCEPT</span>
 <span class="lineNum">    1170 </span>            :       {
-<span class="lineNum">    1171 </span><span class="lineCov">          9 :         _M_erase(_M_begin());</span>
-<span class="lineNum">    1172 </span><span class="lineCov">          9 :         _M_impl._M_reset();</span>
-<span class="lineNum">    1173 </span><span class="lineCov">          9 :       }</span>
+<span class="lineNum">    1171 </span><span class="lineCov">         13 :         _M_erase(_M_begin());</span>
+<span class="lineNum">    1172 </span><span class="lineCov">         13 :         _M_impl._M_reset();</span>
+<span class="lineNum">    1173 </span><span class="lineCov">         13 :       }</span>
 <span class="lineNum">    1174 </span>            : 
 <span class="lineNum">    1175 </span>            :       // Set operations.
 <span class="lineNum">    1176 </span>            :       iterator
@@ -1909,32 +1909,32 @@
 <span class="lineNum">    1847 </span>            :   template&lt;typename _Key, typename _Val, typename _KeyOfValue,
 <a name="1848"><span class="lineNum">    1848 </span>            :            typename _Compare, typename _Alloc&gt;</a>
 <span class="lineNum">    1849 </span>            :     void
-<span class="lineNum">    1850 </span><span class="lineCov">        156 :     _Rb_tree&lt;_Key, _Val, _KeyOfValue, _Compare, _Alloc&gt;::</span>
+<span class="lineNum">    1850 </span><span class="lineCov">        200 :     _Rb_tree&lt;_Key, _Val, _KeyOfValue, _Compare, _Alloc&gt;::</span>
 <span class="lineNum">    1851 </span>            :     _M_erase(_Link_type __x)
 <span class="lineNum">    1852 </span>            :     {
 <span class="lineNum">    1853 </span>            :       // Erase without rebalancing.
-<span class="lineNum">    1854 </span><span class="lineCov">        171 :       while (__x != 0)</span>
+<span class="lineNum">    1854 </span><span class="lineCov">        224 :       while (__x != 0)</span>
 <span class="lineNum">    1855 </span>            :         {
-<span class="lineNum">    1856 </span><span class="lineCov">         15 :           _M_erase(_S_right(__x));</span>
-<span class="lineNum">    1857 </span><span class="lineCov">         15 :           _Link_type __y = _S_left(__x);</span>
-<span class="lineNum">    1858 </span><span class="lineCov">         15 :           _M_drop_node(__x);</span>
-<span class="lineNum">    1859 </span><span class="lineCov">         15 :           __x = __y;</span>
+<span class="lineNum">    1856 </span><span class="lineCov">         24 :           _M_erase(_S_right(__x));</span>
+<span class="lineNum">    1857 </span><span class="lineCov">         24 :           _Link_type __y = _S_left(__x);</span>
+<span class="lineNum">    1858 </span><span class="lineCov">         24 :           _M_drop_node(__x);</span>
+<span class="lineNum">    1859 </span><span class="lineCov">         24 :           __x = __y;</span>
 <span class="lineNum">    1860 </span>            :         }
-<span class="lineNum">    1861 </span><span class="lineCov">        141 :     }</span>
+<span class="lineNum">    1861 </span><span class="lineCov">        176 :     }</span>
 <span class="lineNum">    1862 </span>            : 
 <span class="lineNum">    1863 </span>            :   template&lt;typename _Key, typename _Val, typename _KeyOfValue,
 <span class="lineNum">    1864 </span>            :            typename _Compare, typename _Alloc&gt;
 <a name="1865"><span class="lineNum">    1865 </span>            :     typename _Rb_tree&lt;_Key, _Val, _KeyOfValue,</a>
 <span class="lineNum">    1866 </span>            :                       _Compare, _Alloc&gt;::iterator
-<span class="lineNum">    1867 </span><span class="lineCov">         89 :     _Rb_tree&lt;_Key, _Val, _KeyOfValue, _Compare, _Alloc&gt;::</span>
+<span class="lineNum">    1867 </span><span class="lineCov">         91 :     _Rb_tree&lt;_Key, _Val, _KeyOfValue, _Compare, _Alloc&gt;::</span>
 <span class="lineNum">    1868 </span>            :     _M_lower_bound(_Link_type __x, _Base_ptr __y,
 <span class="lineNum">    1869 </span>            :                    const _Key&amp; __k)
 <span class="lineNum">    1870 </span>            :     {
-<span class="lineNum">    1871 </span><span class="lineCov">        128 :       while (__x != 0)</span>
-<span class="lineNum">    1872 </span><span class="lineCov">         39 :         if (!_M_impl._M_key_compare(_S_key(__x), __k))</span>
-<span class="lineNum">    1873 </span><span class="lineCov">         11 :           __y = __x, __x = _S_left(__x);</span>
+<span class="lineNum">    1871 </span><span class="lineCov">        132 :       while (__x != 0)</span>
+<span class="lineNum">    1872 </span><span class="lineCov">         41 :         if (!_M_impl._M_key_compare(_S_key(__x), __k))</span>
+<span class="lineNum">    1873 </span><span class="lineCov">          9 :           __y = __x, __x = _S_left(__x);</span>
 <span class="lineNum">    1874 </span>            :         else
-<span class="lineNum">    1875 </span><span class="lineCov">         28 :           __x = _S_right(__x);</span>
+<span class="lineNum">    1875 </span><span class="lineCov">         32 :           __x = _S_right(__x);</span>
 <span class="lineNum">    1876 </span><span class="lineCov">         50 :       return iterator(__y);</span>
 <span class="lineNum">    1877 </span>            :     }
 <span class="lineNum">    1878 </span>            : 
@@ -2199,18 +2199,18 @@
 <span class="lineNum">    2137 </span>            :       // end()
 <span class="lineNum">    2138 </span><span class="lineCov">         25 :       if (__pos._M_node == _M_end())</span>
 <span class="lineNum">    2139 </span>            :         {
-<span class="lineNum">    2140 </span><span class="lineCov">         48 :           if (size() &gt; 0</span>
-<span class="lineNum">    2141 </span><span class="lineCov">         24 :               &amp;&amp; _M_impl._M_key_compare(_S_key(_M_rightmost()), __k))</span>
-<span class="lineNum">    2142 </span><span class="lineCov">         12 :             return _Res(0, _M_rightmost());</span>
+<span class="lineNum">    2140 </span><span class="lineCov">         50 :           if (size() &gt; 0</span>
+<span class="lineNum">    2141 </span><span class="lineCov">         25 :               &amp;&amp; _M_impl._M_key_compare(_S_key(_M_rightmost()), __k))</span>
+<span class="lineNum">    2142 </span><span class="lineCov">         13 :             return _Res(0, _M_rightmost());</span>
 <span class="lineNum">    2143 </span>            :           else
 <span class="lineNum">    2144 </span><span class="lineCov">         12 :             return _M_get_insert_unique_pos(__k);</span>
 <span class="lineNum">    2145 </span>            :         }
-<span class="lineNum">    2146 </span><span class="lineCov">          1 :       else if (_M_impl._M_key_compare(__k, _S_key(__pos._M_node)))</span>
+<span class="lineNum">    2146 </span><span class="lineNoCov">          0 :       else if (_M_impl._M_key_compare(__k, _S_key(__pos._M_node)))</span>
 <span class="lineNum">    2147 </span>            :         {
 <span class="lineNum">    2148 </span>            :           // First, try before...
-<span class="lineNum">    2149 </span><span class="lineCov">          1 :           iterator __before = __pos;</span>
-<span class="lineNum">    2150 </span><span class="lineCov">          1 :           if (__pos._M_node == _M_leftmost()) // begin()</span>
-<span class="lineNum">    2151 </span><span class="lineCov">          1 :             return _Res(_M_leftmost(), _M_leftmost());</span>
+<span class="lineNum">    2149 </span><span class="lineNoCov">          0 :           iterator __before = __pos;</span>
+<span class="lineNum">    2150 </span><span class="lineNoCov">          0 :           if (__pos._M_node == _M_leftmost()) // begin()</span>
+<span class="lineNum">    2151 </span><span class="lineNoCov">          0 :             return _Res(_M_leftmost(), _M_leftmost());</span>
 <span class="lineNum">    2152 </span><span class="lineNoCov">          0 :           else if (_M_impl._M_key_compare(_S_key((--__before)._M_node), __k))</span>
 <span class="lineNum">    2153 </span>            :             {
 <span class="lineNum">    2154 </span><span class="lineNoCov">          0 :               if (_S_right(__before._M_node) == 0)</span>
@@ -2359,9 +2359,9 @@
 <span class="lineNum">    2297 </span><span class="lineCov">         25 :     _Rb_tree&lt;_Key, _Val, _KeyOfValue, _Compare, _Alloc&gt;::</span>
 <span class="lineNum">    2298 </span>            :     _M_insert_node(_Base_ptr __x, _Base_ptr __p, _Link_type __z)
 <span class="lineNum">    2299 </span>            :     {
-<span class="lineNum">    2300 </span><span class="lineCov">         49 :       bool __insert_left = (__x != 0 || __p == _M_end()</span>
-<span class="lineNum">    2301 </span><span class="lineCov">         49 :                             || _M_impl._M_key_compare(_S_key(__z),</span>
-<span class="lineNum">    2302 </span><span class="lineCov">         12 :                                                       _S_key(__p)));</span>
+<span class="lineNum">    2300 </span><span class="lineCov">         50 :       bool __insert_left = (__x != 0 || __p == _M_end()</span>
+<span class="lineNum">    2301 </span><span class="lineCov">         51 :                             || _M_impl._M_key_compare(_S_key(__z),</span>
+<span class="lineNum">    2302 </span><span class="lineCov">         13 :                                                       _S_key(__p)));</span>
 <span class="lineNum">    2303 </span>            : 
 <span class="lineNum">    2304 </span><span class="lineCov">         25 :       _Rb_tree_insert_and_rebalance(__insert_left, __z, __p,</span>
 <span class="lineNum">    2305 </span>            :                                     this-&gt;_M_impl._M_header);
@@ -2584,8 +2584,8 @@
 <span class="lineNum">    2522 </span>            :     {
 <span class="lineNum">    2523 </span><span class="lineCov">         24 :       iterator __j = _M_lower_bound(_M_begin(), _M_end(), __k);</span>
 <span class="lineNum">    2524 </span><span class="lineCov">         48 :       return (__j == end()</span>
-<span class="lineNum">    2525 </span><span class="lineCov">         14 :               || _M_impl._M_key_compare(__k,</span>
-<span class="lineNum">    2526 </span><span class="lineCov">         75 :                                         _S_key(__j._M_node))) ? end() : __j;</span>
+<span class="lineNum">    2525 </span><span class="lineCov">         12 :               || _M_impl._M_key_compare(__k,</span>
+<span class="lineNum">    2526 </span><span class="lineCov">         74 :                                         _S_key(__j._M_node))) ? end() : __j;</span>
 <span class="lineNum">    2527 </span>            :     }
 <span class="lineNum">    2528 </span>            : 
 <span class="lineNum">    2529 </span>            :   template&lt;typename _Key, typename _Val, typename _KeyOfValue,

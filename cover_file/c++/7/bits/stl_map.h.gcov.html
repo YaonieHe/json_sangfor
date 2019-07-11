@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2019-07-11 14:56:41</td>
+            <td class="headerValue">2019-07-11 19:40:28</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">14</td>
@@ -353,7 +353,7 @@
 <span class="lineNum">     291 </span>            :        *  themselves are pointers, the pointed-to memory is not touched in any
 <a name="292"><span class="lineNum">     292 </span>            :        *  way.  Managing the pointer is the user's responsibility.</a>
 <span class="lineNum">     293 </span>            :        */
-<span class="lineNum">     294 </span><span class="lineCov">        117 :       ~map() = default;</span>
+<span class="lineNum">     294 </span><span class="lineCov">        139 :       ~map() = default;</span>
 <span class="lineNum">     295 </span>            : #endif
 <span class="lineNum">     296 </span>            : 
 <span class="lineNum">     297 </span>            :       /**
@@ -407,8 +407,8 @@
 <span class="lineNum">     345 </span>            :        *  Iteration is done in ascending order according to the keys.
 <a name="346"><span class="lineNum">     346 </span>            :        */</a>
 <span class="lineNum">     347 </span>            :       iterator
-<span class="lineNum">     348 </span><span class="lineCov">         18 :       begin() _GLIBCXX_NOEXCEPT</span>
-<span class="lineNum">     349 </span><span class="lineCov">         18 :       { return _M_t.begin(); }</span>
+<span class="lineNum">     348 </span><span class="lineCov">         22 :       begin() _GLIBCXX_NOEXCEPT</span>
+<span class="lineNum">     349 </span><span class="lineCov">         22 :       { return _M_t.begin(); }</span>
 <span class="lineNum">     350 </span>            : 
 <span class="lineNum">     351 </span>            :       /**
 <span class="lineNum">     352 </span>            :        *  Returns a read-only (constant) iterator that points to the first pair
@@ -425,8 +425,8 @@
 <span class="lineNum">     363 </span>            :        *  according to the keys.
 <a name="364"><span class="lineNum">     364 </span>            :        */</a>
 <span class="lineNum">     365 </span>            :       iterator
-<span class="lineNum">     366 </span><span class="lineCov">        114 :       end() _GLIBCXX_NOEXCEPT</span>
-<span class="lineNum">     367 </span><span class="lineCov">        114 :       { return _M_t.end(); }</span>
+<span class="lineNum">     366 </span><span class="lineCov">        127 :       end() _GLIBCXX_NOEXCEPT</span>
+<span class="lineNum">     367 </span><span class="lineCov">        127 :       { return _M_t.end(); }</span>
 <span class="lineNum">     368 </span>            : 
 <span class="lineNum">     369 </span>            :       /**
 <span class="lineNum">     370 </span>            :        *  Returns a read-only (constant) iterator that points one past the last
@@ -1185,8 +1185,8 @@
 <span class="lineNum">    1123 </span>            :        *  Managing the pointer is the user's responsibility.
 <a name="1124"><span class="lineNum">    1124 </span>            :        */</a>
 <span class="lineNum">    1125 </span>            :       void
-<span class="lineNum">    1126 </span><span class="lineCov">          9 :       clear() _GLIBCXX_NOEXCEPT</span>
-<span class="lineNum">    1127 </span><span class="lineCov">          9 :       { _M_t.clear(); }</span>
+<span class="lineNum">    1126 </span><span class="lineCov">         13 :       clear() _GLIBCXX_NOEXCEPT</span>
+<span class="lineNum">    1127 </span><span class="lineCov">         13 :       { _M_t.clear(); }</span>
 <span class="lineNum">    1128 </span>            : 
 <span class="lineNum">    1129 </span>            :       // observers
 <span class="lineNum">    1130 </span>            :       /**
@@ -1194,8 +1194,8 @@
 <span class="lineNum">    1132 </span>            :        *  constructed.
 <a name="1133"><span class="lineNum">    1133 </span>            :        */</a>
 <span class="lineNum">    1134 </span>            :       key_compare
-<span class="lineNum">    1135 </span><span class="lineCov">          2 :       key_comp() const</span>
-<span class="lineNum">    1136 </span><span class="lineCov">          2 :       { return _M_t.key_comp(); }</span>
+<span class="lineNum">    1135 </span><span class="lineCov">          1 :       key_comp() const</span>
+<span class="lineNum">    1136 </span><span class="lineCov">          1 :       { return _M_t.key_comp(); }</span>
 <span class="lineNum">    1137 </span>            : 
 <span class="lineNum">    1138 </span>            :       /**
 <span class="lineNum">    1139 </span>            :        *  Returns a value comparison object, built from the key comparison

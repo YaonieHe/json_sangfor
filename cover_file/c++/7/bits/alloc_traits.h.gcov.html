@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2019-07-11 14:56:41</td>
+            <td class="headerValue">2019-07-11 19:40:28</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">9</td>
@@ -520,8 +520,8 @@
 <span class="lineNum">     458 </span>            :        *  Calls &lt;tt&gt; a.deallocate(p, n) &lt;/tt&gt;
 <a name="459"><span class="lineNum">     459 </span>            :       */</a>
 <span class="lineNum">     460 </span>            :       static void
-<span class="lineNum">     461 </span><span class="lineCov">         53 :       deallocate(allocator_type&amp; __a, pointer __p, size_type __n)</span>
-<span class="lineNum">     462 </span><span class="lineCov">         53 :       { __a.deallocate(__p, __n); }</span>
+<span class="lineNum">     461 </span><span class="lineCov">         67 :       deallocate(allocator_type&amp; __a, pointer __p, size_type __n)</span>
+<span class="lineNum">     462 </span><span class="lineCov">         67 :       { __a.deallocate(__p, __n); }</span>
 <span class="lineNum">     463 </span>            : 
 <span class="lineNum">     464 </span>            :       /**
 <span class="lineNum">     465 </span>            :        *  @brief  Construct an object of type @a _Up
@@ -545,8 +545,8 @@
 <span class="lineNum">     483 </span>            :       */
 <a name="484"><span class="lineNum">     484 </span>            :       template&lt;typename _Up&gt;</a>
 <span class="lineNum">     485 </span>            :         static void
-<span class="lineNum">     486 </span><span class="lineCov">         17 :         destroy(allocator_type&amp; __a, _Up* __p)</span>
-<span class="lineNum">     487 </span><span class="lineCov">         17 :         { __a.destroy(__p); }</span>
+<span class="lineNum">     486 </span><span class="lineCov">         26 :         destroy(allocator_type&amp; __a, _Up* __p)</span>
+<span class="lineNum">     487 </span><span class="lineCov">         26 :         { __a.destroy(__p); }</span>
 <span class="lineNum">     488 </span>            : 
 <span class="lineNum">     489 </span>            :       /**
 <span class="lineNum">     490 </span>            :        *  @brief  The maximum supported allocation size

@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2019-07-11 14:56:41</td>
+            <td class="headerValue">2019-07-11 19:40:28</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">2</td>
@@ -963,7 +963,7 @@
 <span class="lineNum">     901 </span>            :   RE(const RE&amp; other) { Init(other.pattern()); }
 <a name="902"><span class="lineNum">     902 </span>            : </a>
 <span class="lineNum">     903 </span>            :   // Constructs an RE from a string.
-<span class="lineNum">     904 </span><span class="lineCov">          1 :   RE(const ::std::string&amp; regex) { Init(regex.c_str()); }  // NOLINT</span>
+<span class="lineNum">     904 </span><span class="lineCov">          2 :   RE(const ::std::string&amp; regex) { Init(regex.c_str()); }  // NOLINT</span>
 <span class="lineNum">     905 </span>            : 
 <span class="lineNum">     906 </span>            :   RE(const char* regex) { Init(regex); }  // NOLINT
 <span class="lineNum">     907 </span>            :   ~RE();
@@ -978,8 +978,8 @@
 <span class="lineNum">     916 </span><span class="lineNoCov">          0 :   static bool FullMatch(const ::std::string&amp; str, const RE&amp; re) {</span>
 <a name="917"><span class="lineNum">     917 </span><span class="lineNoCov">          0 :     return FullMatch(str.c_str(), re);</span></a>
 <span class="lineNum">     918 </span>            :   }
-<span class="lineNum">     919 </span><span class="lineCov">          1 :   static bool PartialMatch(const ::std::string&amp; str, const RE&amp; re) {</span>
-<span class="lineNum">     920 </span><span class="lineCov">          1 :     return PartialMatch(str.c_str(), re);</span>
+<span class="lineNum">     919 </span><span class="lineCov">          2 :   static bool PartialMatch(const ::std::string&amp; str, const RE&amp; re) {</span>
+<span class="lineNum">     920 </span><span class="lineCov">          2 :     return PartialMatch(str.c_str(), re);</span>
 <span class="lineNum">     921 </span>            :   }
 <span class="lineNum">     922 </span>            : 
 <span class="lineNum">     923 </span>            :   static bool FullMatch(const char* str, const RE&amp; re);

@@ -37,12 +37,12 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2019-07-11 14:56:41</td>
+            <td class="headerValue">2019-07-11 19:40:28</td>
             <td></td>
             <td class="headerItem">Functions:</td>
-            <td class="headerCovTableEntry">95</td>
-            <td class="headerCovTableEntry">96</td>
-            <td class="headerCovTableEntryHi">99.0 %</td>
+            <td class="headerCovTableEntry">91</td>
+            <td class="headerCovTableEntry">92</td>
+            <td class="headerCovTableEntryHi">98.9 %</td>
           </tr>
           <tr><td><img src="../../glass.png" width=3 height=3 alt=""></td></tr>
         </table>
@@ -501,14 +501,14 @@
 <span class="lineNum">     439 </span>            : // of a Test object.
 <a name="440"><span class="lineNum">     440 </span>            : class TestFactoryBase {</a>
 <span class="lineNum">     441 </span>            :  public:
-<span class="lineNum">     442 </span><span class="lineCov">         22 :   virtual ~TestFactoryBase() {}</span>
+<span class="lineNum">     442 </span><span class="lineCov">         21 :   virtual ~TestFactoryBase() {}</span>
 <span class="lineNum">     443 </span>            : 
 <span class="lineNum">     444 </span>            :   // Creates a test instance to run. The instance is both created and destroyed
 <span class="lineNum">     445 </span>            :   // within TestInfoImpl::Run()
 <span class="lineNum">     446 </span>            :   virtual Test* CreateTest() = 0;
 <a name="447"><span class="lineNum">     447 </span>            : </a>
 <span class="lineNum">     448 </span>            :  protected:
-<span class="lineNum">     449 </span><span class="lineCov">         22 :   TestFactoryBase() {}</span>
+<span class="lineNum">     449 </span><span class="lineCov">         21 :   TestFactoryBase() {}</span>
 <span class="lineNum">     450 </span>            : 
 <span class="lineNum">     451 </span>            :  private:
 <span class="lineNum">     452 </span>            :   GTEST_DISALLOW_COPY_AND_ASSIGN_(TestFactoryBase);
@@ -517,9 +517,9 @@
 <span class="lineNum">     455 </span>            : // This class provides implementation of TeastFactoryBase interface.
 <a name="456"><span class="lineNum">     456 </span>            : // It is used in TEST and TEST_F macros.</a>
 <span class="lineNum">     457 </span>            : template &lt;class TestClass&gt;
-<a name="458"><span class="lineNum">     458 </span><span class="lineCov">         66 : class TestFactoryImpl : public TestFactoryBase {</span></a>
+<a name="458"><span class="lineNum">     458 </span><span class="lineCov">         63 : class TestFactoryImpl : public TestFactoryBase {</span></a>
 <span class="lineNum">     459 </span>            :  public:
-<span class="lineNum">     460 </span><span class="lineCov">         22 :   Test* CreateTest() override { return new TestClass; }</span>
+<span class="lineNum">     460 </span><span class="lineCov">         21 :   Test* CreateTest() override { return new TestClass; }</span>
 <span class="lineNum">     461 </span>            : };
 <span class="lineNum">     462 </span>            : 
 <span class="lineNum">     463 </span>            : #if GTEST_OS_WINDOWS
@@ -539,9 +539,9 @@
 <span class="lineNum">     477 </span>            : using SetUpTestSuiteFunc = void (*)();
 <a name="478"><span class="lineNum">     478 </span>            : using TearDownTestSuiteFunc = void (*)();</a>
 <a name="479"><span class="lineNum">     479 </span>            : </a>
-<span class="lineNum">     480 </span><span class="lineCov">         66 : struct CodeLocation {</span>
-<span class="lineNum">     481 </span><span class="lineCov">         22 :   CodeLocation(const std::string&amp; a_file, int a_line)</span>
-<span class="lineNum">     482 </span><span class="lineCov">         22 :       : file(a_file), line(a_line) {}</span>
+<span class="lineNum">     480 </span><span class="lineCov">         63 : struct CodeLocation {</span>
+<span class="lineNum">     481 </span><span class="lineCov">         21 :   CodeLocation(const std::string&amp; a_file, int a_line)</span>
+<span class="lineNum">     482 </span><span class="lineCov">         21 :       : file(a_file), line(a_line) {}</span>
 <span class="lineNum">     483 </span>            : 
 <span class="lineNum">     484 </span>            :   std::string file;
 <span class="lineNum">     485 </span>            :   int line;
@@ -553,9 +553,9 @@
 <span class="lineNum">     491 </span>            : // Utility functions to help SuiteApiResolver
 <a name="492"><span class="lineNum">     492 </span>            : using SetUpTearDownSuiteFuncType = void (*)();</a>
 <span class="lineNum">     493 </span>            : 
-<span class="lineNum">     494 </span><span class="lineCov">         88 : inline SetUpTearDownSuiteFuncType GetNotDefaultOrNull(</span>
+<span class="lineNum">     494 </span><span class="lineCov">         84 : inline SetUpTearDownSuiteFuncType GetNotDefaultOrNull(</span>
 <span class="lineNum">     495 </span>            :     SetUpTearDownSuiteFuncType a, SetUpTearDownSuiteFuncType def) {
-<span class="lineNum">     496 </span><span class="lineCov">         88 :   return a == def ? nullptr : a;</span>
+<span class="lineNum">     496 </span><span class="lineCov">         84 :   return a == def ? nullptr : a;</span>
 <span class="lineNum">     497 </span>            : }
 <span class="lineNum">     498 </span>            : 
 <span class="lineNum">     499 </span>            : template &lt;typename T&gt;
@@ -568,34 +568,34 @@
 <span class="lineNum">     506 </span>            :   using Test =
 <a name="507"><span class="lineNum">     507 </span>            :       typename std::conditional&lt;sizeof(T) != 0, ::testing::Test, void&gt;::type;</a>
 <span class="lineNum">     508 </span>            : 
-<span class="lineNum">     509 </span><span class="lineCov">         22 :   static SetUpTearDownSuiteFuncType GetSetUpCaseOrSuite(const char* filename,</span>
+<span class="lineNum">     509 </span><span class="lineCov">         21 :   static SetUpTearDownSuiteFuncType GetSetUpCaseOrSuite(const char* filename,</span>
 <span class="lineNum">     510 </span>            :                                                         int line_num) {
-<span class="lineNum">     511 </span><span class="lineCov">         22 :     SetUpTearDownSuiteFuncType test_case_fp =</span>
+<span class="lineNum">     511 </span><span class="lineCov">         21 :     SetUpTearDownSuiteFuncType test_case_fp =</span>
 <span class="lineNum">     512 </span>            :         GetNotDefaultOrNull(&amp;T::SetUpTestCase, &amp;Test::SetUpTestCase);
-<span class="lineNum">     513 </span><span class="lineCov">         22 :     SetUpTearDownSuiteFuncType test_suite_fp =</span>
+<span class="lineNum">     513 </span><span class="lineCov">         21 :     SetUpTearDownSuiteFuncType test_suite_fp =</span>
 <span class="lineNum">     514 </span>            :         GetNotDefaultOrNull(&amp;T::SetUpTestSuite, &amp;Test::SetUpTestSuite);
 <span class="lineNum">     515 </span>            : 
-<span class="lineNum">     516 </span><span class="lineCov">         22 :     GTEST_CHECK_(!test_case_fp || !test_suite_fp)</span>
+<span class="lineNum">     516 </span><span class="lineCov">         21 :     GTEST_CHECK_(!test_case_fp || !test_suite_fp)</span>
 <span class="lineNum">     517 </span>            :         &lt;&lt; &quot;Test can not provide both SetUpTestSuite and SetUpTestCase, please &quot;
 <span class="lineNum">     518 </span>            :            &quot;make sure there is only one present at &quot;
 <span class="lineNum">     519 </span><span class="lineNoCov">          0 :         &lt;&lt; filename &lt;&lt; &quot;:&quot; &lt;&lt; line_num;</span>
 <span class="lineNum">     520 </span>            : 
-<span class="lineNum">     521 </span><span class="lineCov">         22 :     return test_case_fp != nullptr ? test_case_fp : test_suite_fp;</span>
+<span class="lineNum">     521 </span><span class="lineCov">         21 :     return test_case_fp != nullptr ? test_case_fp : test_suite_fp;</span>
 <a name="522"><span class="lineNum">     522 </span>            :   }</a>
 <span class="lineNum">     523 </span>            : 
-<span class="lineNum">     524 </span><span class="lineCov">         22 :   static SetUpTearDownSuiteFuncType GetTearDownCaseOrSuite(const char* filename,</span>
+<span class="lineNum">     524 </span><span class="lineCov">         21 :   static SetUpTearDownSuiteFuncType GetTearDownCaseOrSuite(const char* filename,</span>
 <span class="lineNum">     525 </span>            :                                                            int line_num) {
-<span class="lineNum">     526 </span><span class="lineCov">         22 :     SetUpTearDownSuiteFuncType test_case_fp =</span>
+<span class="lineNum">     526 </span><span class="lineCov">         21 :     SetUpTearDownSuiteFuncType test_case_fp =</span>
 <span class="lineNum">     527 </span>            :         GetNotDefaultOrNull(&amp;T::TearDownTestCase, &amp;Test::TearDownTestCase);
-<span class="lineNum">     528 </span><span class="lineCov">         22 :     SetUpTearDownSuiteFuncType test_suite_fp =</span>
+<span class="lineNum">     528 </span><span class="lineCov">         21 :     SetUpTearDownSuiteFuncType test_suite_fp =</span>
 <span class="lineNum">     529 </span>            :         GetNotDefaultOrNull(&amp;T::TearDownTestSuite, &amp;Test::TearDownTestSuite);
 <span class="lineNum">     530 </span>            : 
-<span class="lineNum">     531 </span><span class="lineCov">         22 :     GTEST_CHECK_(!test_case_fp || !test_suite_fp)</span>
+<span class="lineNum">     531 </span><span class="lineCov">         21 :     GTEST_CHECK_(!test_case_fp || !test_suite_fp)</span>
 <span class="lineNum">     532 </span>            :         &lt;&lt; &quot;Test can not provide both TearDownTestSuite and TearDownTestCase,&quot;
 <span class="lineNum">     533 </span>            :            &quot; please make sure there is only one present at&quot;
 <span class="lineNum">     534 </span><span class="lineNoCov">          0 :         &lt;&lt; filename &lt;&lt; &quot;:&quot; &lt;&lt; line_num;</span>
 <span class="lineNum">     535 </span>            : 
-<span class="lineNum">     536 </span><span class="lineCov">         22 :     return test_case_fp != nullptr ? test_case_fp : test_suite_fp;</span>
+<span class="lineNum">     536 </span><span class="lineCov">         21 :     return test_case_fp != nullptr ? test_case_fp : test_suite_fp;</span>
 <span class="lineNum">     537 </span>            :   }
 <span class="lineNum">     538 </span>            : };
 <span class="lineNum">     539 </span>            : 

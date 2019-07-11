@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2019-07-11 14:56:41</td>
+            <td class="headerValue">2019-07-11 19:40:28</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">1</td>
@@ -231,8 +231,8 @@
 <span class="lineNum">     169 </span>            :     ::testing::internal::RE regex) {
 <a name="170"><span class="lineNum">     170 </span>            :   return ContainsRegex(regex.pattern());</a>
 <span class="lineNum">     171 </span>            : }
-<span class="lineNum">     172 </span><span class="lineCov">          1 : inline Matcher&lt;const ::std::string&amp;&gt; MakeDeathTestMatcher(const char* regex) {</span>
-<span class="lineNum">     173 </span><span class="lineCov">          1 :   return ContainsRegex(regex);</span>
+<span class="lineNum">     172 </span><span class="lineCov">          2 : inline Matcher&lt;const ::std::string&amp;&gt; MakeDeathTestMatcher(const char* regex) {</span>
+<span class="lineNum">     173 </span><span class="lineCov">          2 :   return ContainsRegex(regex);</span>
 <span class="lineNum">     174 </span>            : }
 <span class="lineNum">     175 </span>            : inline Matcher&lt;const ::std::string&amp;&gt; MakeDeathTestMatcher(
 <span class="lineNum">     176 </span>            :     const ::std::string&amp; regex) {

@@ -37,7 +37,7 @@
           </tr>
           <tr>
             <td class="headerItem">Date:</td>
-            <td class="headerValue">2019-07-11 15:14:39</td>
+            <td class="headerValue">2019-07-11 20:01:27</td>
             <td></td>
             <td class="headerItem">Functions:</td>
             <td class="headerCovTableEntry">46</td>
@@ -172,7 +172,7 @@
 <span class="lineNum">     110 </span>            :         : _Head(std::forward&lt;_UHead&gt;(__uhead), *__a._M_a) { }
 <a name="111"><span class="lineNum">     111 </span>            : </a>
 <span class="lineNum">     112 </span>            :       static constexpr _Head&amp;
-<span class="lineNum">     113 </span><span class="lineCov">         98 :       _M_head(_Head_base&amp; __b) noexcept { return __b; }</span>
+<span class="lineNum">     113 </span><span class="lineCov">         94 :       _M_head(_Head_base&amp; __b) noexcept { return __b; }</span>
 <span class="lineNum">     114 </span>            : 
 <span class="lineNum">     115 </span>            :       static constexpr const _Head&amp;
 <span class="lineNum">     116 </span>            :       _M_head(const _Head_base&amp; __b) noexcept { return __b; }
@@ -219,10 +219,10 @@
 <span class="lineNum">     157 </span>            :         : _M_head_impl(std::forward&lt;_UHead&gt;(__uhead), *__a._M_a) { }
 <a name="158"><span class="lineNum">     158 </span>            : </a>
 <span class="lineNum">     159 </span>            :       static constexpr _Head&amp;
-<span class="lineNum">     160 </span><span class="lineCov">        330 :       _M_head(_Head_base&amp; __b) noexcept { return __b._M_head_impl; }</span>
+<span class="lineNum">     160 </span><span class="lineCov">        322 :       _M_head(_Head_base&amp; __b) noexcept { return __b._M_head_impl; }</span>
 <a name="161"><span class="lineNum">     161 </span>            : </a>
 <span class="lineNum">     162 </span>            :       static constexpr const _Head&amp;
-<span class="lineNum">     163 </span><span class="lineCov">        642 :       _M_head(const _Head_base&amp; __b) noexcept { return __b._M_head_impl; }</span>
+<span class="lineNum">     163 </span><span class="lineCov">        630 :       _M_head(const _Head_base&amp; __b) noexcept { return __b._M_head_impl; }</span>
 <span class="lineNum">     164 </span>            : 
 <span class="lineNum">     165 </span>            :       _Head _M_head_impl;
 <span class="lineNum">     166 </span>            :     };
@@ -254,10 +254,10 @@
 <span class="lineNum">     192 </span>            :       typedef _Head_base&lt;_Idx, _Head&gt; _Base;
 <a name="193"><span class="lineNum">     193 </span>            : </a>
 <span class="lineNum">     194 </span>            :       static constexpr _Head&amp;
-<span class="lineNum">     195 </span><span class="lineCov">        280 :       _M_head(_Tuple_impl&amp; __t) noexcept { return _Base::_M_head(__t); }</span>
+<span class="lineNum">     195 </span><span class="lineCov">        272 :       _M_head(_Tuple_impl&amp; __t) noexcept { return _Base::_M_head(__t); }</span>
 <a name="196"><span class="lineNum">     196 </span>            : </a>
 <span class="lineNum">     197 </span>            :       static constexpr const _Head&amp;
-<span class="lineNum">     198 </span><span class="lineCov">        642 :       _M_head(const _Tuple_impl&amp; __t) noexcept { return _Base::_M_head(__t); }</span>
+<span class="lineNum">     198 </span><span class="lineCov">        630 :       _M_head(const _Tuple_impl&amp; __t) noexcept { return _Base::_M_head(__t); }</span>
 <span class="lineNum">     199 </span>            : 
 <span class="lineNum">     200 </span>            :       static constexpr _Inherited&amp;
 <span class="lineNum">     201 </span>            :       _M_tail(_Tuple_impl&amp; __t) noexcept { return __t; }
@@ -410,7 +410,7 @@
 <span class="lineNum">     348 </span>            :       typedef _Head_base&lt;_Idx, _Head&gt; _Base;
 <a name="349"><span class="lineNum">     349 </span>            : </a>
 <span class="lineNum">     350 </span>            :       static constexpr _Head&amp;
-<span class="lineNum">     351 </span><span class="lineCov">        148 :       _M_head(_Tuple_impl&amp; __t) noexcept { return _Base::_M_head(__t); }</span>
+<span class="lineNum">     351 </span><span class="lineCov">        144 :       _M_head(_Tuple_impl&amp; __t) noexcept { return _Base::_M_head(__t); }</span>
 <span class="lineNum">     352 </span>            : 
 <span class="lineNum">     353 </span>            :       static constexpr const _Head&amp;
 <a name="354"><span class="lineNum">     354 </span>            :       _M_head(const _Tuple_impl&amp; __t) noexcept { return _Base::_M_head(__t); }</a>
@@ -1362,25 +1362,25 @@
 <span class="lineNum">    1300 </span>            : 
 <a name="1301"><span class="lineNum">    1301 </span>            :   template&lt;std::size_t __i, typename _Head, typename... _Tail&gt;</a>
 <span class="lineNum">    1302 </span>            :     constexpr _Head&amp;
-<span class="lineNum">    1303 </span><span class="lineCov">        403 :     __get_helper(_Tuple_impl&lt;__i, _Head, _Tail...&gt;&amp; __t) noexcept</span>
-<span class="lineNum">    1304 </span><span class="lineCov">        403 :     { return _Tuple_impl&lt;__i, _Head, _Tail...&gt;::_M_head(__t); }</span>
+<span class="lineNum">    1303 </span><span class="lineCov">        391 :     __get_helper(_Tuple_impl&lt;__i, _Head, _Tail...&gt;&amp; __t) noexcept</span>
+<span class="lineNum">    1304 </span><span class="lineCov">        391 :     { return _Tuple_impl&lt;__i, _Head, _Tail...&gt;::_M_head(__t); }</span>
 <span class="lineNum">    1305 </span>            : 
 <a name="1306"><span class="lineNum">    1306 </span>            :   template&lt;std::size_t __i, typename _Head, typename... _Tail&gt;</a>
 <span class="lineNum">    1307 </span>            :     constexpr const _Head&amp;
-<span class="lineNum">    1308 </span><span class="lineCov">        642 :     __get_helper(const _Tuple_impl&lt;__i, _Head, _Tail...&gt;&amp; __t) noexcept</span>
-<span class="lineNum">    1309 </span><span class="lineCov">        642 :     { return _Tuple_impl&lt;__i, _Head, _Tail...&gt;::_M_head(__t); }</span>
+<span class="lineNum">    1308 </span><span class="lineCov">        630 :     __get_helper(const _Tuple_impl&lt;__i, _Head, _Tail...&gt;&amp; __t) noexcept</span>
+<span class="lineNum">    1309 </span><span class="lineCov">        630 :     { return _Tuple_impl&lt;__i, _Head, _Tail...&gt;::_M_head(__t); }</span>
 <span class="lineNum">    1310 </span>            : 
 <span class="lineNum">    1311 </span>            :   /// Return a reference to the ith element of a tuple.
 <a name="1312"><span class="lineNum">    1312 </span>            :   template&lt;std::size_t __i, typename... _Elements&gt;</a>
 <span class="lineNum">    1313 </span>            :     constexpr __tuple_element_t&lt;__i, tuple&lt;_Elements...&gt;&gt;&amp;
-<span class="lineNum">    1314 </span><span class="lineCov">        403 :     get(tuple&lt;_Elements...&gt;&amp; __t) noexcept</span>
-<span class="lineNum">    1315 </span><span class="lineCov">        403 :     { return std::__get_helper&lt;__i&gt;(__t); }</span>
+<span class="lineNum">    1314 </span><span class="lineCov">        391 :     get(tuple&lt;_Elements...&gt;&amp; __t) noexcept</span>
+<span class="lineNum">    1315 </span><span class="lineCov">        391 :     { return std::__get_helper&lt;__i&gt;(__t); }</span>
 <span class="lineNum">    1316 </span>            : 
 <span class="lineNum">    1317 </span>            :   /// Return a const reference to the ith element of a const tuple.
 <a name="1318"><span class="lineNum">    1318 </span>            :   template&lt;std::size_t __i, typename... _Elements&gt;</a>
 <span class="lineNum">    1319 </span>            :     constexpr const __tuple_element_t&lt;__i, tuple&lt;_Elements...&gt;&gt;&amp;
-<span class="lineNum">    1320 </span><span class="lineCov">        642 :     get(const tuple&lt;_Elements...&gt;&amp; __t) noexcept</span>
-<span class="lineNum">    1321 </span><span class="lineCov">        642 :     { return std::__get_helper&lt;__i&gt;(__t); }</span>
+<span class="lineNum">    1320 </span><span class="lineCov">        630 :     get(const tuple&lt;_Elements...&gt;&amp; __t) noexcept</span>
+<span class="lineNum">    1321 </span><span class="lineCov">        630 :     { return std::__get_helper&lt;__i&gt;(__t); }</span>
 <span class="lineNum">    1322 </span>            : 
 <span class="lineNum">    1323 </span>            :   /// Return an rvalue reference to the ith element of a tuple rvalue.
 <span class="lineNum">    1324 </span>            :   template&lt;std::size_t __i, typename... _Elements&gt;

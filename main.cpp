@@ -384,45 +384,7 @@ TEST(TestFormatYaml, ARRandOBJToYamlStr){
 	delete obj_json;
 }
 
-// 测试复杂JSON（ARR类型和OBJ类型）转json和yaml
-TEST(TestFormatComplex, ARRandOBJToStr){
- 	JSON* bol_json = new JSON(true);
-	JSON* str_json = new JSON("value_str");
-	JSON* num_json = new JSON((NUM)3.5);
-	JSON* arr_json = new JSON(json_e::JSON_ARR);	// 
-	JSON* obj_json = new JSON(json_e::JSON_OBJ);	// {}
-
-	arr_json->arr_add(-1, num_json);
-	arr_json->arr_add(0, str_json);
-	obj_json->obj_add("id1", arr_json);				// {‘id1’ ： }
-	obj_json->obj_add("id2", bol_json);				// {‘id1’ ： ， ‘id2’ : }
-	arr_json->arr_add(-1, arr_json);
-	arr_json->arr_add(-1, obj_json);
-	obj_json->obj_add("cpx1", arr_json);
-
-	// ARR to yaml
-	std::string str = arr_json->to_yaml_str();
-	printf("\033[1;36;40mcomplex arr_json to yaml:\n%s\033[0m\n", str.c_str());
-
-	// ARR to json
-	str = arr_json->to_json_str_with_tab();
-	printf("\033[1;36;40mcomplex arr_json to json with tab:\n%s\033[0m\n", str.c_str());
-
-	// OBJ to yaml
-	str = obj_json->to_yaml_str();
-	printf("\033[1;36;40mcomplex obj_json to yaml:\n%s\033[0m\n", str.c_str());
-
-	// OBJ to json
-	str = obj_json->to_json_str_with_tab();
-	printf("\033[1;36;40mcomplex obj_json to json with tab:\n%s\033[0m\n", str.c_str());
-
-	delete bol_json;
-	delete num_json;
-	delete str_json;
-	delete arr_json;
-	delete obj_json;
-}
-
+// 测试JSON::size
 TEST(TestSize, AllType){
 	JSON none_json;
 	JSON str_json("111");
@@ -445,6 +407,7 @@ TEST(TestSize, AllType){
 	delete obj_json;
 }
 
+// 测试JSON::arr_rm和obj_rm
 TEST(TestRmJson, ARRandOBJ){
 	JSON none_json;
 	JSON str_json("111");
@@ -479,43 +442,48 @@ TEST(TestRmJson, ARRandOBJ){
 	delete obj_json;
 }
 
+// 测试复杂JSON（ARR类型和OBJ类型）转json和yaml
+void TestFormatComplex(){
+ 	JSON* bol_json = new JSON(true);
+	JSON* str_json = new JSON("value_str");
+	JSON* num_json = new JSON((NUM)-3.5);
+	JSON* arr_json = new JSON(json_e::JSON_ARR);	// 
+	JSON* obj_json = new JSON(json_e::JSON_OBJ);	// {}
 
-int main(int argc,char **argv){
-  testing::InitGoogleTest(&argc,argv);
-  return RUN_ALL_TESTS();
+	arr_json->arr_add(-1, num_json);
+	arr_json->arr_add(0, str_json);
+	obj_json->obj_add("id1", arr_json);				// {‘id1’ ： }
+	obj_json->obj_add("id2", bol_json);				// {‘id1’ ： ， ‘id2’ : }
+	arr_json->arr_add(-1, arr_json);
+	arr_json->arr_add(-1, obj_json);
+	obj_json->obj_add("this is a str", arr_json);
+
+	// ARR to yaml
+	std::string str = arr_json->to_yaml_str();
+	printf("\033[1;36;40mcomplex arr_json to yaml:\n%s\033[0m\n", str.c_str());
+
+	// ARR to json
+	str = arr_json->to_json_str_with_tab();
+	printf("\033[1;36;40mcomplex arr_json to json with tab:\n%s\033[0m\n", str.c_str());
+
+	// OBJ to yaml
+	str = obj_json->to_yaml_str();
+	printf("\033[1;36;40mcomplex obj_json to yaml:\n%s\033[0m\n", str.c_str());
+
+	// OBJ to json
+	str = obj_json->to_json_str_with_tab();
+	printf("\033[1;36;40mcomplex obj_json to json with tab:\n%s\033[0m\n", str.c_str());
+
+	delete bol_json;
+	delete num_json;
+	delete str_json;
+	delete arr_json;
+	delete obj_json;
 }
 
-
-
-// int main(){
-
-// 	try{
-// 		// 创建测试
-// 		JSON* bol_json = new JSON(json_e::JSON_BOL);
-// 		JSON* str_json = new JSON(json_e::JSON_STR);
-// 		JSON* arr_json = new JSON(json_e::JSON_ARR);
-// 		JSON* obj_json = new JSON(json_e::JSON_OBJ);	// {}
-// 		JSON* int_json = new JSON(json_e::JSON_NUM);
-
-// 		// 插入测试
-// //		bol_json->set_value<bool>(true);
-// //		int_json->set_value<NUM>(1);
-// //		str_json->set_value<char*>("hello world");
-// 		arr_json->arr_add(-1, int_json);
-// 		arr_json->arr_add(0, str_json);
-// 		obj_json->obj_add("id1", arr_json);				// {‘id1’ ： }
-// 		obj_json->obj_add("id2", bol_json);				// {‘id1’ ： ， ‘id2’ : }
-
-// 		// 查询测试
-// //		NUM get_num_value = int_json->get_value<NUM>();
-// //		JSON* get_from_key = obj_json->get_from_key("id1");
-// //		JSON* get_from_arr = arr_json->get_from_arr(1);
-
-// 		// 格式化测试
-// 		char* to_str = obj_json->to_str();
-// 	}catch(const char* str){
-// 		printf("%s\n", str);
-// 	}
-
-// 	return 0;
-// }
+int main(int argc,char **argv){
+	testing::InitGoogleTest(&argc,argv);
+	TestFormatComplex();
+  
+	return RUN_ALL_TESTS();
+}
