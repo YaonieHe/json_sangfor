@@ -1,0 +1,288 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+
+<html lang="en">
+
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>LCOV - main.info - /home/concise/sangfor/入职培训/week3_code/训练课题/json_hjp/include/json.h</title>
+  <link rel="stylesheet" type="text/css" href="../../../../../../../../gcov.css">
+</head>
+
+<body>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="title">LCOV - code coverage report</td></tr>
+    <tr><td class="ruler"><img src="../../../../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+
+    <tr>
+      <td width="100%">
+        <table cellpadding=1 border=0 width="100%">
+          <tr>
+            <td width="10%" class="headerItem">Current view:</td>
+            <td width="35%" class="headerValue"><a href="../../../../../../../../index.html">top level</a> - <a href="index.html">home/concise/sangfor/入职培训/week3_code/训练课题/json_hjp/include</a> - json.h<span style="font-size: 80%;"> (source / <a href="json.h.func-sort-c.html">functions</a>)</span></td>
+            <td width="5%"></td>
+            <td width="15%"></td>
+            <td width="10%" class="headerCovTableHead">Hit</td>
+            <td width="10%" class="headerCovTableHead">Total</td>
+            <td width="15%" class="headerCovTableHead">Coverage</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Test:</td>
+            <td class="headerValue">main.info</td>
+            <td></td>
+            <td class="headerItem">Lines:</td>
+            <td class="headerCovTableEntry">2</td>
+            <td class="headerCovTableEntry">2</td>
+            <td class="headerCovTableEntryHi">100.0 %</td>
+          </tr>
+          <tr>
+            <td class="headerItem">Date:</td>
+            <td class="headerValue">2019-07-11 20:12:18</td>
+            <td></td>
+            <td class="headerItem">Functions:</td>
+            <td class="headerCovTableEntry">1</td>
+            <td class="headerCovTableEntry">1</td>
+            <td class="headerCovTableEntryHi">100.0 %</td>
+          </tr>
+          <tr><td><img src="../../../../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr><td class="ruler"><img src="../../../../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+  </table>
+
+  <table cellpadding=0 cellspacing=0 border=0>
+    <tr>
+      <td><br></td>
+    </tr>
+    <tr>
+      <td>
+<pre class="sourceHeading">          Line data    Source code</pre>
+<pre class="source">
+<a name="1"><span class="lineNum">       1 </span>            : #ifndef MYJSON_H_</a>
+<span class="lineNum">       2 </span>            : #define MYJSON_H_
+<span class="lineNum">       3 </span>            : #include&lt;vector&gt;
+<span class="lineNum">       4 </span>            : #include&lt;map&gt;
+<span class="lineNum">       5 </span>            : #include&lt;cstdio&gt;
+<span class="lineNum">       6 </span>            : #include&lt;cstring&gt;
+<span class="lineNum">       7 </span>            : #include&lt;string&gt;
+<span class="lineNum">       8 </span>            : #include&lt;exception&gt;
+<span class="lineNum">       9 </span>            : #include&lt;cassert&gt;
+<span class="lineNum">      10 </span>            : 
+<span class="lineNum">      11 </span>            : 
+<span class="lineNum">      12 </span>            : #define NUM_DIGITS 10 //JSON_NUM类型，数字的有效数字位数
+<span class="lineNum">      13 </span>            : 
+<span class="lineNum">      14 </span>            : 
+<span class="lineNum">      15 </span>            : typedef double NUM;
+<span class="lineNum">      16 </span>            : 
+<span class="lineNum">      17 </span>            : 
+<span class="lineNum">      18 </span>            : typedef enum json_e {
+<span class="lineNum">      19 </span>            :     JSON_NONE,
+<span class="lineNum">      20 </span>            :     JSON_BOL,
+<span class="lineNum">      21 </span>            :     JSON_STR,
+<span class="lineNum">      22 </span>            :     JSON_ARR,
+<span class="lineNum">      23 </span>            :     JSON_OBJ,
+<span class="lineNum">      24 </span>            :     JSON_NUM
+<span class="lineNum">      25 </span>            : } json_e;
+<span class="lineNum">      26 </span>            : 
+<span class="lineNum">      27 </span>            : 
+<span class="lineNum">      28 </span>            : /*
+<span class="lineNum">      29 </span>            : * 缩进模式
+<span class="lineNum">      30 </span>            : * INDENT_TAB， 填充tab
+<span class="lineNum">      31 </span>            : * INDENT_TWO，填充2空格
+<span class="lineNum">      32 </span>            : * INDENT_TWO_ARR，填充2空格，最后加一个2空格，其第1位置用短线取代
+<span class="lineNum">      33 </span>            : * INDENT_FOUR, 填充4空格
+<span class="lineNum">      34 </span>            : * INDENT_FOUR_ARR，填充4空格，最后加一个四空格，其第三位置用短线取代
+<span class="lineNum">      35 </span>            :  */
+<span class="lineNum">      36 </span>            : typedef enum mode_e{
+<span class="lineNum">      37 </span>            :         INDENT_TAB,
+<span class="lineNum">      38 </span>            :         INDENT_TWO,
+<span class="lineNum">      39 </span>            :         INDENT_TWO_ARR,
+<span class="lineNum">      40 </span>            :         INDENT_FOUR,
+<span class="lineNum">      41 </span>            :         INDENT_FOUR_ARR
+<span class="lineNum">      42 </span>            : } mode_e;
+<span class="lineNum">      43 </span>            : 
+<a name="44"><span class="lineNum">      44 </span>            : </a>
+<span class="lineNum">      45 </span>            : typedef struct ptrCmp{
+<span class="lineNum">      46 </span><span class="lineCov">         74 :         bool operator()( const char * s1, const char * s2 ) const{</span>
+<span class="lineNum">      47 </span><span class="lineCov">         74 :                 return strcmp( s1, s2 ) &lt; 0;</span>
+<span class="lineNum">      48 </span>            :         }
+<span class="lineNum">      49 </span>            : } ptrCmp;
+<span class="lineNum">      50 </span>            : 
+<span class="lineNum">      51 </span>            : 
+<span class="lineNum">      52 </span>            : class JSON{
+<span class="lineNum">      53 </span>            : public:
+<span class="lineNum">      54 </span>            :         JSON();
+<span class="lineNum">      55 </span>            :         /*
+<span class="lineNum">      56 </span>            :         * 使用类型构建
+<span class="lineNum">      57 </span>            :          */
+<span class="lineNum">      58 </span>            :         JSON(json_e type_name);
+<span class="lineNum">      59 </span>            :         /*
+<span class="lineNum">      60 </span>            :         * 使用 num、bool、cahr*或string构建，会设置其对应类型值。
+<span class="lineNum">      61 </span>            :          */                     
+<span class="lineNum">      62 </span>            :         JSON(NUM value);
+<span class="lineNum">      63 </span>            :         JSON(const char* value);
+<span class="lineNum">      64 </span>            :         JSON(const std::string&amp; value);
+<span class="lineNum">      65 </span>            :         JSON(bool value);
+<span class="lineNum">      66 </span>            :         /*
+<span class="lineNum">      67 </span>            :         * 拷贝构造
+<span class="lineNum">      68 </span>            :          */
+<span class="lineNum">      69 </span>            :         JSON(const JSON &amp; json);
+<span class="lineNum">      70 </span>            :         /*
+<span class="lineNum">      71 </span>            :         * 析构
+<span class="lineNum">      72 </span>            :          */
+<span class="lineNum">      73 </span>            :         ~JSON();
+<span class="lineNum">      74 </span>            :         /* 
+<span class="lineNum">      75 </span>            :         * INT、BOL、STR类型，设置值, 成功返回0
+<span class="lineNum">      76 </span>            :         */
+<span class="lineNum">      77 </span>            :         int set_value(bool value);                              
+<span class="lineNum">      78 </span>            :         int set_value(NUM value);
+<span class="lineNum">      79 </span>            :         int set_value(const char* value);
+<span class="lineNum">      80 </span>            :         int set_value(const std::string&amp; value);
+<span class="lineNum">      81 </span>            :         /*
+<span class="lineNum">      82 </span>            :         * OBJ类型，新增一个键值对, 成功返回0
+<span class="lineNum">      83 </span>            :          */
+<span class="lineNum">      84 </span>            :         int obj_add(const char* key, JSON* value);
+<span class="lineNum">      85 </span>            :         /*
+<span class="lineNum">      86 </span>            :         * ARR类型，在index位置新增一个JSON对象，index为-1表示在最后插入, 成功返回0
+<span class="lineNum">      87 </span>            :          */
+<span class="lineNum">      88 </span>            :         int arr_add(int index, JSON* value);
+<span class="lineNum">      89 </span>            :         /*
+<span class="lineNum">      90 </span>            :         * 返回JSON类型
+<span class="lineNum">      91 </span>            :          */
+<span class="lineNum">      92 </span>            :         json_e get_type();
+<span class="lineNum">      93 </span>            : 
+<span class="lineNum">      94 </span>            :         /*
+<span class="lineNum">      95 </span>            :         * ARR类型和OBJ类型返回包含对象数量
+<span class="lineNum">      96 </span>            :         * NONE类型返回0
+<span class="lineNum">      97 </span>            :         * 其他类型返回1
+<span class="lineNum">      98 </span>            :          */
+<span class="lineNum">      99 </span>            :         int size();
+<span class="lineNum">     100 </span>            :         /*
+<span class="lineNum">     101 </span>            :         * NUM、BOL、STR类型，获取值
+<span class="lineNum">     102 </span>            :         * 类型不匹配扔出异常
+<span class="lineNum">     103 </span>            :         */
+<span class="lineNum">     104 </span>            :         NUM get_from_num();
+<span class="lineNum">     105 </span>            :         bool get_from_bol();
+<span class="lineNum">     106 </span>            :         std::string get_from_str();     
+<span class="lineNum">     107 </span>            :         /* 
+<span class="lineNum">     108 </span>            :         * OBJ类型，获取键key对应的值，不成功返回NULL    
+<span class="lineNum">     109 </span>            :         */
+<span class="lineNum">     110 </span>            :         JSON* get_from_key(const char* key);
+<span class="lineNum">     111 </span>            :         /* 
+<span class="lineNum">     112 </span>            :         * ARR类型，获取index位置的值，index从0开始
+<span class="lineNum">     113 </span>            :         * 为-1表示查询最后一个
+<span class="lineNum">     114 </span>            :         * 超出范围或其他原因不成功返回NULL
+<span class="lineNum">     115 </span>            :         */
+<span class="lineNum">     116 </span>            :         JSON* get_from_arr(int index);
+<span class="lineNum">     117 </span>            :         /*
+<span class="lineNum">     118 </span>            :         * 格式化为JSON字符串，不换行
+<span class="lineNum">     119 </span>            :         */
+<span class="lineNum">     120 </span>            :         std::string to_json_str_without_tab();
+<span class="lineNum">     121 </span>            :         /*
+<span class="lineNum">     122 </span>            :         * 格式化为JSON字符串，换行，有缩进
+<span class="lineNum">     123 </span>            :         */
+<span class="lineNum">     124 </span>            :         std::string to_json_str_with_tab();             
+<span class="lineNum">     125 </span>            :         /*
+<span class="lineNum">     126 </span>            :         * 格式化为YAML字符串
+<span class="lineNum">     127 </span>            :         */
+<span class="lineNum">     128 </span>            :         std::string to_yaml_str();                      
+<span class="lineNum">     129 </span>            :         /*
+<span class="lineNum">     130 </span>            :         * OBJ类型，删除一个键值对,成功返回0
+<span class="lineNum">     131 </span>            :          */
+<span class="lineNum">     132 </span>            :         int obj_rm(const char* key);            
+<span class="lineNum">     133 </span>            :         /* 
+<span class="lineNum">     134 </span>            :         * ARR类型，删除下标为index的JSON对象，成功返回0
+<span class="lineNum">     135 </span>            :         */
+<span class="lineNum">     136 </span>            :         int arr_rm(int index);                          
+<span class="lineNum">     137 </span>            :         /*
+<span class="lineNum">     138 </span>            :         * 清空 
+<span class="lineNum">     139 </span>            :         */
+<span class="lineNum">     140 </span>            :         void free();
+<span class="lineNum">     141 </span>            :         /* 
+<span class="lineNum">     142 </span>            :         * 获取错误信息。
+<span class="lineNum">     143 </span>            :         */
+<span class="lineNum">     144 </span>            :         std::string get_err_info();
+<span class="lineNum">     145 </span>            : 
+<span class="lineNum">     146 </span>            : private:
+<span class="lineNum">     147 </span>            :         /*
+<span class="lineNum">     148 </span>            :         * 类型
+<span class="lineNum">     149 </span>            :          */
+<span class="lineNum">     150 </span>            :         json_e type;
+<span class="lineNum">     151 </span>            :         /*
+<span class="lineNum">     152 </span>            :         * NUM、BOL、STR类型，保存数据。
+<span class="lineNum">     153 </span>            :          */
+<span class="lineNum">     154 </span>            :         union{
+<span class="lineNum">     155 </span>            :                 NUM num;
+<span class="lineNum">     156 </span>            :                 bool bol;
+<span class="lineNum">     157 </span>            :                 char* str;
+<span class="lineNum">     158 </span>            :         };
+<span class="lineNum">     159 </span>            :         /*
+<span class="lineNum">     160 </span>            :         * ARR类型，保存数据。
+<span class="lineNum">     161 </span>            :         */
+<span class="lineNum">     162 </span>            :         std::vector&lt;JSON*&gt; arr;
+<span class="lineNum">     163 </span>            :         /*
+<span class="lineNum">     164 </span>            :         * OBJ类型，保存键值对
+<span class="lineNum">     165 </span>            :         */
+<span class="lineNum">     166 </span>            :         std::map&lt;const char* const, JSON*, ptrCmp&gt; obj;
+<span class="lineNum">     167 </span>            :         /*
+<span class="lineNum">     168 </span>            :         * 保存错误信息
+<span class="lineNum">     169 </span>            :         */
+<span class="lineNum">     170 </span>            :         char* err_info;                                         
+<span class="lineNum">     171 </span>            : 
+<span class="lineNum">     172 </span>            :         /* 
+<span class="lineNum">     173 </span>            :         * 记录错误信息, 保存在err_info中。
+<span class="lineNum">     174 </span>            :         */
+<span class="lineNum">     175 </span>            :         void note_err_info(const char*);
+<span class="lineNum">     176 </span>            :         /*
+<span class="lineNum">     177 </span>            :         * @param mode: 一个整数，表示缩进模式：
+<span class="lineNum">     178 </span>            :         * @param indent_len: 一个整数，表示填充个数
+<span class="lineNum">     179 </span>            :         * @return: 一个char*，表示返回的字符串，错误则返回NULL
+<span class="lineNum">     180 </span>            :          */
+<span class="lineNum">     181 </span>            :         std::string pre_place(int indent_len, mode_e mode);
+<span class="lineNum">     182 </span>            :         /*
+<span class="lineNum">     183 </span>            :         * to_str函数，将各种类型的JSON对象转换成char*返回
+<span class="lineNum">     184 </span>            :         * @param indent_len为-1时不加缩进，否则加缩进，indent_len表示缩进个数
+<span class="lineNum">     185 </span>            :         * @param mode: 缩进模式
+<span class="lineNum">     186 </span>            :         * 对于ARR和OBJ，对象之间换行，末尾不换行
+<span class="lineNum">     187 </span>            :         * 出错会抛出异常
+<span class="lineNum">     188 </span>            :          */
+<span class="lineNum">     189 </span>            :         std::string none_to_str(int indent_len, mode_e mode = mode_e::INDENT_TAB);
+<span class="lineNum">     190 </span>            :         std::string num_to_str(int indent_len, mode_e mode = mode_e::INDENT_TAB);
+<span class="lineNum">     191 </span>            :         std::string bol_to_str(int indent_len, mode_e mode = mode_e::INDENT_TAB);
+<span class="lineNum">     192 </span>            :         std::string str_to_str(int indent_len, mode_e mode = mode_e::INDENT_TAB);
+<span class="lineNum">     193 </span>            :         std::string arr_to_str(int indent_len, mode_e mode = mode_e::INDENT_TAB);
+<span class="lineNum">     194 </span>            :         std::string obj_to_str(int indent_len, mode_e mode = mode_e::INDENT_TAB);
+<span class="lineNum">     195 </span>            :         /*
+<span class="lineNum">     196 </span>            :         * 选择是否需要换行和加缩进。
+<span class="lineNum">     197 </span>            :         * indent_len为-1时不换行且无缩进，否则换行加缩进，indent_len表示tab个数
+<span class="lineNum">     198 </span>            :          */
+<span class="lineNum">     199 </span>            :         std::string to_str_select_tab(int indent_len = -1);
+<span class="lineNum">     200 </span>            :         /*
+<span class="lineNum">     201 </span>            :         * 转为yaml格式的字符串
+<span class="lineNum">     202 </span>            :         * @param indent_len: 表示需要的缩进层数 
+<span class="lineNum">     203 </span>            :         * @param mode: 表示缩进模式 
+<span class="lineNum">     204 </span>            :          */
+<span class="lineNum">     205 </span>            :         std::string none_to_yaml(int indent_len, mode_e mode = mode_e::INDENT_FOUR);
+<span class="lineNum">     206 </span>            :         std::string obj_to_yaml(int indent_len, mode_e mode = mode_e::INDENT_FOUR);
+<span class="lineNum">     207 </span>            :         std::string arr_to_yaml(int indent_len, mode_e mode = mode_e::INDENT_FOUR_ARR);
+<span class="lineNum">     208 </span>            : 
+<span class="lineNum">     209 </span>            :         std::string to_yaml_select_tab(int indent_len = 0);
+<span class="lineNum">     210 </span>            : };
+<span class="lineNum">     211 </span>            : 
+<span class="lineNum">     212 </span>            : #endif
+</pre>
+      </td>
+    </tr>
+  </table>
+  <br>
+
+  <table width="100%" border=0 cellspacing=0 cellpadding=0>
+    <tr><td class="ruler"><img src="../../../../../../../../glass.png" width=3 height=3 alt=""></td></tr>
+    <tr><td class="versionInfo">Generated by: <a href="http://ltp.sourceforge.net/coverage/lcov.php" target="_parent">LCOV version 1.13</a></td></tr>
+  </table>
+  <br>
+
+</body>
+</html>

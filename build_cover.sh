@@ -1,4 +1,4 @@
-g++ -g -fprofile-arcs -ftest-coverage -o main json.cpp main.cpp -lgtest -lpthread --std=c++11
+g++ -g -fprofile-arcs -ftest-coverage -o main src/json.cpp src/main.cpp -lgtest -lpthread --std=c++11
 ./main
 lcov -d ./ -t 'main' -o 'main.info' -b . -c
 
